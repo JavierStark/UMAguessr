@@ -11,3 +11,5 @@ _
 /src/main/java/org/umaguessr/frontend/backend.md,e\4\e419a527429eb1e215eaa6a1f2365a55282a7149
 F
 src/test/java/tests.md,2\7\27c90ed9cbe95107a41ca0801cfb22701549dcb1
+>
+projectInfo.md,a\e\ae88fa92d8ce8e59be9a1a3130aba68cbd104705
