@@ -1,47 +1,71 @@
 package org.umaguessr.backend;
 
-public class Image {
+/**
+ * Image class.
+ * 
+ * Abstraction of an Image. It has an unique ID and a URL 
+ * to send to the frontend.
+ * 
+ * 
+ *  TODO in refactoring: improve code and ADD EXCEPTIONS!!
+ * 
+ */
 
+
+public class Image {
+	
 	private int id;
 	private String url;
-	private int x;
-	private int y;
+	private int xCoord;
+	private int yCoord;
 	
-	public Image() {}
 	
-	public Image(String z, String newURL, String a, String b) {
-		this.id = Integer.parseInt(z);
+	/**
+	 * Constructor of the Image class. 
+	 * @param newId
+	 * @param newURL
+	 * @param newX
+	 * @param newY
+	 */
+	public Image(int newId, String newURL, int newX, int newY) {
+		this.id = newId;
 		this.url = newURL;
-		this.x = Integer.parseInt(a);
-		this.y = Integer.parseInt(b);
+		this.xCoord = newX;
+		this.yCoord = newY;
 	}
 	
-	public Image(int z, String newURL, int x, int y) {
-		this.id = z;
-		this.url = newURL;
-		this.x = x;
-		this.y = y;
+	/**
+	 * Constructor that GSON uses.
+	 * @param newId
+	 * @param newURL
+	 * @param newX
+	 * @param newY
+	 */
+	public Image(String newId, String newURL, String newX, String newY) {
+		this(Integer.parseInt(newId), newURL, Integer.parseInt(newX), Integer.parseInt(newY));
 	}
+	
+
 	
 	public void setX(int x) {
-		this.x = x;
+		this.xCoord = x;
 	}
 	
 	public void setY(int y ) {
-		this.y = y;
+		this.yCoord = y;
 	}
 	
 	public int getXCoord() {
-		return this.x;
+		return this.xCoord;
 	}
 	
 	public int getYCoord() {
-		return this.y;
+		return this.yCoord;
 	}
 	
 	@Override
 	public String toString() {
-		return "ID: " + this.id + " | URL: " + this.url + " | X: " + this.x + " Y: " + this.y + " //";
+		return "(ID: " + this.id + ", URL: " + this.url + ", X: " + this.xCoord + ", Y: " + this.yCoord + ")";
 	}
 	
 }

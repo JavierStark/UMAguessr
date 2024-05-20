@@ -1,7 +1,9 @@
 package org.umaguessr.backend;
 
+import java.util.List;
+
 public interface Database {
 	
-	void read(String paths);
+	List<Image> read(String paths);
 	
 }
