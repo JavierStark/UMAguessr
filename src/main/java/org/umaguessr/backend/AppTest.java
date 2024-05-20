@@ -1,22 +1,32 @@
 package org.umaguessr.backend;
 
-import java.util.Iterator;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 public class AppTest {
 
 	public static void main(String[] args){
-				
-		ObjectMapper objm = new ObjectMapper();
-			
+							
 		try {
-			String json = "{ \"x\": 1, \"y\": 44 }";
-			Image img1= objm.readValue(json, Image.class); 
-			System.out.println(img1.getXCoord());
-			System.out.println(img1.getYCoord());
+			
+			Scanner sc = new Scanner(Path.of("pics.json"));
+			BufferedReader br = new BufferedReader(new FileReader("pics.json"));
+			
+			List<Image> al = new ArrayList<>();
+			
+			Image[] imageArray = new Gson().fromJson(br, Image[].class);
+			
+			al = Arrays.asList(imageArray);
+			
+			System.out.println(al);
+			
 		} catch (Exception e){
 			System.out.println(":)");
 			e.printStackTrace();
