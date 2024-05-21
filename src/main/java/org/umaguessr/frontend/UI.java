@@ -15,6 +15,7 @@ public class UI extends JFrame {
 
 
         add(new HideablePanel());
+        add(new ZoomableImagePanel(1.1));
 
 
         setVisible(true);
