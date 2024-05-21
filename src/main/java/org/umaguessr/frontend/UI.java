@@ -10,19 +10,17 @@ public class UI extends JFrame {
         super();
 
         setTitle("UmaGuessr");
-        setSize(800, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setVisible(true);
         setBackground(java.awt.Color.WHITE);
 
 
-        HideablePanel hideablePanel = new HideablePanel();
-        panel.add(hideablePanel);
-        getContentPane().add(panel);
+        add(new HideablePanel());
+
+
+        setVisible(true);
 
         pack();
         setSize(800, 600);
+
     }
 }

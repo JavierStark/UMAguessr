@@ -1,7 +1,13 @@
 package org.umaguessr.frontend;
 
+import javax.swing.*;
+
 public class App {
     public static void main(String[] args) {
-        new UI();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new UI();
+            }
+        });
     }
 }
