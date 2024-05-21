@@ -33,27 +33,50 @@ public class ZoomableImagePanel extends JPanel {
             }
         });
 
-        addMouseWheelListener(e -> {
-            double oldScale = scale;
-            if (e.getPreciseWheelRotation() < 0) {
-                scale *= scaleMultiplier;  // Zoom in
-            } else {
-                scale /= scaleMultiplier;  // Zoom out
-            }
-            // Translate so that the zoom focuses on the mouse cursor
-            double mouseX = e.getX();
-            double mouseY = e.getY();
-            System.out.println("Mouse X: " + mouseX + " Mouse Y: " + mouseY);
-            double inImageCoordX = (mouseX-translateX)/oldScale;
-            double inImageCoordY = (mouseY-translateY)/oldScale;
-            System.out.println("Real X: " + inImageCoordX + " Real Y: " + inImageCoordY);
-            System.out.println("Scale: " + scale);
-            translateX = (-inImageCoordX*scale+mouseX);
-            translateY = (-inImageCoordY*scale+mouseY);
-            System.out.println("Translate X: " + translateX + " Translate Y: " + translateY+"\n");
+        addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                double oldScale = scale;
+                double minScale = Math.min((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
+                if (e.getPreciseWheelRotation() < 0 && scale <= 8.0) {
+                    scale *= scaleMultiplier;  // Zoom in
+                } else if (scale > minScale) {
+                    scale /= scaleMultiplier;  // Zoom out
+                } else {
+                    scale = minScale;
+                }
+                // Translate so that the zoom focuses on the mouse cursor
+                double mouseX = e.getX();
+                double mouseY = e.getY();
+                System.out.println("Mouse X: " + mouseX + " Mouse Y: " + mouseY);
+                double inImageCoordX = (mouseX-translateX)/oldScale;
+                double inImageCoordY = (mouseY-translateY)/oldScale;
+                System.out.println("Real X: " + inImageCoordX + " Real Y: " + inImageCoordY);
+                System.out.println("Scale: " + scale);
+                translateX = Math.min(0, Math.max(getWidth() - image.getWidth(null) * scale, -inImageCoordX * scale + mouseX));
+                translateY = Math.min(0, Math.max(getHeight() - image.getHeight(null) * scale, -inImageCoordY * scale + mouseY));
+                System.out.println("Translate X: " + translateX + " Translate Y: " + translateY+"\n");
 
-            repaint();
+                repaint();
+            }
         });
+
+        addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				updateScaleAndTranslation();
+			}
+		});
+    }
+
+    private void updateScaleAndTranslation() {
+        if (image != null) {
+            double minScale = Math.min((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
+            scale = minScale;
+            translateX = 0;
+            translateY = 0;
+            repaint();
+        }
     }
 
     @Override
