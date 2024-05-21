@@ -35,3 +35,12 @@ We start today the official sprint after some days of research and planning.
 We have held our first official sprint meetings, one for each team. In the frontend meeting, we discussed several ways to implement zoomable images in the UI, as the methods considered during the previous days did not fully work. We will keep searching and trying out new implementations until we find one that meets all our expectations. What is more, we have planned a pair programming session for next Sunday morning, where we will focus on resolving every loose end regarding the zoomable image aspect of the UI.
 
 In the backend meeting we discussed the key aspects of the model, and the importance of doing TDD to implement the classes. We had the idea to make an interface "Filter" in the second sprint to filter images by some criteria (by place, by difficulty...) and a class "SecureImage" with only the URL and the ID as attributes and pass them to the Frontend, so that the user cannot have access to the real coordinates at any time. We finally implemented the class "SearchFromFileSystem", which takes a JSON file as an argument with the ID of the pictures, their URL and their real coordinates.
+
+### Day 6:
+Today, at first we updated the trello board adding almost all the pending tasks to the first sprint, becouse we realized that the sprint is two weeks long instead of one as we thought.
+![Captura](https://github.com/JavierStark/UMAguessr/assets/162295178/b0bae8d0-6cde-4f48-8922-e13490fda641)
+![Captura1](https://github.com/JavierStark/UMAguessr/assets/162295178/4eb4316a-d70a-45f4-9226-c95432dc378a)
+Then, each team continued with their tasks, where:
+The frontend team has integrated the image zoom so that it can be implemented with both the map and the main image, then, this feature has been used with two new panels that are, the main one where the main image will appear, taking up the entire screen, and the other one being where the map should be visible as soon as you approach the mouse, but not visible otherwise. At last, we implemented some limits in the map movement so that you can't get out of the borders of the image moving or zooming it, and limited the zoom that can be done, so that the image doesn't get too small.
+
+The backend team ...(to be done).
