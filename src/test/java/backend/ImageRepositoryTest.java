@@ -1,40 +1,92 @@
 package backend;
 
-import org.umaguessr.backend.Image;
-import org.umaguessr.backend.ImageRepository;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.umaguessr.backend.ImageRepository;
+import org.umaguessr.backend.Image;
 
-public class ImageRepositoryTest {
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class ImageRepositoryTest {
+
+    @TempDir
+    Path tempDir;
 
     private ImageRepository imageRepository;
 
     @BeforeEach
-    void setUp() {
-        // Assuming ImageRepository can load images correctly from a predefined JSON file
-        imageRepository = new ImageRepository();
+    void setUp() throws IOException {
+        // Create a temporary images.json file
+        Path jsonFile = tempDir.resolve("images.json");
+        String jsonContent = "[{\"id\":\"1\", \"name\":\"Image 1\"}, {\"id\":\"2\", \"name\":\"Image 2\"}]";
+        Files.writeString(jsonFile, jsonContent);
+
+        // Set up classloader to read from temp directory
+        ClassLoader classLoader = mock(ClassLoader.class);
+        when(classLoader.getResourceAsStream("images.json")).thenAnswer(invocation -> Files.newInputStream(jsonFile));
+
+        imageRepository = new ImageRepository(classLoader);
     }
 
     @Test
-    void testGetImageDataValidId() {
-        // Test with a valid image ID that exists in the JSON file
-        Image image = imageRepository.getImageData("img101");
-        assertNotNull(image, "Image should not be null");
-        assertEquals("img101", image.getId(), "Image ID should match");
-        assertEquals("https://example.com/image101.jpg", image.getURL(), "Image URL should match");
-        assertEquals(150, image.getCoordinates()[0], "X coordinate should match");
-        assertEquals(250, image.getCoordinates()[1], "Y coordinate should match");
+    void testLoadImagesSuccessfully() {
+        assertNotNull(imageRepository);
+        List<Image> images = imageRepository.getAllImages();
+        assertEquals(2, images.size());
+        assertEquals("1", images.get(0).getId());
+        assertEquals("2", images.get(1).getId());
     }
 
     @Test
-    void testGetImageDataInvalidId() {
-        // Test with an invalid image ID that does not exist in the JSON file
-        Image image = imageRepository.getImageData("nonexistent");
-        assertNull(image, "Image should be null for an invalid ID");
+    void testLoadImagesFileNotFound() {
+        // Mock classloader to return null for getResourceAsStream
+        ClassLoader classLoader = mock(ClassLoader.class);
+        when(classLoader.getResourceAsStream("images.json")).thenReturn(null);
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            new ImageRepository(classLoader);
+        });
+
+        assertEquals("images.json file not found in classpath", exception.getMessage());
+    }
+
+    @Test
+    void testLoadImagesMalformedJson() throws IOException {
+        // Create a temporary malformed images.json file
+        Path jsonFile = tempDir.resolve("images.json");
+        String malformedJsonContent = "[{\"id\":\"1\", \"name\":\"Image 1\", {\"id\":\"2\", \"name\":\"Image 2\"}]";
+        Files.writeString(jsonFile, malformedJsonContent);
+
+        // Set up classloader to read from temp directory
+        ClassLoader classLoader = mock(ClassLoader.class);
+        when(classLoader.getResourceAsStream("images.json")).thenAnswer(invocation -> Files.newInputStream(jsonFile));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            new ImageRepository(classLoader);
+        });
+
+        assertTrue(exception.getMessage().contains("Failed to load images from JSON file"));
+    }
+
+    @Test
+    void testGetImageDataExisting() {
+        Image image = imageRepository.getImageData("1");
+        assertNotNull(image);
+        assertEquals("1", image.getId());
+    }
+
+    @Test
+    void testGetImageDataNonExisting() {
+        Image image = imageRepository.getImageData("3");
+        assertNull(image);
     }
 }
