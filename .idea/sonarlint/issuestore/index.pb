@@ -1,0 +1,19 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+^
+.src/main/java/org/umaguessr/backend/backend.md,7\f\7f3fda2327c2b63b9561641531d50ae3a6754d56
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+^
+.src/test/java/backend/ScoreCalculatorTest.java,a\f\afefdcdba93d2178362402502c5577840ddbac6a
+h
+8src/main/java/org/umaguessr/backend/ImageRepository.java,4\7\4729b825ffb03b30d5553a60eaabb30f2623b464
+^
+.src/main/java/org/umaguessr/backend/Image.java,3\e\3ea378c4afb1bf46164c916462fe91ca0a1da454
+T
+$src/test/java/backend/ImageTest.java,5\d\5d8d54a2eb83fc6aab3401cfc9166a88d6d42db6
+_
+/src/main/java/org/umaguessr/backend/images.json,3\7\377ea4558347213648e39b0c35a3e539641d2263
+^
+.src/test/java/backend/ImageRepositoryTest.java,1\c\1cd68a675f35a7bb227c8b344fd2d3a3549e39c6
