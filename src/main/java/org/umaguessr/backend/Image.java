@@ -30,5 +30,5 @@ public class Image {
     public int[] getCoordinates() {
         return new int[]{this.posX, this.posY};
     }
-
+  
 }
