@@ -17,6 +17,8 @@ public class ZoomableImagePanel extends JPanel {
     private double translateX = 0;
     private double translateY = 0;
 
+    private Point lastDragPoint = null;
+
     public ZoomableImagePanel(double scaleMultiplier) {
         super();
 
@@ -37,7 +39,7 @@ public class ZoomableImagePanel extends JPanel {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 double oldScale = scale;
-                double minScale = Math.min((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
+                double minScale = Math.max((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
                 if (e.getPreciseWheelRotation() < 0 && scale <= 8.0) {
                     scale *= scaleMultiplier;  // Zoom in
                 } else if (scale > minScale) {
@@ -61,6 +63,34 @@ public class ZoomableImagePanel extends JPanel {
             }
         });
 
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                lastDragPoint = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                lastDragPoint = null;
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (lastDragPoint != null) {
+                    Point currentDragPoint = e.getPoint();
+                    double deltaX = (currentDragPoint.getX() - lastDragPoint.getX());
+                    double deltaY = (currentDragPoint.getY() - lastDragPoint.getY());
+
+                    translateX += deltaX;
+                    translateY += deltaY;
+                    lastDragPoint = currentDragPoint;
+                    repaint();
+                }
+            }
+        });
+
         addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -71,7 +101,7 @@ public class ZoomableImagePanel extends JPanel {
 
     private void updateScaleAndTranslation() {
         if (image != null) {
-            double minScale = Math.min((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
+            double minScale = Math.max((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
             scale = minScale;
             translateX = 0;
             translateY = 0;
