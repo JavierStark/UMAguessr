@@ -115,6 +115,19 @@ public class ZoomableImagePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        double imageWidth = image.getWidth(null)*scale;
+		double imageHeight = image.getHeight(null)*scale;
+		if (translateX < getWidth() - imageWidth)
+			translateX = getWidth() - imageWidth;
+		if (translateY < getHeight() - imageHeight)
+			translateY = getHeight() - imageHeight;
+		
+		// Apply translation and scaling transformation
+		if(translateX > 0)
+			translateX = 0;
+
+		if (translateY > 0)
+			translateY = 0;
 
         // Apply translation and scaling transformation
         g2d.translate(translateX, translateY);
