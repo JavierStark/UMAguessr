@@ -27,6 +27,14 @@ public class Image {
         return this.imageURL;
     }
 
+    public int getXCoordinate() {
+    	return this.posX;
+    }
+    
+    public int getYCoordinate() {
+    	return this.posY;
+    }
+    
     public int[] getCoordinates() {
         return new int[]{this.posX, this.posY};
     }

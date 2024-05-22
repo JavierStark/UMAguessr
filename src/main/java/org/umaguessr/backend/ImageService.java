@@ -9,21 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ImageRepository {
-    private ClassLoader classLoader;
+public class ImageService {
+	
     private List<Image> images;
 
-    public ImageRepository(ClassLoader classLoader) {
-        this.classLoader = classLoader;
-        loadImages();
-        
+    public ImageService(String filePath) {
+        loadImages(filePath);
     }
+    
     public List<Image> getAllImages() {
     return new ArrayList<>(images);
 }
 
-    public void loadImages() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("images.json")) {
+    public void loadImages(String filePath) {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream == null) {
                 throw new IllegalStateException("images.json file not found in classpath");
             }
