@@ -137,5 +137,7 @@ public class ZoomableImagePanel extends JPanel {
         if (image != null) {
             g2d.drawImage(image, 0, 0, this);
         }
+
+        getParent().repaint();
     }
 }
