@@ -3,6 +3,8 @@ package org.umaguessr.frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -12,16 +14,20 @@ public class ZoomableImagePanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private double scale = 1.0;
-    private final double scaleMultiplier = 1.1;
+    private final double scaleMultiplier;
     private Image image;
     private double translateX = 0;
     private double translateY = 0;
+    double inImageCoordX;
+    double inImageCoordY;
 
     private Point lastDragPoint = null;
 
     public ZoomableImagePanel(double scaleMultiplier) {
         super();
-
+        
+        this.scaleMultiplier = scaleMultiplier;
+        
         try {
             image = ImageIO.read(new File("src/main/java/org/umaguessr/frontend/map.jpg")); // Load your image here
         } catch (IOException e) {
@@ -31,14 +37,16 @@ public class ZoomableImagePanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("X: " + e.getX() + " Y:" + e.getY());
+            	Point2D.Double p = getRealPoint(e, scale);
+                System.out.println("X: " + p.getX() + " Y:" + p.getY());
             }
+
         });
 
         addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                double oldScale = scale;
+            	double oldScale=scale;
                 double minScale = Math.max((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));
                 if (e.getPreciseWheelRotation() < 0 && scale <= 8.0) {
                     scale *= scaleMultiplier;  // Zoom in
@@ -50,14 +58,14 @@ public class ZoomableImagePanel extends JPanel {
                 // Translate so that the zoom focuses on the mouse cursor
                 double mouseX = e.getX();
                 double mouseY = e.getY();
-                System.out.println("Mouse X: " + mouseX + " Mouse Y: " + mouseY);
-                double inImageCoordX = (mouseX-translateX)/oldScale;
-                double inImageCoordY = (mouseY-translateY)/oldScale;
+                //System.out.println("Mouse X: " + mouseX + " Mouse Y: " + mouseY);
+                inImageCoordX = (mouseX-translateX)/oldScale;
+                inImageCoordY = (mouseY-translateY)/oldScale;
                 System.out.println("Real X: " + inImageCoordX + " Real Y: " + inImageCoordY);
-                System.out.println("Scale: " + scale);
+                //System.out.println("Scale: " + scale);
                 translateX = Math.min(0, Math.max(getWidth() - image.getWidth(null) * scale, -inImageCoordX * scale + mouseX));
                 translateY = Math.min(0, Math.max(getHeight() - image.getHeight(null) * scale, -inImageCoordY * scale + mouseY));
-                System.out.println("Translate X: " + translateX + " Translate Y: " + translateY+"\n");
+                //System.out.println("Translate X: " + translateX + " Translate Y: " + translateY+"\n");
 
                 repaint();
             }
@@ -99,6 +107,16 @@ public class ZoomableImagePanel extends JPanel {
 		});
     }
 
+    private Point2D.Double getRealPoint(MouseEvent e, double scale) {
+    	double mouseX = e.getX();
+    	double mouseY = e.getY();
+    	//System.out.println("Mouse X: " + mouseX + " Mouse Y: " + mouseY);
+    	double realX = (mouseX-translateX)/scale;
+    	double realY = (mouseY-translateY)/scale;
+    	Point2D.Double p = new Point2D.Double(realX, realY);
+    	return p;
+    }
+    
     private void updateScaleAndTranslation() {
         if (image != null) {
             double minScale = Math.max((double) getWidth() / image.getWidth(null), (double) getHeight() / image.getHeight(null));

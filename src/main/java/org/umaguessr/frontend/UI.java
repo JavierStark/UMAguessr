@@ -14,7 +14,7 @@ public class UI extends JFrame {
         setBackground(java.awt.Color.WHITE);
 
 
-        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(1.1);
+        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(2);
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
 
@@ -24,7 +24,7 @@ public class UI extends JFrame {
         hideablePanel.setVisible(true);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, zoomableImagePanel, hideablePanel);
-        splitPane.setDividerSize(1);
+        splitPane.setDividerSize(10);
 
         JPanel content = new JPanel();
         content.setLayout(new BorderLayout());
@@ -32,7 +32,7 @@ public class UI extends JFrame {
 
         setContentPane(content);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(500, 400));
+        setPreferredSize(new Dimension(800, 600));
         pack();
         setVisible(true);
     }
