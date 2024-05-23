@@ -17,3 +17,11 @@ _
 /src/main/java/org/umaguessr/backend/images.json,3\7\377ea4558347213648e39b0c35a3e539641d2263
 ^
 .src/test/java/backend/ImageRepositoryTest.java,1\c\1cd68a675f35a7bb227c8b344fd2d3a3549e39c6
+e
+5src/main/java/org/umaguessr/backend/ScoreService.java,a\4\a480b05c22f66d0e2a2c941950c9e60da608bc26
+[
++src/test/java/backend/ScoreServiceTest.java,f\e\feb23b3fa42a3f905f33645e4f74bd46575a0a75
+e
+5src/main/java/org/umaguessr/backend/ImageService.java,1\b\1b9e8e59a853dbbdd79dd6b033cab526e339168a
+i
+9src/main/java/org/umaguessr/backend/SearchFileSystem.java,b\3\b319441d12f9f324717ed7b1ffd63a84d313bdfe
