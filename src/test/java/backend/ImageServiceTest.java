@@ -2,19 +2,14 @@ package backend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.Image;
 
-
-
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class ImageServiceTest {
 
@@ -34,15 +29,15 @@ class ImageServiceTest {
         assertEquals("img102", images.get(1).getId());
     }
 
-        
     @Test
     void testLoadImagesFileNotFound() {
-    	
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             new ImageService("totallyNotExisting.json");
         });
 
-        assertEquals("images.json file not found in classpath", exception.getMessage());
+        assertTrue(exception.getMessage().contains("Failed to load images from JSON file"));
+        assertTrue(exception.getCause() instanceof IllegalStateException);
+        assertEquals("images.json file not found in classpath", exception.getCause().getMessage());
     }
 
     @Test
@@ -53,10 +48,9 @@ class ImageServiceTest {
 
         assertTrue(exception.getMessage().contains("Failed to load images from JSON file"));
     }
-    
+
     @Test
     void testGetImageDataValidId() {
-        // Test with a valid image ID that exists in the JSON file
         Image image = imageRepository.getImageData("img101");
         assertNotNull(image, "Image should not be null");
         assertEquals("img101", image.getId(), "Image ID should match");
@@ -67,8 +61,28 @@ class ImageServiceTest {
 
     @Test
     void testGetImageDataInvalidId() {
-        // Test with an invalid image ID that does not exist in the JSON file
         Image image = imageRepository.getImageData("nonexistent");
         assertNull(image, "Image should be null for an invalid ID");
+    }
+
+    @Test
+    void testGetRandomUnplayedImageId() {
+        String imageId = imageRepository.getRandomUnplayedImageId();
+        assertNotNull(imageId, "Image ID should not be null");
+        assertTrue(imageRepository.getAllImages().stream().anyMatch(img -> img.getId().equals(imageId)), "Image ID should be valid");
+
+        // Mark all images as played
+        for (int i = 0; i < 5; i++) {
+            imageRepository.getRandomUnplayedImageId();
+        }
+
+        // Now all images have been played
+        assertNull(imageRepository.getRandomUnplayedImageId(), "Should return null when all images have been played");
+    }
+
+    @Test
+    void testReadImageFromURL() throws IOException {
+        BufferedImage image = imageRepository.readImageFromURL("https://upload.wikimedia.org/wikipedia/commons/2/28/JPG_Test.jpg");
+        assertNotNull(image, "BufferedImage should not be null");
     }
 }

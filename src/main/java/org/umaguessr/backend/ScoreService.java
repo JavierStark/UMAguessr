@@ -47,8 +47,8 @@ public class ScoreService {
 	private double calculateDistance(String id, int coordX, int coordY) {
 		Image image = imageService.getImageData(id);
 		
-		int differenceX = image.getXCoordinate() - coordX;
-		int differenceY = image.getYCoordinate() - coordY;
+		int differenceX = image.getCoordinates()[0] - coordX;
+		int differenceY = image.getCoordinates()[1] - coordY;
 		
 		return Math.sqrt((double)(differenceX*differenceX) - differenceY*differenceY);
 	}
