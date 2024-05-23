@@ -30,18 +30,10 @@ public class ScoreService {
 
 	private double calculateDistance(String id, int coordX, int coordY) {
 		Image image = imageService.getImageData(id);
-		int differenceX = image.getXCoordinate() - coordX;
-		int differenceY = image.getYCoordinate() - coordY;
-		return Math.sqrt(differenceX * differenceX + differenceY * differenceY);
-	}
-
-	private int calculatePointsBasedOnDistance(double distance) {
-		if (distance <= MIN_DISTANCE_FOR_MAX_SCORE) {
-			return MAX_SCORE;
-		} else if (distance > MAX_DISTANCE_FOR_ZERO_SCORE) {
-			return 0;
-		} else {
-			return (int) Math.ceil(Math.pow(BASE, EXPONENT_MULTIPLIER * distance + EXPONENT_CONSTANT));
-		}
+    
+		int differenceX = image.getCoordinates()[0] - coordX;
+		int differenceY = image.getCoordinates()[1] - coordY;
+		
+		return Math.sqrt((double)(differenceX*differenceX) - differenceY*differenceY);
 	}
 }
