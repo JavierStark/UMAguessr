@@ -12,10 +12,9 @@ public class UI extends JFrame {
         setBackground(java.awt.Color.WHITE);
 
 
-        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(2);
+        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(1.2);
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
-
 
         HideablePanel hideablePanel = new HideablePanel();
         hideablePanel.setSize(new Dimension(800, 200));
