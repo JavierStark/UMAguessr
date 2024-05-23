@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UI extends JFrame {
-    JPanel panel = new JPanel();
-
     public UI() {
         super();
 
@@ -31,7 +29,7 @@ public class UI extends JFrame {
         content.add(splitPane, BorderLayout.CENTER);
 
         setContentPane(content);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(800, 600));
         pack();
         setVisible(true);
