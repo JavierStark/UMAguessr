@@ -14,7 +14,7 @@ import org.umaguessr.backend.ImageService;
 class ScoreServiceTest {
 
 	ScoreService myScoreService;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 		ImageService imageService = new ImageService("images.json");
@@ -29,13 +29,13 @@ class ScoreServiceTest {
 	void theInitialFinalScoreIs0() {
 		assertEquals(0, myScoreService.getFinalScore());
 	}
-	
-	
+
+
 	@Test
-	void whenSendingTheExactLocationItReturnsTheFullScore() {		
+	void whenSendingTheExactLocationItReturnsTheFullScore() {
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("img101", 150, 250));
 	}
-	
+
 	@Test
 	void whenSendingCoordinatesFurtherThan200TheyGet0Score() {
 		assertEquals(0, myScoreService.calculateScore("img105", 7, 27));
@@ -48,15 +48,15 @@ class ScoreServiceTest {
 
 		myScoreService.calculateScore("img105", 27, 27);
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
-		
+
 		myScoreService.calculateScore("img102", 350, 450);
 		assertEquals(2*ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
 	}
-	
+
 	@Test
 	void theFurtherAwayTheLowerTheScore() {
 		assertTrue(myScoreService.calculateScore("img101", 100, 200) > myScoreService.calculateScore("img101", 80, 100));
 	}
-	
+
 }
