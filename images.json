@@ -1,7 +1,7 @@
 [
   {
     "imageId": "img101",
-    "imageURL": "https://picsum.photos/200/300",
+    "imageURL": "https://picsum.photos/1000/700",
     "posX": 150,
     "posY": 250,
     "faculty": "Sciences",
@@ -9,7 +9,7 @@
   },
   {
     "imageId": "img102",
-    "imageURL": "https://picsum.photos/200/300",
+    "imageURL": "https://picsum.photos/1000/700",
     "posX": 350,
     "posY": 450,
     "faculty": "ETSII",
@@ -17,7 +17,7 @@
   },
   {
     "imageId": "img103",
-    "imageURL": "https://picsum.photos/200/300",
+    "imageURL": "https://picsum.photos/1000/700",
     "posX": 550,
     "posY": 650,
     "faculty": "Sciences",
@@ -25,7 +25,7 @@
   },
   {
     "imageId": "img104",
-    "imageURL": "https://picsum.photos/200/300",
+    "imageURL": "https://picsum.photos/1000/700",
     "posX": 750,
     "posY": 850,
     "faculty": "ETSII",
@@ -33,7 +33,7 @@
   },
   {
     "imageId": "img105",
-    "imageURL": "https://picsum.photos/200/300",
+    "imageURL": "https://picsum.photos/1000/700",
     "posX": 950,
     "posY": 1050,
     "faculty": "ETSII",
