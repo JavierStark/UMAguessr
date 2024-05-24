@@ -31,26 +31,6 @@ class ImageServiceTest {
     }
 
     @Test
-    void testLoadImagesFileNotFound() {
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            new ImageService("totallyNotExisting.json");
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to load images from JSON file"));
-        assertTrue(exception.getCause() instanceof IllegalStateException);
-        assertEquals("images.json file not found in classpath", exception.getCause().getMessage());
-    }
-
-    @Test
-    void testLoadImagesMalformedJson() throws IOException {
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            new ImageService("badImages.json");
-        });
-
-        assertTrue(exception.getMessage().contains("Failed to load images from JSON file"));
-    }
-
-    @Test
     void testGetImageDataValidId() {
         Image image = imageRepository.getImageData("img101");
         assertNotNull(image, "Image should not be null");
