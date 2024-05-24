@@ -19,7 +19,8 @@ public class UI extends JFrame {
         this.imageService = imageService;
         this.scoreService = scoreService;
 
-        Image image = this.imageService.getImageData(this.imageService.getRandomUnplayedImageId());
+		String imageID = this.imageService.getRandomUnplayedImageId();
+        Image image = this.imageService.getImageData(imageID);
 
         setTitle("UmaGuessr");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -45,18 +46,13 @@ public class UI extends JFrame {
 		JButton signalButton = new JButton("Send Signal");
 
 		// Add an ActionListener to the button
-		signalButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (Marker.getPreviousMarker().getRealX()<0 && Marker.getPreviousMarker().getRealY()<0) {
-
-				}else {
-					//To implement
-					//sendData(new Point2D.Double(Marker.getPreviousMarker().getRealX(), Marker.getPreviousMarker().getRealY()));
-					System.out.println(new Point2D.Double(Marker.getPreviousMarker().getRealX(), Marker.getPreviousMarker().getRealY()));
-				}
-			}
-		});
+		signalButton.addActionListener(e -> {
+            if (Marker.getPreviousMarker().getRealX() >= 0 || Marker.getPreviousMarker().getRealY() >= 0) {
+                Point2D.Double marker = new Point2D.Double(Marker.getPreviousMarker().getRealX(), Marker.getPreviousMarker().getRealY());
+				System.out.println("Score: ");
+				System.out.println(this.scoreService.calculateScore(imageID, (int)marker.getX(), (int)marker.getY()));
+            }
+        });
 
 		signalButton.setVisible(true);
 		signalButton.setPreferredSize(new Dimension(200, 100));

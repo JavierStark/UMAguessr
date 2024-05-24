@@ -17,7 +17,7 @@ class ScoreServiceTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		ImageService imageService = new ImageService("images.json");
+		ImageService imageService = new ImageService();
 		myScoreService = new ScoreService(imageService);
 	}
 
