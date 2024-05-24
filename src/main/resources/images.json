@@ -3,30 +3,40 @@
     "imageId": "img101",
     "imageURL": "https://example.com/image101.jpg",
     "posX": 150,
-    "posY": 250
+    "posY": 250,
+    "faculty": "Sciences",
+    "difficulty": 1
   },
   {
     "imageId": "img102",
     "imageURL": "https://example.com/image102.jpg",
     "posX": 350,
-    "posY": 450
+    "posY": 450,
+    "faculty": "ETSII",
+    "difficulty": 2
   },
   {
     "imageId": "img103",
     "imageURL": "https://example.com/image103.jpg",
     "posX": 550,
-    "posY": 650
+    "posY": 650,
+    "faculty": "Sciences",
+    "difficulty": 4
   },
   {
     "imageId": "img104",
     "imageURL": "https://example.com/image104.jpg",
     "posX": 750,
-    "posY": 850
+    "posY": 850,
+    "faculty": "ETSII",
+    "difficulty": 7
   },
   {
     "imageId": "img105",
     "imageURL": "https://example.com/image105.jpg",
     "posX": 950,
-    "posY": 1050
+    "posY": 1050,
+    "faculty": "ETSII",
+    "difficulty": 5
   }
 ]
