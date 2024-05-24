@@ -8,6 +8,9 @@ import java.awt.geom.Point2D;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class ZoomableImagePanel extends JLayeredPane {
 
@@ -27,18 +30,23 @@ public class ZoomableImagePanel extends JLayeredPane {
 
 	private Point lastDragPoint = null;
 
-	public ZoomableImagePanel(double scaleMultiplier) {
+	public ZoomableImagePanel(double scaleMultiplier, org.umaguessr.backend.Image imageData) {
 		super();
 
 		this.scaleMultiplier = scaleMultiplier;
 
 		try {
-			image = ImageIO.read(new File("src/main/java/org/umaguessr/frontend/map.jpg")); // Load your image here
+			URI uri = new URI(imageData.getURL());
+			System.out.println(imageData.getURL());
+			URL url = uri.toURL();
+			image = ImageIO.read(url);// Load your image here
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+        }
 
-		initializeListeners();
+        initializeListeners();
 	}
 
 	private void initializeListeners() {

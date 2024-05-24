@@ -1,22 +1,33 @@
 package org.umaguessr.frontend;
 
+import org.umaguessr.backend.Image;
+import org.umaguessr.backend.ImageService;
+import org.umaguessr.backend.ScoreService;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class UI extends JFrame {
-    public UI() {
+    ImageService imageService;
+    ScoreService scoreService;
+    public UI(ImageService imageService, ScoreService scoreService) {
         super();
+
+        this.imageService = imageService;
+        this.scoreService = scoreService;
+
+        Image image = this.imageService.getImageData(this.imageService.getRandomUnplayedImageId());
 
         setTitle("UmaGuessr");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.WHITE);
 
 
-        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(1.2);
+        ZoomableImagePanel zoomableImagePanel = new ZoomableImagePanel(1.2, image);
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
 
-        HideablePanel hideablePanel = new HideablePanel();
+        HideablePanel hideablePanel = new HideablePanel(image);
         hideablePanel.setSize(new Dimension(800, 200));
         hideablePanel.setVisible(true);
 
