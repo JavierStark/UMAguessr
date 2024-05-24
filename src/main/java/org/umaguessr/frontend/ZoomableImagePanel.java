@@ -37,14 +37,11 @@ public class ZoomableImagePanel extends JLayeredPane {
 
 		try {
 			URI uri = new URI(imageData.getURL());
-			System.out.println(imageData.getURL());
 			URL url = uri.toURL();
 			image = ImageIO.read(url);// Load your image here
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-        }
+		}
 
         initializeListeners();
 	}
@@ -104,7 +101,6 @@ public class ZoomableImagePanel extends JLayeredPane {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			inImageCoord = getRealPoint(e, scale);
-			System.out.println("X: " + inImageCoord.getX() + " Y:" + inImageCoord.getY());
 		}
 
 		@Override
@@ -148,7 +144,7 @@ public class ZoomableImagePanel extends JLayeredPane {
 			inImageCoord = getRealPoint(e, oldScale);
 			translation.x = Math.min(0, Math.max(ZoomableImagePanel.this.getWidth() - image.getWidth(null) * scale, -inImageCoord.x * scale + e.getX()));
 			translation.y = Math.min(0, Math.max(ZoomableImagePanel.this.getHeight() - image.getHeight(null) * scale, -inImageCoord.y * scale + e.getY()));
-
+			
 			ZoomableImagePanel.this.repaint();
 		}
 	}
@@ -164,12 +160,11 @@ public class ZoomableImagePanel extends JLayeredPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Point2D.Double p = getRealPoint(e, scale);
-				System.out.println("X: " + p.getX() + " Y:" + p.getY());
-				System.out.println("Translate X: " + translation.x + " Translate Y: " + translation.y);
 				remove(Marker.getPreviousMarker());
 				Marker marker = new Marker(p.getX(), p.getY());
 				add(marker, 0);
 				Marker.setPreviousMarker(marker);
+				
 				getParent().repaint();
 			}
 

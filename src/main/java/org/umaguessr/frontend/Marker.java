@@ -12,7 +12,7 @@ public class Marker extends JLabel{
 	private double realX;
 	private double realY;
 	private static Marker previousMarker = new Marker(-100, -100);
-	static final String dir = "src/main/java/org/umaguessr/frontend/marker.jpg";
+	static final String dir = "src/main/resources/marker.png";
 
 	public Marker(double realX, double realY) {
 		Image image;
