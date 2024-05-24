@@ -19,7 +19,7 @@ public class MainLoop {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
         	public void run() {
-                StartingMenu_panel frame = new StartingMenu_panel();
+                StartingMenu frame = new StartingMenu();
                 frame.setVisible(true);
             }
         });

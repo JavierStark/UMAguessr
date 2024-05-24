@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class StartingMenu_panel extends JFrame {
+public class StartingMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -39,7 +39,7 @@ public class StartingMenu_panel extends JFrame {
 
 	protected Color mainPanelColor = new Color(255, 255, 255);
 	
-	public StartingMenu_panel() {
+	public StartingMenu() {
         initComponents();
     }
 
@@ -66,9 +66,9 @@ public class StartingMenu_panel extends JFrame {
         Image image2 = null;
         Image cross_image = null;
 		try {
-			image1 = ImageIO.read(new File("C:\\Users\\Pedro Torres\\Documents\\UMAGuesrr\\Images\\UMAGUESSR.png"));
-			image2 = ImageIO.read(new File("C:\\\\Users\\\\Pedro Torres\\\\Documents\\\\UMAGuesrr\\\\Images\\Sin_titulo.png"));
-			cross_image = ImageIO.read(new File("C:\\Users\\Pedro Torres\\Documents\\UMAGuesrr\\Images\\cross.png"));
+			image1 = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
+			image2 = ImageIO.read(new File("src/main/resources/gear.png"));
+			cross_image = ImageIO.read(new File("src/main/resources/cross.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
