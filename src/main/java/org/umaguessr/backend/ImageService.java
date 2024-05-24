@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class ImageService {
@@ -33,13 +35,16 @@ public class ImageService {
     }
 
     public void loadImages(String filePath) {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath)) {
-            if (inputStream == null) {
-                throw new IllegalStateException("images.json file not found in classpath");
+        String urlString = "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images.json";
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            try (Reader reader = new InputStreamReader(connection.getInputStream())) {
+                Type listType = new TypeToken<List<Image>>(){}.getType();
+                images = new Gson().fromJson(reader, listType);
             }
-            InputStreamReader reader = new InputStreamReader(inputStream);
-            Type listType = new TypeToken<List<Image>>(){}.getType();
-            images = new Gson().fromJson(reader, listType);
         } catch (Exception e) {
             throw new RuntimeException("Failed to load images from JSON file", e);
         }
