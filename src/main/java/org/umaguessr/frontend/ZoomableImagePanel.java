@@ -37,14 +37,11 @@ public class ZoomableImagePanel extends JLayeredPane {
 
 		try {
 			URI uri = new URI(imageData.getURL());
-			System.out.println(imageData.getURL());
 			URL url = uri.toURL();
 			image = ImageIO.read(url);// Load your image here
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-        }
+		}
 
         initializeListeners();
 	}
