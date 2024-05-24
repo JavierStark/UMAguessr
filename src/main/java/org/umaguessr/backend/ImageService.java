@@ -25,16 +25,16 @@ public class ImageService {
     private List<Image> images;
     private Set<String> playedImageIds;
 
-    public ImageService(String filePath) {
+    public ImageService() {
         playedImageIds = new HashSet<>();
-        loadImages(filePath);
+        loadImages();
     }
 
     public List<Image> getAllImages() {
         return new ArrayList<>(images);
     }
 
-    public void loadImages(String filePath) {
+    public void loadImages() {
         String urlString = "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images.json";
         try {
             URL url = new URL(urlString);

@@ -18,7 +18,7 @@ class ImageServiceTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        imageRepository = new ImageService("images.json");
+        imageRepository = new ImageService();
     }
 
     @Test
@@ -65,5 +65,18 @@ class ImageServiceTest {
     void testReadImageFromURL() throws IOException, URISyntaxException {
         BufferedImage image = imageRepository.readImageFromURL("https://upload.wikimedia.org/wikipedia/commons/2/28/JPG_Test.jpg");
         assertNotNull(image, "BufferedImage should not be null");
+    }
+    
+    
+    @Test
+    void checkFacultyIsOkay() {
+    	assertEquals("Sciences", imageRepository.getImageData("img101").getFaculty());
+    	assertEquals("ETSII", imageRepository.getImageData("img102").getFaculty());
+    }
+    
+    @Test
+    void checkDifficultyIsOkay() {
+    	assertEquals(1, imageRepository.getImageData("img101").getDifficulty());
+    	assertEquals(7, imageRepository.getImageData("img104").getDifficulty());
     }
 }

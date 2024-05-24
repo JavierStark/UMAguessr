@@ -6,8 +6,10 @@ public class Image {
     private String imageURL;
     private int posX;
     private int posY;
+    private String faculty;
+    private int difficulty;
 
-    public Image(String imageId, String imageURL, int[] coords) {
+    public Image(String imageId, String imageURL, int[] coords, String faculty, int difficulty) {
         if (!imageURL.startsWith("https://")) {
             throw new IllegalArgumentException("Image URL must start with 'https://'");
         }
@@ -17,6 +19,9 @@ public class Image {
 
         this.posX = coords[0];
         this.posY = coords[1];
+        
+        this.faculty = faculty;
+        this.difficulty = difficulty;
     }
 
     public String getId() {
@@ -30,4 +35,13 @@ public class Image {
     public int[] getCoordinates() {
         return new int[]{this.posX, this.posY};
     }
+    
+    public String getFaculty() {
+    	return this.faculty;
+    }
+    
+    public int getDifficulty() {
+    	return this.difficulty;
+    }
+    
 }
