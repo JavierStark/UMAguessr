@@ -13,6 +13,8 @@ import java.util.Random;
 import java.util.Set;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -73,8 +75,9 @@ public class ImageService {
         return randomImage.getId();
     }
 
-    public BufferedImage readImageFromURL(String imageUrl) throws IOException {
-        URL url = new URL(imageUrl);
+    public BufferedImage readImageFromURL(String imageUrl) throws IOException, URISyntaxException {
+        URI uri = new URI(imageUrl);
+        URL url = uri.toURL();
         return ImageIO.read(url);
     }
 }
