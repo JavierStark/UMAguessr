@@ -8,6 +8,7 @@ import org.umaguessr.backend.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,7 +82,7 @@ class ImageServiceTest {
     }
 
     @Test
-    void testReadImageFromURL() throws IOException {
+    void testReadImageFromURL() throws IOException, URISyntaxException {
         BufferedImage image = imageRepository.readImageFromURL("https://upload.wikimedia.org/wikipedia/commons/2/28/JPG_Test.jpg");
         assertNotNull(image, "BufferedImage should not be null");
     }

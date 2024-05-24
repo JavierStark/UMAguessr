@@ -36,4 +36,15 @@ public class ScoreService {
 		
 		return Math.sqrt((double)(differenceX*differenceX) - differenceY*differenceY);
 	}
+	
+	private int calculatePointsBasedOnDistance(double distance) {
+		if (distance <= MIN_DISTANCE_FOR_MAX_SCORE) {
+			return MAX_SCORE;
+		} else if (distance > MAX_DISTANCE_FOR_ZERO_SCORE) {
+			return 0;
+		} else {
+			return (int) Math.ceil(Math.pow(BASE, EXPONENT_MULTIPLIER * distance + EXPONENT_CONSTANT));
+		}
+	}
+	
 }
