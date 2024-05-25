@@ -1,7 +1,20 @@
 package org.umaguessr.frontend;
 
+import org.umaguessr.backend.ImageService;
+import org.umaguessr.backend.ScoreService;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 public class App {
     public static void main(String[] args) {
-        new UI();
+        SwingUtilities.invokeLater(() -> {
+            ImageService imageService = new ImageService();
+            ScoreService scoreService = new ScoreService(imageService);
+            UI a = new UI(imageService, scoreService);
+        });
     }
 }
