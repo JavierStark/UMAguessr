@@ -22,7 +22,7 @@ class ImageServiceTest {
     }
 
     @Test
-    void testLoadImagesSuccessfully() {
+    void testLoadImagesDataSuccessfully() {
         assertNotNull(imageRepository);
         List<Image> images = imageRepository.getAllImages();
         assertEquals(5, images.size());

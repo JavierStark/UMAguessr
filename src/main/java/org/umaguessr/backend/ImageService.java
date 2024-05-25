@@ -3,7 +3,6 @@ package org.umaguessr.backend;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.InputStreamReader;
-import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -22,21 +21,21 @@ import javax.imageio.ImageIO;
 
 public class ImageService {
 
-    private List<Image> images;
+    private List<Image> imagesData;
     private Set<String> playedImageIds;
     Random random;
 
     public ImageService() {
         playedImageIds = new HashSet<>();
-        loadImages();
+        loadImagesData();
         random = new Random();
     }
 
     public List<Image> getAllImages() {
-        return new ArrayList<>(images);
+        return new ArrayList<>(imagesData);
     }
 
-    public void loadImages() {
+    public void loadImagesData() {
         String urlString = "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images.json";
         try {
             URI uri = new URI(urlString);
@@ -46,7 +45,7 @@ public class ImageService {
 
             try (Reader reader = new InputStreamReader(connection.getInputStream())) {
                 Type listType = new TypeToken<List<Image>>(){}.getType();
-                images = new Gson().fromJson(reader, listType);
+                imagesData = new Gson().fromJson(reader, listType);
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to load images from JSON file", e);
@@ -54,22 +53,22 @@ public class ImageService {
     }
 
     public Image getImageData(String id) {
-        Optional<Image> foundImage = images.stream()
+        Optional<Image> foundImage = imagesData.stream()
                 .filter(image -> image.getId().equals(id))
                 .findFirst();
         return foundImage.orElse(null);
     }
 
     public Image getImage() {
-        if (images != null && !images.isEmpty()) {
-            return images.get(0);
+        if (imagesData != null && !imagesData.isEmpty()) {
+            return imagesData.get(0);
         }
         return null;
     }
 
     public String getRandomUnplayedImageId() {
         List<Image> unplayedImages = new ArrayList<>();
-        for (Image image : images) {
+        for (Image image : imagesData) {
             if (!playedImageIds.contains(image.getId())) {
                 unplayedImages.add(image);
             }
