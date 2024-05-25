@@ -37,7 +37,8 @@ public class ImageService {
     public void loadImages() {
         String urlString = "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images.json";
         try {
-            URL url = new URL(urlString);
+            URI uri = new URI(urlString);
+            URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
