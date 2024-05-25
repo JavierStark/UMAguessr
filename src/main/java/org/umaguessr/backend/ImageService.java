@@ -24,10 +24,12 @@ public class ImageService {
 
     private List<Image> images;
     private Set<String> playedImageIds;
+    Random random;
 
     public ImageService() {
         playedImageIds = new HashSet<>();
         loadImages();
+        random = new Random();
     }
 
     public List<Image> getAllImages() {
@@ -75,7 +77,7 @@ public class ImageService {
         if (unplayedImages.isEmpty()) {
             return null;
         }
-        Random random = new Random();
+
         Image randomImage = unplayedImages.get(random.nextInt(unplayedImages.size()));
         playedImageIds.add(randomImage.getId());
         return randomImage.getId();
