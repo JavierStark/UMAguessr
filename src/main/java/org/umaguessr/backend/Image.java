@@ -2,12 +2,12 @@ package org.umaguessr.backend;
 
 public class Image {
 
-    private String imageId;
-    private String imageURL;
-    private int posX;
-    private int posY;
-    private String faculty;
-    private int difficulty;
+    private final String imageId;
+    private final String imageURL;
+    private final int posX;
+    private final int posY;
+    private final String faculty;
+    private final int difficulty;
 
     public Image(String imageId, String imageURL, int[] coords, String faculty, int difficulty) {
         if (!imageURL.startsWith("https://")) {
