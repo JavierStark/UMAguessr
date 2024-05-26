@@ -32,8 +32,8 @@ public class ImageService {
     }
     
     public ImageService(ImageFilter filter) {
-        playedImageIds = new HashSet<>();
-        loadImages(filter);
+        this();
+        loadImagesWithFilter(filter);
     }
 
     public List<Image> getAllImages() {
@@ -57,17 +57,15 @@ public class ImageService {
         }
     }
     
-    public void loadImages(ImageFilter filter) {
-    	loadImages();
-    	
+    public void loadImagesWithFilter(ImageFilter filter) {
     	List<Image> newImageList = new ArrayList<>();
-    	for (Image img : images ) {
+    	for (Image img : imagesData ) {
     		if (filter.check(img)) {
     			newImageList.add(img);
     		}
     	}
-    	
-    	images = newImageList;
+
+        imagesData = newImageList;
     }
 
     public Image getImageData(String id) {
