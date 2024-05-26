@@ -6,7 +6,7 @@ public class ScoreService {
 	private final ImageService imageService;
 
 	public static final int MAX_SCORE = 100;
-	private static final int MIN_DISTANCE_FOR_MAX_SCORE = 15;
+	private static final int MIN_DISTANCE_FOR_MAX_SCORE = 27;
 	private static final int MAX_DISTANCE_FOR_ZERO_SCORE = 250;
 	private static final double BASE = 1.06;
 	private static final double EXPONENT_MULTIPLIER = -0.3;

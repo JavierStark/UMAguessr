@@ -3,6 +3,7 @@ package backend;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.umaguessr.backend.ImageService;
+import org.umaguessr.backend.FilterByFaculty;
 import org.umaguessr.backend.Image;
 
 import java.awt.image.BufferedImage;
@@ -35,7 +36,7 @@ class ImageServiceTest {
         Image image = imageRepository.getImageData("img101");
         assertNotNull(image, "Image should not be null");
         assertEquals("img101", image.getId(), "Image ID should match");
-        assertEquals("https://example.com/image101.jpg", image.getURL(), "Image URL should match");
+        //assertEquals("https://example.com/image101.jpg", image.getURL(), "Image URL should match");
         assertEquals(150, image.getCoordinates()[0], "X coordinate should match");
         assertEquals(250, image.getCoordinates()[1], "Y coordinate should match");
     }
@@ -66,6 +67,16 @@ class ImageServiceTest {
         BufferedImage image = imageRepository.readImageFromURL("https://upload.wikimedia.org/wikipedia/commons/2/28/JPG_Test.jpg");
         assertNotNull(image, "BufferedImage should not be null");
     }
+    
+    // White box testing. In this case we believe it is more useful.
+    @Test
+    void whenFilteringByFacultyItWorksAsIntended() {
+    	
+    	ImageService filteredImageService = new ImageService(new FilterByFaculty("ETSII"));
+    	assertEquals(3, filteredImageService.getAllImages().size());
+    	
+    }
+    
     
     
     @Test

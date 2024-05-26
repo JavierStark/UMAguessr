@@ -30,6 +30,11 @@ public class ImageService {
         loadImagesData();
         random = new Random();
     }
+    
+    public ImageService(ImageFilter filter) {
+        this();
+        loadImagesWithFilter(filter);
+    }
 
     public List<Image> getAllImages() {
         return new ArrayList<>(imagesData);
@@ -50,6 +55,17 @@ public class ImageService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load images from JSON file", e);
         }
+    }
+    
+    public void loadImagesWithFilter(ImageFilter filter) {
+    	List<Image> newImageList = new ArrayList<>();
+    	for (Image img : imagesData ) {
+    		if (filter.check(img)) {
+    			newImageList.add(img);
+    		}
+    	}
+
+        imagesData = newImageList;
     }
 
     public Image getImageData(String id) {
