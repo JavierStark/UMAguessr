@@ -5,6 +5,8 @@ import org.umaguessr.backend.ScoreService;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,7 +16,11 @@ public class App {
         SwingUtilities.invokeLater(() -> {
             ImageService imageService = new ImageService();
             ScoreService scoreService = new ScoreService(imageService);
-            UI a = new UI(imageService, scoreService);
+            try {
+                new UI(imageService, scoreService);
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 }

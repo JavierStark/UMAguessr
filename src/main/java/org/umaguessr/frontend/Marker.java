@@ -26,7 +26,7 @@ public class Marker extends JLabel{
 		this.realX = realX;
 		this.realY = realY;
 		setVisible(true);
-		this.setBounds((int) realX-15, (int) realY-15, 30, 30);
+		this.setBounds((int) realX-15, (int) realY-30, 30, 30);
 	}
 	
 	public static Marker getPreviousMarker() {
