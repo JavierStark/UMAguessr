@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ImageTest {
 
     @Test
-    void testImageConstructorValidURL() {
+    void testCreateImageOnValidURL() {
         int[] coords = {100, 200};
         Image image = new Image("1", "https://example.com/image.png", coords, "ETSII", 5);
         assertNotNull(image);
@@ -17,11 +17,10 @@ class ImageTest {
     }
 
     @Test
-    void testImageConstructorInvalidURL() {
+    void testErrorOnInvalidURL() {
         int[] coords = {100, 200};
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Image("1", "http://example.com/image.png", coords, "Sciences", 5);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                new Image("1", "http://example.com/image.png", coords, "Sciences", 5));
         assertEquals("Image URL must start with 'https://'", exception.getMessage());
     }
 

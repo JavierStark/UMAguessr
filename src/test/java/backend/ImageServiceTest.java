@@ -67,27 +67,23 @@ class ImageServiceTest {
         BufferedImage image = imageRepository.readImageFromURL("https://upload.wikimedia.org/wikipedia/commons/2/28/JPG_Test.jpg");
         assertNotNull(image, "BufferedImage should not be null");
     }
-    
-    // White box testing. In this case we believe it is more useful.
+
     @Test
-    void whenFilteringByFacultyItWorksAsIntended() {
-    	
+    void testCheckFacultyIsCorrect() {
+        assertEquals("Sciences", imageRepository.getImageData("img101").getFaculty());
+        assertEquals("ETSII", imageRepository.getImageData("img102").getFaculty());
+    }
+
+    @Test
+    void testCheckDifficultyIsCorrect() {
+        assertEquals(1, imageRepository.getImageData("img101").getDifficulty());
+        assertEquals(7, imageRepository.getImageData("img104").getDifficulty());
+    }
+
+    @Test
+    void testFilterByFaculty() {
     	ImageService filteredImageService = new ImageService(new FilterByFaculty("ETSII"));
     	assertEquals(3, filteredImageService.getAllImages().size());
-    	
     }
-    
-    
-    
-    @Test
-    void checkFacultyIsOkay() {
-    	assertEquals("Sciences", imageRepository.getImageData("img101").getFaculty());
-    	assertEquals("ETSII", imageRepository.getImageData("img102").getFaculty());
-    }
-    
-    @Test
-    void checkDifficultyIsOkay() {
-    	assertEquals(1, imageRepository.getImageData("img101").getDifficulty());
-    	assertEquals(7, imageRepository.getImageData("img104").getDifficulty());
-    }
+
 }

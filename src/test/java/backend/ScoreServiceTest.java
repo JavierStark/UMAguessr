@@ -21,28 +21,23 @@ class ScoreServiceTest {
 		myScoreService = new ScoreService(imageService);
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
 	@Test
-	void theInitialFinalScoreIs0() {
+	void testInitialFinalScoreIs0() {
 		assertEquals(0, myScoreService.getFinalScore());
 	}
 
-
 	@Test
-	void whenSendingTheExactLocationItReturnsTheFullScore() {
+	void testMaxScoreOnExactLocation() {
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("img101", 150, 250));
 	}
 
 	@Test
-	void whenSendingCoordinatesFurtherThan200TheyGet0Score() {
+	void testSendingCoordinatesFurtherThan200Score0() {
 		assertEquals(0, myScoreService.calculateScore("img105", 7, 27));
 	}
 
 	@Test
-	void theFinalScoreIncreasesEachTime() {
+	void testFinalScoreIncreasesEachRound() {
 		myScoreService.calculateScore("img101", 150, 250);
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
@@ -55,7 +50,7 @@ class ScoreServiceTest {
 	}
 
 	@Test
-	void theFurtherAwayTheLowerTheScore() {
+	void testLessScoreOnFurtherFromSolution() {
 		assertTrue(myScoreService.calculateScore("img101", 100, 200) > myScoreService.calculateScore("img101", 80, 100));
 	}
 
