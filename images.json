@@ -1,7 +1,7 @@
 [
   {
     "imageId": "img101",
-    "imageURL": "https://github.com/JavierStark/UMAguessr/blob/a07165ef8f20ea5ce68085c3ef704576bf307bfd/images/img1.jpg",
+    "imageURL": "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images/img1.jpg",
     "posX": 227,
     "posY": 721,
     "faculty": "ETSII",
@@ -9,7 +9,7 @@
   },
   {
     "imageId": "img102",
-    "imageURL": "https://github.com/JavierStark/UMAguessr/blob/a07165ef8f20ea5ce68085c3ef704576bf307bfd/images/img2.jpg",
+    "imageURL": "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images/img2.jpg",
     "posX": 238,
     "posY": 790,
     "faculty": "ETSII",
@@ -17,7 +17,7 @@
   },
   {
     "imageId": "img103",
-    "imageURL": "https://github.com/JavierStark/UMAguessr/blob/a07165ef8f20ea5ce68085c3ef704576bf307bfd/images/img3.jpg",
+    "imageURL": "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images/img3.jpg",
     "posX": 177,
     "posY": 794,
     "faculty": "Sciences",
@@ -25,7 +25,7 @@
   },
   {
     "imageId": "img104",
-    "imageURL": "https://github.com/JavierStark/UMAguessr/blob/a07165ef8f20ea5ce68085c3ef704576bf307bfd/images/img4.jpg",
+    "imageURL": "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images/img4.jpg",
     "posX": 71,
     "posY": 808,
     "faculty": "ETSII",
@@ -33,7 +33,7 @@
   },
   {
     "imageId": "img105",
-    "imageURL": "https://github.com/JavierStark/UMAguessr/blob/a07165ef8f20ea5ce68085c3ef704576bf307bfd/images/img5.jpg",
+    "imageURL": "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images/img5.jpg",
     "posX": 124,
     "posY": 796,
     "faculty": "ETSII",
