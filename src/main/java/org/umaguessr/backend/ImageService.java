@@ -90,7 +90,8 @@ public class ImageService {
             }
         }
         if (unplayedImages.isEmpty()) {
-            return null;
+            playedImageIds.clear();
+            return getRandomUnplayedImageId();
         }
 
         Image randomImage = unplayedImages.get(random.nextInt(unplayedImages.size()));
