@@ -10,7 +10,7 @@ public class ScorePanel extends JPanel {
 	private JLabel scoreLabel;
 	private JButton signalButton;
 	
-	public ScorePanel(JButton signalButton) {
+	public ScorePanel() {
 		score = 0;
 		round = 1;
 		
@@ -27,6 +27,9 @@ public class ScorePanel extends JPanel {
 		
 		add(roundLabel, BorderLayout.WEST);
 		add(scoreLabel, BorderLayout.WEST);
+	}
+
+	public void addSignalButton(JButton signalButton) {
 		add(signalButton, BorderLayout.EAST);
 	}
 	

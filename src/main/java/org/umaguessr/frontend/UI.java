@@ -47,9 +47,9 @@ public class UI extends JFrame {
         JButton signalButton = getSignalButton(imageID, scorePanel);
         scorePanel.addSignalButton(signalButton);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, zoomableImagePanel, hideablePanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, zoomableImagePanel, hideablePanel);
         splitPane.setDividerSize(10);
-        splitPane.setDividerLocation(200);
+        splitPane.setDividerLocation(450);
 
 
 		
