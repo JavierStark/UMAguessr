@@ -20,6 +20,8 @@ public class MainLoop {
             @Override
         	public void run() {
                 StartingMenu frame = new StartingMenu();
+                frame.setLocationRelativeTo(null);
+                frame.setResizable(false);
                 frame.setVisible(true);
             }
         });

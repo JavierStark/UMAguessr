@@ -3,6 +3,7 @@ package org.umaguessr.frontend;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,6 +22,11 @@ public class StartingMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	private final int WIDTH = screenSize.width/2;
+	private final int HEIGHT = screenSize.height/2;
+	
 	private JButton jButton1;
 	private JButton jButton2;
 	private JButton jButton3;
@@ -214,6 +220,7 @@ public class StartingMenu extends JFrame {
 		//----------------------------------------------------------------------------------------------------------Panel 1
 
 		jPanel1.setBackground(mainPanelColor );
+		jPanel1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 		jButton2.setText("Easy Mode");
 		jButton2.addActionListener(new ActionListener() {
