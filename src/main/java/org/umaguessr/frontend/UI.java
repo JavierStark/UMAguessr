@@ -39,7 +39,9 @@ public class UI extends JFrame {
 		hideablePanel.setSize(new Dimension(800, 200));
 		hideablePanel.setVisible(true);
 
-		ScorePanel scorePanel = new ScorePanel();
+		JButton signalButton = getSignalButton(imageID);
+
+		ScorePanel scorePanel = new ScorePanel(signalButton);
 		scorePanel.setSize(new Dimension(75, 30));
 		scorePanel.setVisible(true);
 
@@ -47,13 +49,10 @@ public class UI extends JFrame {
 		splitPane.setDividerSize(10);
 		splitPane.setDividerLocation(450);
 
-
-		JButton signalButton = getSignalButton(imageID);
-
+		
 		JPanel content = new JPanel();
 		content.setLayout(new BorderLayout());
 		content.add(splitPane, BorderLayout.CENTER);
-		content.add(signalButton, BorderLayout.SOUTH);
 		content.add(scorePanel, BorderLayout.NORTH);
 		
 		setContentPane(content);
@@ -78,7 +77,7 @@ public class UI extends JFrame {
 		});
 
 		signalButton.setVisible(true);
-		signalButton.setPreferredSize(new Dimension(200, 100));
+		signalButton.setPreferredSize(new Dimension(150, 50));
 		return signalButton;
 	}
 
