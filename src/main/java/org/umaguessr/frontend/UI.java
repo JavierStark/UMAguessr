@@ -68,23 +68,28 @@ public class UI extends JFrame {
 
     private JButton getSignalButton(String imageID, ScorePanel scorePanel) {
         JButton signalButton = new JButton("Make Guess");
-        
-        // Add an ActionListener to the button
-        signalButton.addActionListener(e -> {
-            Marker previousMarker = Marker.getPreviousMarker();
-            if (previousMarker.getRealX() >= 0 || previousMarker.getRealY() >= 0) {
-                Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
-                System.out.println("Score: ");
-                System.out.println(this.scoreService.calculateScore(imageID, (int) marker.getX(), (int) marker.getY()));
-                System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
-            }
-            scorePanel.setScore(this.scoreService.getFinalScore());
-            scorePanel.nextRound();
-            String imageID2 = this.imageService.getRandomUnplayedImageId();
-            Image image2 = this.imageService.getImageData(imageID2);
-            changeImage(image2);
-        });
+               
+       signalButton.addActionListener(new ActionListener() {
 
+    	String newImageID = imageID;
+    	   
+		public void actionPerformed(ActionEvent e) {
+			
+    	            Marker previousMarker = Marker.getPreviousMarker();
+    	            if (previousMarker.getRealX() >= 0 || previousMarker.getRealY() >= 0) {
+    	                Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
+    	                System.out.println("Score: ");
+    	                System.out.println(scoreService.calculateScore(newImageID, (int) marker.getX(), (int) marker.getY()));
+    	                System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
+    	            }
+    	            scorePanel.setScore(scoreService.getFinalScore());
+    	            scorePanel.nextRound();
+    	            newImageID = imageService.getRandomUnplayedImageId();
+    	            Image newImage = imageService.getImageData(newImageID);
+    	            changeImage(newImage);
+    	   }
+       });      
+        
         signalButton.setVisible(true);
         signalButton.setPreferredSize(new Dimension(200, 100));
         return signalButton;
