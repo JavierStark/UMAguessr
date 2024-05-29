@@ -63,7 +63,7 @@ public class UI extends JFrame {
 	}
 
 	private JButton getSignalButton(String imageID) {
-		JButton signalButton = new JButton("Send Signal");
+		JButton signalButton = new JButton("Make Guess");
 
 		// Add an ActionListener to the button
 		signalButton.addActionListener(e -> {
