@@ -34,7 +34,7 @@ public class ScoreService {
 		int differenceX = image.getCoordinates()[0] - coordX;
 		int differenceY = image.getCoordinates()[1] - coordY;
 		
-		return Math.sqrt((double)(differenceX*differenceX) - differenceY*differenceY);
+		return Math.sqrt((double)(differenceX*differenceX) + differenceY*differenceY);
 	}
 	
 	private int calculatePointsBasedOnDistance(double distance) {
