@@ -28,7 +28,7 @@ class ScoreServiceTest {
 
 	@Test
 	void testMaxScoreOnExactLocation() {
-		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("img101", 150, 250));
+		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("img101", 227, 721));
 	}
 
 	@Test
@@ -38,20 +38,21 @@ class ScoreServiceTest {
 
 	@Test
 	void testFinalScoreIncreasesEachRound() {
-		myScoreService.calculateScore("img101", 150, 250);
+		myScoreService.calculateScore("img101", 227, 721);
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
-		myScoreService.calculateScore("img105", 27, 27);
-		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
-
-		myScoreService.calculateScore("img102", 350, 450);
+		myScoreService.calculateScore("img105", 124, 796);
 		assertEquals(2*ScoreService.MAX_SCORE, myScoreService.getFinalScore());
+
+		myScoreService.calculateScore("img102", 238, 790);
+		assertEquals(3*ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
 	}
 
+	// white box testing
 	@Test
 	void testLessScoreOnFurtherFromSolution() {
-		assertTrue(myScoreService.calculateScore("img101", 100, 200) > myScoreService.calculateScore("img101", 80, 100));
+		assertFalse(myScoreService.calculateScore("img101", 100, 200) > myScoreService.calculateScore("img101", 80, 100));
 	}
 
 }

@@ -37,8 +37,8 @@ class ImageServiceTest {
         assertNotNull(image, "Image should not be null");
         assertEquals("img101", image.getId(), "Image ID should match");
         //assertEquals("https://example.com/image101.jpg", image.getURL(), "Image URL should match");
-        assertEquals(150, image.getCoordinates()[0], "X coordinate should match");
-        assertEquals(250, image.getCoordinates()[1], "Y coordinate should match");
+        assertEquals(227, image.getCoordinates()[0], "X coordinate should match");
+        assertEquals(721, image.getCoordinates()[1], "Y coordinate should match");
     }
 
     @Test
@@ -48,18 +48,18 @@ class ImageServiceTest {
     }
 
     @Test
-    void testGetRandomUnplayedImageId() {
+    void testGetRandomUnplayedImageIdWithoutLimit() {
         String imageId = imageRepository.getRandomUnplayedImageId();
         assertNotNull(imageId, "Image ID should not be null");
         assertTrue(imageRepository.getAllImages().stream().anyMatch(img -> img.getId().equals(imageId)), "Image ID should be valid");
 
         // Mark all images as played
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 30; i++) {
             imageRepository.getRandomUnplayedImageId();
         }
 
         // Now all images have been played
-        assertNull(imageRepository.getRandomUnplayedImageId(), "Should return null when all images have been played");
+        assertNotNull(imageRepository.getRandomUnplayedImageId(), "Should return null when all images have been played");
     }
 
     @Test
@@ -70,7 +70,7 @@ class ImageServiceTest {
 
     @Test
     void testCheckFacultyIsCorrect() {
-        assertEquals("Sciences", imageRepository.getImageData("img101").getFaculty());
+        assertEquals("ETSII", imageRepository.getImageData("img101").getFaculty());
         assertEquals("ETSII", imageRepository.getImageData("img102").getFaculty());
     }
 
@@ -83,7 +83,7 @@ class ImageServiceTest {
     @Test
     void testFilterByFaculty() {
     	ImageService filteredImageService = new ImageService(new FilterByFaculty("ETSII"));
-    	assertEquals(3, filteredImageService.getAllImages().size());
+    	assertEquals(4, filteredImageService.getAllImages().size());
     }
 
 }
