@@ -1,7 +1,6 @@
 package backend;
 
 import org.umaguessr.backend.Image;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,5 +35,19 @@ class ImageTest {
         int[] coords = {100, 200};
         Image image = new Image("1", "https://example.com/image.png", coords, "Sciences", 5);
         assertArrayEquals(new int[]{100, 200}, image.getCoordinates());
+    }
+
+    @Test
+    void testGetFaculty() {
+        int[] coords = {100, 200};
+        Image image = new Image("1", "https://example.com/image.png", coords, "ETSII", 5);
+        assertEquals("ETSII", image.getFaculty());
+    }
+
+    @Test
+    void testGetDifficulty() {
+        int[] coords = {100, 200};
+        Image image = new Image("1", "https://example.com/image.png", coords, "ETSII", 5);
+        assertEquals(5, image.getDifficulty());
     }
 }
