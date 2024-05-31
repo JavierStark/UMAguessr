@@ -31,7 +31,9 @@ public class UI extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.WHITE);
 
-        zoomableImagePanel = new ZoomableImagePanel(1.2, imageService.readImageFromURL(image.getURL()));
+
+        Image imageData = imageService.getImageData(imageService.getRandomUnplayedImageId());
+        zoomableImagePanel = new ZoomableImagePanel(1.2, imageService.readImageFromURL(imageData.getURL()));
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
 
@@ -72,7 +74,7 @@ public class UI extends JFrame {
        signalButton.addActionListener(new ActionListener() {
 
     	String newImageID = imageID;
-    	   
+
 		public void actionPerformed(ActionEvent e) {
 			
     	            Marker previousMarker = Marker.getPreviousMarker();
@@ -82,6 +84,7 @@ public class UI extends JFrame {
     	                System.out.println(scoreService.calculateScore(newImageID, (int) marker.getX(), (int) marker.getY()));
     	                System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
     	            }
+
     	            scorePanel.setScore(scoreService.getFinalScore());
     	            scorePanel.nextRound();
     	            newImageID = imageService.getRandomUnplayedImageId();

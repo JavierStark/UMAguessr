@@ -82,13 +82,6 @@ public class ImageService {
         return foundImage.orElse(null);
     }
 
-    public Image getImage() {
-        if (imagesData != null && !imagesData.isEmpty()) {
-            return imagesData.get(0);
-        }
-        return null;
-    }
-
     public String getRandomUnplayedImageId() {
         List<Image> unplayedImages = new ArrayList<>();
         for (Image image : imagesData) {

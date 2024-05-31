@@ -21,7 +21,8 @@ public class App {
                 throw new RuntimeException(e);
             }
             ImageService imageService = new ImageService();
-            ScoreService scoreService = new ScoreService(imageService);
+            ScoreService scoreService = new ScoreService(imageService, "pokemaniaco");
+
             try {
                 new UI(imageService, scoreService);
             } catch (IOException | URISyntaxException e) {

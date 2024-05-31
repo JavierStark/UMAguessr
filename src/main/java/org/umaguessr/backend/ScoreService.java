@@ -68,7 +68,7 @@ public class ScoreService {
 			ps.setInt(2, score);
 			ps.setInt(3, 1); // Default daily attempt value for simplicity
 			ps.setString(4, this.username);
-			ps.executeUpdate();
+				ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

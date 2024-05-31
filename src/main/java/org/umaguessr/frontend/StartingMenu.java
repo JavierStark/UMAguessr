@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -17,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import org.umaguessr.backend.GameService;
+import org.umaguessr.backend.ImageService;
+import org.umaguessr.backend.ScoreService;
 
 public class StartingMenu extends JFrame {
 
@@ -40,7 +43,7 @@ public class StartingMenu extends JFrame {
 	private JPanel jPanel3;
 	private JPanel jPanel4;
 	private JPanel jPanel5;
-	private GameService gameService = new GameService();
+	private GameService gameService = new GameService("pokemaniaco");
 
 	private JPanel overlayPanel;
 
@@ -228,7 +231,14 @@ public class StartingMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				gameService.startSession(GameService.Difficulty.Easy);
 				setVisible(false);
-			}
+				// open new window with UI
+                try {
+					ImageService imageService = new ImageService();
+                    new UI(imageService, new ScoreService(imageService, "hola"));
+                } catch (IOException | URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 		});
 		jButton4.setText("Normal Mode");
 		jButton4.addActionListener(new ActionListener() {
