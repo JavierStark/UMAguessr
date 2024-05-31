@@ -17,6 +17,7 @@ public class UI extends JFrame {
     ImageService imageService;
     ScoreService scoreService;
     ZoomableImagePanel zoomableImagePanel;
+    private Image currentImage;
 
     public UI(ImageService imageService, ScoreService scoreService) throws IOException, URISyntaxException {
         super();
@@ -25,7 +26,7 @@ public class UI extends JFrame {
         this.scoreService = scoreService;
 
         String imageID = this.imageService.getRandomUnplayedImageId();
-        Image image = this.imageService.getImageData(imageID);
+
 
         setTitle("UmaGuessr");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,6 +38,8 @@ public class UI extends JFrame {
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
 
+        changeImage(this.imageService.getImageData(imageID));
+
         HideablePanel hideablePanel = new HideablePanel(imageService.readImageFromURL("https://i.imgur.com/FZm22X0.png"));
         hideablePanel.setSize(new Dimension(800, 200));
         hideablePanel.setVisible(true);
@@ -46,7 +49,7 @@ public class UI extends JFrame {
         scorePanel.setSize(new Dimension(75, 30));
         scorePanel.setVisible(true);
         
-        JButton signalButton = getSignalButton(imageID, scorePanel);
+        JButton signalButton = getSignalButton(scorePanel);
         scorePanel.addSignalButton(signalButton);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, zoomableImagePanel, hideablePanel);
@@ -68,30 +71,21 @@ public class UI extends JFrame {
 	}
 
 
-    private JButton getSignalButton(String imageID, ScorePanel scorePanel) {
+    private JButton getSignalButton(ScorePanel scorePanel) {
         JButton signalButton = new JButton("Make Guess");
                
-       signalButton.addActionListener(new ActionListener() {
+       signalButton.addActionListener(e -> {
+            Marker previousMarker = Marker.getPreviousMarker();
 
-    	String newImageID = imageID;
+            Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
+            scoreService.calculateScore(currentImage.getId(), (int) marker.getX(), (int) marker.getY());
+            System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
 
-		public void actionPerformed(ActionEvent e) {
-			
-    	            Marker previousMarker = Marker.getPreviousMarker();
-    	            if (previousMarker.getRealX() >= 0 || previousMarker.getRealY() >= 0) {
-    	                Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
-    	                System.out.println("Score: ");
-    	                System.out.println(scoreService.calculateScore(newImageID, (int) marker.getX(), (int) marker.getY()));
-    	                System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
-    	            }
-
-    	            scorePanel.setScore(scoreService.getFinalScore());
-    	            scorePanel.nextRound();
-    	            newImageID = imageService.getRandomUnplayedImageId();
-    	            Image newImage = imageService.getImageData(newImageID);
-    	            changeImage(newImage);
-    	   }
-       });      
+            scorePanel.setScore(scoreService.getFinalScore());
+            scorePanel.nextRound();
+            Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
+            changeImage(newImage);
+        });
         
         signalButton.setVisible(true);
         signalButton.setPreferredSize(new Dimension(150, 50));
@@ -99,6 +93,7 @@ public class UI extends JFrame {
     }
     
 	private void changeImage(Image image) {
+        currentImage = image;
         try {
 			zoomableImagePanel.setImage(imageService.readImageFromURL(image.getURL()));
 		} catch (Exception e) {
