@@ -91,7 +91,7 @@ public class UI extends JFrame {
        });      
         
         signalButton.setVisible(true);
-        signalButton.setPreferredSize(new Dimension(200, 100));
+        signalButton.setPreferredSize(new Dimension(150, 50));
         return signalButton;
     }
     
