@@ -46,13 +46,14 @@ public class GameService {
         return lastDate;
     }
 
-    public void startSession(Difficulty difficulty) {
+    public boolean startSession(Difficulty difficulty) {
         if (lastDatePlayed != null && lastDatePlayed.plusDays(1).isAfter(LocalDateTime.now())) {
             sessionActive = false;
-            return;
+            return false;
         }
         this.difficulty = difficulty;
         sessionActive = true;
+        return true;
     }
 
     public void endSession() {

@@ -229,31 +229,21 @@ public class StartingMenu extends JFrame {
 		jButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Easy);
-				setVisible(false);
-				// open new window with UI
-                try {
-					ImageService imageService = new ImageService();
-                    new UI(imageService, new ScoreService(imageService, "hola"));
-                } catch (IOException | URISyntaxException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
+				startGame(GameService.Difficulty.Easy);
+			}
 		});
 		jButton4.setText("Normal Mode");
 		jButton4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Medium);
-				setVisible(false);
+				startGame(GameService.Difficulty.Medium);
 			}
 		});
 		jButton3.setText("Hard Mode");
 		jButton3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Hard);
-				setVisible(false);
+				startGame(GameService.Difficulty.Hard);
 			}
 		});
 
@@ -319,5 +309,19 @@ public class StartingMenu extends JFrame {
 				);
 
 		pack();
+	}
+
+	private void startGame(GameService.Difficulty difficulty){
+		if(!gameService.startSession(difficulty))
+			return;
+		setVisible(false);
+		ImageService imageService = new ImageService();
+		ScoreService scoreService = new ScoreService(imageService, "hola");
+
+		try {
+			new UI(imageService, scoreService);
+		} catch (IOException | URISyntaxException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 }
