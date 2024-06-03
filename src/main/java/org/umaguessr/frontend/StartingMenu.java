@@ -254,41 +254,13 @@ public class StartingMenu extends JFrame {
 		//----------------------------------------------------------------------------------------------------------Panel 1
 
 		jPanel1.setBackground(mainPanelColor );
-		//jPanel1.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 		jButton2.setText("Easy Mode");
-		jButton2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Easy);
-				setVisible(false);
-				// open new window with UI
-                try {
-					ImageService imageService = new ImageService();
-                    UI frame = new UI(imageService, new ScoreService(imageService, "hola"));
-                    //frame.setResizable(false);
-                    frame.setLocationRelativeTo(null);
-                } catch (IOException | URISyntaxException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-		});
+		jButton2.addActionListener(e -> startGame(GameService.Difficulty.Easy));
 		jButton4.setText("Normal Mode");
-		jButton4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Medium);
-				setVisible(false);
-			}
-		});
+		jButton4.addActionListener(e -> startGame(GameService.Difficulty.Medium));
 		jButton3.setText("Hard Mode");
-		jButton3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				gameService.startSession(GameService.Difficulty.Hard);
-				setVisible(false);
-			}
-		});
+		jButton3.addActionListener(e -> startGame(GameService.Difficulty.Hard));
 
 
 		GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
@@ -397,9 +369,10 @@ public class StartingMenu extends JFrame {
         ScoreService scoreService = new ScoreService(imageService, "hola");
 
         try {
-            new UI(imageService, scoreService);
-        } catch (IOException | URISyntaxException ex) {
-            throw new RuntimeException(ex);
-        }
+			UI frame = new UI(imageService, scoreService);
+			frame.setLocationRelativeTo(null);
+		} catch (IOException | URISyntaxException ex) {
+			throw new RuntimeException(ex);
+		}
     }
 }
