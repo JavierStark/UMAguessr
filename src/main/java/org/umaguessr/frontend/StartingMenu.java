@@ -18,8 +18,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
@@ -43,12 +46,16 @@ public class StartingMenu extends JFrame {
 	private JButton jButton2;
 	private JButton jButton3;
 	private JButton jButton4;
+	private JButton submitButton;
 
 	private JLabel jLabel2;
 	private JLabel jLabel3;
 	private JLabel modLabel;
 	private JLabel settLabel;
 	private JLabel volLabel;
+	private JLabel usrnameLabel;
+	private JLabel passLabel;
+	private JLabel regLabel;
 
 	private JPanel jPanel1;
 	private JPanel jPanel3;
@@ -58,6 +65,8 @@ public class StartingMenu extends JFrame {
 
 	private JToggleButton modeToggleButton;
 	private JSlider volumeSlider1;
+	private JPasswordField passField;
+	private JTextField usernameField;
 
 
 	protected Color mainPanelColor = new Color(255, 255, 255);
@@ -153,6 +162,15 @@ public class StartingMenu extends JFrame {
         volLabel = new JLabel();
         volumeSlider1 = new JSlider();
         settLabel = new JLabel();
+        
+        usrnameLabel = new JLabel();
+        passLabel = new JLabel();
+        regLabel = new JLabel();
+        passField = new JPasswordField();
+        usernameField = new JTextField();
+        submitButton = new JButton("Submit");
+        
+        
 
         /**
 		 * Settings panel view configuration.
@@ -160,6 +178,16 @@ public class StartingMenu extends JFrame {
 //		overlayPanel.setBackground(Color.WHITE);
 //		overlayPanel.setOpaque(false);
 		overlayPanel.setVisible(false);
+		
+		settLabel.setText("SETTINGS");
+		
+		volLabel.setText("· VOLUME:");
+
+        volumeSlider1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+            	//Make the slider change the music volume.
+            }
+        });
 
 		modLabel.setText("· DARK MODE:");
 
@@ -169,53 +197,83 @@ public class StartingMenu extends JFrame {
             	//Make the toggle button change the screen lightning.
             }
         });
+        
+        regLabel.setText("REGISTER"); 
 
-        volLabel.setText("· VOLUME:");
+        usrnameLabel.setText("· USERNAME:");
+        passLabel.setText("· PASSWORD:");
+        
+        submitButton.setBounds(150, 100, 100, 30);
 
-        volumeSlider1.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent evt) {
-            	//Make the slider change the music volume.
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = usernameField.getText();
+                JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
             }
         });
-
-        settLabel.setText("SETTINGS");
+        
+        
 
         GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
         overlayPanel.setLayout(overlayPanelLayout);
         overlayPanelLayout.setHorizontalGroup(
-            overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        		overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(overlayPanelLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(overlayPanelLayout.createSequentialGroup()
-                        .addComponent(modLabel, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(modeToggleButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 194, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(volLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(volumeSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(overlayPanelLayout.createSequentialGroup()
-                        .addComponent(volLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(volumeSlider1, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(modLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usrnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(modeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usernameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(31, 31, 31))
-            .addGroup(GroupLayout.Alignment.TRAILING, overlayPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(settLabel)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, overlayPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(settLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(regLabel, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(172, 172, 172))
+            .addGroup(overlayPanelLayout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         overlayPanelLayout.setVerticalGroup(
-            overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        		overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(overlayPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(settLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                .addComponent(settLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(volLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(volumeSlider1, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(volLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(volumeSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(modLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modeToggleButton, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(regLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usrnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
 		//----------------------------------------------------------------------------------------------------------Hidden panel
@@ -271,6 +329,7 @@ public class StartingMenu extends JFrame {
 						.addContainerGap()
 						.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
 						.addGap(18, 18, 18)
+						//.addContainerGap(18, 1000)
 						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addGroup(jPanel1Layout.createSequentialGroup()
 										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
@@ -298,7 +357,7 @@ public class StartingMenu extends JFrame {
 										.addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
 										.addGap(37, 37, 37)
 										.addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
 										.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
 								.addGroup(jPanel1Layout.createSequentialGroup()
 										.addGap(33, 33, 33)
