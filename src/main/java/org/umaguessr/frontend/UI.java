@@ -1,5 +1,6 @@
 package org.umaguessr.frontend;
 
+import org.umaguessr.backend.GameService;
 import org.umaguessr.backend.Image;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.ScoreService;
@@ -16,14 +17,16 @@ public class UI extends JFrame {
 	
     ImageService imageService;
     ScoreService scoreService;
+    GameService gameService;
     ZoomableImagePanel zoomableImagePanel;
     private Image currentImage;
 
-    public UI(ImageService imageService, ScoreService scoreService) throws IOException, URISyntaxException {
+    public UI(ImageService imageService, ScoreService scoreService, GameService gameService) throws IOException, URISyntaxException {
         super();
 
         this.imageService = imageService;
         this.scoreService = scoreService;
+        this.gameService = gameService;
 
         String imageID = this.imageService.getRandomUnplayedImageId();
 
@@ -78,13 +81,19 @@ public class UI extends JFrame {
             Marker previousMarker = Marker.getPreviousMarker();
 
             Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
-            scoreService.calculateScore(currentImage.getId(), (int) marker.getX(), (int) marker.getY());
+            scoreService.calculateScore(currentImage.getId(), (int) marker.getX(), (int) marker.getY(), gameService.getDailyAttempt());
             System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
 
             scorePanel.setScore(scoreService.getFinalScore());
-            scorePanel.nextRound();
-            Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
-            changeImage(newImage);
+            if(gameService.continuePlaying()){
+                scorePanel.nextRound();
+                Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
+                changeImage(newImage);
+            }
+            else{
+                // exit UI back to startingmenu
+                this.dispose();
+            }
         });
         
         signalButton.setVisible(true);

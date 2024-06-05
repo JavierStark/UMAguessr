@@ -61,7 +61,6 @@ public class StartingMenu extends JFrame {
 	private JPanel jPanel3;
 	private JPanel overlayPanel;
 
-	private GameService gameService = new GameService("pokemaniaco");
 
 	private JToggleButton modeToggleButton;
 	private JSlider volumeSlider1;
@@ -421,14 +420,20 @@ public class StartingMenu extends JFrame {
                Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
     }
     private void startGame(GameService.Difficulty difficulty){
-        if(!gameService.startSession(difficulty))
-            return;
+		if(usernameField.getText().isEmpty())
+			return;
+
+		GameService gameService = new GameService(usernameField.getText());
+
+		if(!gameService.startSession(difficulty)) {
+			return;
+		}
         setVisible(false);
         ImageService imageService = new ImageService();
-        ScoreService scoreService = new ScoreService(imageService, "hola");
+        ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
 
         try {
-			UI frame = new UI(imageService, scoreService);
+			UI frame = new UI(imageService, scoreService, gameService);
 			frame.setLocationRelativeTo(null);
 		} catch (IOException | URISyntaxException ex) {
 			throw new RuntimeException(ex);

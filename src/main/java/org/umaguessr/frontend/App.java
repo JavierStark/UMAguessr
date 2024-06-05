@@ -1,5 +1,6 @@
 package org.umaguessr.frontend;
 
+import org.umaguessr.backend.GameService;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.ScoreService;
 
@@ -24,7 +25,7 @@ public class App {
             ScoreService scoreService = new ScoreService(imageService, "pokemaniaco");
 
             try {
-                new UI(imageService, scoreService);
+                new UI(imageService, scoreService, new GameService("pokemaniaco"));
             } catch (IOException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
