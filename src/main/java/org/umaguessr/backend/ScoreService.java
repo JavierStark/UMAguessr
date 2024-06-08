@@ -28,11 +28,11 @@ public class ScoreService {
 		this.username = username;
 	}
 
-	public int calculateScore(String id, int coordX, int coordY) {
+	public int calculateScore(String id, int coordX, int coordY, int dailyAttempt) {
 		double distance = calculateDistance(id, coordX, coordY);
 		int points = calculatePointsBasedOnDistance(distance);
 		finalScore += points;
-		saveScoreToDB(id, points);
+		saveScoreToDB(id, points, dailyAttempt);
 		return points;
 	}
 
@@ -59,16 +59,16 @@ public class ScoreService {
 		return (int) Math.ceil(Math.pow(BASE, EXPONENT_MULTIPLIER * distance + EXPONENT_CONSTANT));
 	}
 
-	private void saveScoreToDB(String imageId, int score) {
+	private void saveScoreToDB(String imageId, int score, int dailyAttempt) {
 		String query = "INSERT INTO scores (image_id, score, daily_attempt, username) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 			 PreparedStatement ps = conn.prepareStatement(query)) {
 			ps.setInt(1, Integer.parseInt(imageId));
 			ps.setInt(2, score);
-			ps.setInt(3, 1); // Default daily attempt value for simplicity
+			ps.setInt(3, dailyAttempt); // Default daily attempt value for simplicity
 			ps.setString(4, this.username);
-			ps.executeUpdate();
+				ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

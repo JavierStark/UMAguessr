@@ -8,27 +8,38 @@ public class ScorePanel extends JPanel {
 	private int round;
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
+	private JButton signalButton;
 	
 	public ScorePanel() {
 		score = 0;
 		round = 1;
 		
-		setLayout(new GridLayout(2, 1));
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		setBackground(Color.WHITE);
-		
+				
 		roundLabel = new JLabel("Round: " + round, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
 		scoreLabel = new JLabel("Score: " + score, SwingConstants.CENTER);
-		scoreLabel.setVerticalAlignment(SwingConstants.CENTER);
-
+		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
 		
-		add(roundLabel);
-		add(scoreLabel);
+		roundLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+		scoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+		
+		add(roundLabel, BorderLayout.WEST);
+		add(scoreLabel, BorderLayout.WEST);
+	}
+
+	public void addSignalButton(JButton signalButton) {
+		add(signalButton, BorderLayout.EAST);
 	}
 	
 	public void setScore(int newScore) {
 		score = newScore;
+		scoreLabel.setText("Score: " + score);
+	}
+	
+	public void sumScore(int newScore) {
+		score += newScore;
 		scoreLabel.setText("Score: " + score);
 	}
 	

@@ -1,5 +1,6 @@
 package org.umaguessr.frontend;
 
+import org.umaguessr.backend.GameService;
 import org.umaguessr.backend.Image;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.ScoreService;
@@ -13,85 +14,112 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class UI extends JFrame {
+	
     ImageService imageService;
     ScoreService scoreService;
+    GameService gameService;
     ZoomableImagePanel zoomableImagePanel;
+    private Image currentImage;
 
-    public UI(ImageService imageService, ScoreService scoreService) throws IOException, URISyntaxException {
+    public UI(ImageService imageService, ScoreService scoreService, GameService gameService) throws IOException, URISyntaxException {
         super();
 
         this.imageService = imageService;
         this.scoreService = scoreService;
+        this.gameService = gameService;
 
         String imageID = this.imageService.getRandomUnplayedImageId();
-        Image image = this.imageService.getImageData(imageID);
+
 
         setTitle("UmaGuessr");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.WHITE);
 
-        zoomableImagePanel = new ZoomableImagePanel(1.2, imageService.readImageFromURL(image.getURL()));
+
+        Image imageData = imageService.getImageData(imageService.getRandomUnplayedImageId());
+        zoomableImagePanel = new ZoomableImagePanel(1.2, imageService.readImageFromURL(imageData.getURL()));
         zoomableImagePanel.setSize(new Dimension(800, 600));
         zoomableImagePanel.setVisible(true);
+
+        changeImage(this.imageService.getImageData(imageID));
 
         HideablePanel hideablePanel = new HideablePanel(imageService.readImageFromURL("https://i.imgur.com/FZm22X0.png"));
         hideablePanel.setSize(new Dimension(800, 200));
         hideablePanel.setVisible(true);
+        
 
         ScorePanel scorePanel = new ScorePanel();
         scorePanel.setSize(new Dimension(75, 30));
         scorePanel.setVisible(true);
+        
+        JButton signalButton = getSignalButton(scorePanel);
+        scorePanel.addSignalButton(signalButton);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, zoomableImagePanel, hideablePanel);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, zoomableImagePanel, hideablePanel);
         splitPane.setDividerSize(10);
-        splitPane.setDividerLocation(200);
+        splitPane.setDividerLocation(450);
 
 
-        JButton signalButton = getSignalButton(imageID, scorePanel);
+		
+		JPanel content = new JPanel();
+		content.setLayout(new BorderLayout());
+		content.add(splitPane, BorderLayout.CENTER);
+		content.add(scorePanel, BorderLayout.NORTH);
+		
+		setContentPane(content);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setPreferredSize(new Dimension(800, 600));
+		pack();
+		setVisible(true);
+		
+		//----------------------------------------------------------------------------------------------------------new
+		content.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "escPressed");
+        content.getActionMap().put("escPressed", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
-        JPanel content = new JPanel();
-        content.setLayout(new BorderLayout());
-        content.add(splitPane, BorderLayout.CENTER);
-        content.add(signalButton, BorderLayout.SOUTH);
-        content.add(scorePanel, BorderLayout.NORTH);
-
-        setContentPane(content);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(800, 600));
-        pack();
-        setVisible(true);
-    }
-
-    private JButton getSignalButton(String imageID, ScorePanel scorePanel) {
-        JButton signalButton = new JButton("Send Signal");
-
-        // Add an ActionListener to the button
-        signalButton.addActionListener(e -> {
-            Marker previousMarker = Marker.getPreviousMarker();
-            if (previousMarker.getRealX() >= 0 || previousMarker.getRealY() >= 0) {
-                Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
-                System.out.println("Score: ");
-                System.out.println(this.scoreService.calculateScore(imageID, (int) marker.getX(), (int) marker.getY()));
-                System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                
+                //Press the ESC key to return to main menu.
             }
-            scorePanel.setScore(this.scoreService.getFinalScore());
-            scorePanel.nextRound();
-            String imageID2 = this.imageService.getRandomUnplayedImageId();
-            Image image2 = this.imageService.getImageData(imageID2);
-            changeImage(image2);
         });
+        //----------------------------------------------------------------------------------------------------------new
+	}
 
+
+    private JButton getSignalButton(ScorePanel scorePanel) {
+        JButton signalButton = new JButton("Make Guess");
+               
+       signalButton.addActionListener(e -> {
+            Marker previousMarker = Marker.getPreviousMarker();
+
+            Point2D.Double marker = new Point2D.Double(previousMarker.getRealX(), previousMarker.getRealY());
+            scoreService.calculateScore(currentImage.getId(), (int) marker.getX(), (int) marker.getY(), gameService.getDailyAttempt());
+            System.out.println(previousMarker.getRealX() + " " + previousMarker.getRealY());
+
+            scorePanel.setScore(scoreService.getFinalScore());
+            if(gameService.continuePlaying()){
+                scorePanel.nextRound();
+                Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
+                changeImage(newImage);
+            }
+            else{
+                // exit UI back to startingmenu
+                this.dispose();
+            }
+        });
+        
         signalButton.setVisible(true);
-        signalButton.setPreferredSize(new Dimension(200, 100));
+        signalButton.setPreferredSize(new Dimension(150, 50));
         return signalButton;
     }
     
 	private void changeImage(Image image) {
+        currentImage = image;
         try {
 			zoomableImagePanel.setImage(imageService.readImageFromURL(image.getURL()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
-    
 }
