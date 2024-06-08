@@ -28,7 +28,12 @@ public class ZoomableImagePanel extends JLayeredPane {
 	public double getTranslateY() {
 		return translation.y;
 	}
-
+	
+	public void setImage(BufferedImage image) {
+		this.image = image;
+		updateScaleAndTranslation();
+	}
+	
 	private Point lastDragPoint = null;
 
 	public ZoomableImagePanel(double scaleMultiplier, BufferedImage image) {

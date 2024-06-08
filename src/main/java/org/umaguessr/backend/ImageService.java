@@ -1,25 +1,24 @@
 package org.umaguessr.backend;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.HashSet;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class ImageService {
+
+    private static final String JDBC_URL = "jdbc:postgresql://vps.damianverde.es:5432/umaguessr";
+    private static final String JDBC_USER = "postgres";
+    private static final String JDBC_PASSWORD = "bombardeenlaetsii";
 
     private List<Image> imagesData;
     private Set<String> playedImageIds;
@@ -27,10 +26,14 @@ public class ImageService {
 
     public ImageService() {
         playedImageIds = new HashSet<>();
-        loadImagesData();
-        random = new Random();
+        try {
+            loadImagesData();
+            random = new Random();
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
     }
-    
+
     public ImageService(ImageFilter filter) {
         this();
         loadImagesWithFilter(filter);
@@ -40,36 +43,40 @@ public class ImageService {
         return new ArrayList<>(imagesData);
     }
 
-    public void loadImagesData() {
-        String urlString = "https://raw.githubusercontent.com/JavierStark/UMAguessr/main/images.json";
-        try {
-            URI uri = new URI(urlString);
-            URL url = uri.toURL();
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+    public void loadImagesData() throws SQLException {
+        String query = "SELECT * FROM images";
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
 
-            try (Reader reader = new InputStreamReader(connection.getInputStream())) {
-                Type listType = new TypeToken<List<Image>>(){}.getType();
-                imagesData = new Gson().fromJson(reader, listType);
+            imagesData = new ArrayList<>();
+            while (rs.next()) {
+                imagesData.add(new Image(
+                        Integer.toString(rs.getInt("image_id")),
+                        rs.getString("image_url"),
+                        new int[]{rs.getInt("pos_x"), rs.getInt("pos_y")},
+                        rs.getString("faculty"),
+                        rs.getInt("difficulty")
+                ));
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load images from JSON file", e);
         }
     }
-    
-    public void loadImagesWithFilter(ImageFilter filter) {
-    	List<Image> newImageList = new ArrayList<>();
-    	for (Image img : imagesData ) {
-    		if (filter.check(img)) {
-    			newImageList.add(img);
-    		}
-    	}
 
+    public void loadImagesWithFilter(ImageFilter filter) {
+        List<Image> newImageList = new ArrayList<>();
+        if (imagesData != null) {
+            for (Image img : imagesData) {
+                if (filter.check(img)) {
+                    newImageList.add(img);
+                }
+            }
+        }
         imagesData = newImageList;
     }
 
     public Image getImageData(String id) {
-        Optional<Image> foundImage = imagesData.stream()
+        Optional<Image> foundImage = imagesData
+                .stream()
                 .filter(image -> image.getId().equals(id))
                 .findFirst();
         return foundImage.orElse(null);
@@ -90,7 +97,8 @@ public class ImageService {
             }
         }
         if (unplayedImages.isEmpty()) {
-            return null;
+            playedImageIds.clear();
+            return getRandomUnplayedImageId();
         }
 
         Image randomImage = unplayedImages.get(random.nextInt(unplayedImages.size()));
@@ -102,5 +110,9 @@ public class ImageService {
         URI uri = new URI(imageUrl);
         URL url = uri.toURL();
         return ImageIO.read(url);
+    }
+
+    private void handleSQLException(SQLException e) {
+        e.printStackTrace();
     }
 }
