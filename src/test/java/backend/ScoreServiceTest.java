@@ -43,29 +43,29 @@ class ScoreServiceTest {
 
 	@Test
 	void testMaxScoreOnExactLocation() {
-		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("1", 227, 721));
+		assertEquals(ScoreService.MAX_SCORE, myScoreService.calculateScore("1", 227, 721, 0));
 	}
 
 	@Test
 	void testSendingCoordinatesFurtherThan200Score0() {
-		assertEquals(0, myScoreService.calculateScore("5", 7, 27));
+		assertEquals(0, myScoreService.calculateScore("5", 7, 27, 0));
 	}
 
 	@Test
 	void testFinalScoreIncreasesEachRound() {
-		myScoreService.calculateScore("1", 227, 721);
+		myScoreService.calculateScore("1", 227, 721, 0);
 		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
-		myScoreService.calculateScore("5", 124, 796);
+		myScoreService.calculateScore("5", 124, 796, 0);
 		assertEquals(2 * ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 
-		myScoreService.calculateScore("2", 238, 790);
+		myScoreService.calculateScore("2", 238, 790, 0);
 		assertEquals(3 * ScoreService.MAX_SCORE, myScoreService.getFinalScore());
 	}
 
 	@Test
 	void testScoreIsSavedToDatabase() throws SQLException {
-		myScoreService.calculateScore("1", 227, 721);
+		myScoreService.calculateScore("1", 227, 721, 0);
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 			 PreparedStatement ps = conn.prepareStatement(
@@ -83,6 +83,6 @@ class ScoreServiceTest {
 	// White box testing
 	@Test
 	void testLessScoreOnFurtherFromSolution() {
-		assertTrue(myScoreService.calculateScore("1", 200, 700) > myScoreService.calculateScore("1", 100, 500));
+		assertTrue(myScoreService.calculateScore("1", 200, 700, 0) > myScoreService.calculateScore("1", 100, 500, 0));
 	}
 }

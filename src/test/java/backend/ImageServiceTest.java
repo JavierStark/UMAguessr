@@ -27,7 +27,7 @@ class ImageServiceTest {
     void testLoadImagesDataSuccessfully() throws SQLException {
         assertNotNull(imageRepository);
         List<Image> images = imageRepository.getAllImages();
-        assertEquals(5, images.size());
+        assertEquals(12, images.size());
         assertEquals("1", images.get(0).getId());
         assertEquals("2", images.get(1).getId());
     }
@@ -84,6 +84,6 @@ class ImageServiceTest {
     @Test
     void testFilterByFaculty() throws SQLException {
         ImageService filteredImageService = new ImageService(new FilterByFaculty("ETSII"));
-        assertEquals(4, filteredImageService.getAllImages().size());
+        assertEquals(5, filteredImageService.getAllImages().size());
     }
 }

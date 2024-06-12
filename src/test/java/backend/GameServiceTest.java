@@ -58,8 +58,7 @@ class GameServiceTest {
         }
 
         GameService sut = new GameService(SAMPLE_USERNAME);
-        sut.startSession(GameService.Difficulty.Easy);
-        assertFalse(sut.isSessionActive());
+        assertFalse(sut.startSession(GameService.Difficulty.Easy));
     }
 
     @Test
