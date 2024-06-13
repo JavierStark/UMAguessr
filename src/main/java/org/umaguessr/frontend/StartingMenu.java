@@ -44,13 +44,13 @@ public class StartingMenu extends JFrame {
 	private JTextField usernameField = new JTextField();
 	private JPanel overlayPanel = new JPanel();
 	
-	final int defaultSize = GroupLayout.DEFAULT_SIZE;
-	final int preferredSize = GroupLayout.PREFERRED_SIZE;
-	final GroupLayout.Alignment leadingAlignment = GroupLayout.Alignment.LEADING;
-	final GroupLayout.Alignment trailingAlignment = GroupLayout.Alignment.TRAILING;
-	final short maxValue = Short.MAX_VALUE;
-	final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
-	final GroupLayout.Alignment baselineAlignment = GroupLayout.Alignment.BASELINE;
+	static final int defaultSize = GroupLayout.DEFAULT_SIZE;
+	static final int preferredSize = GroupLayout.PREFERRED_SIZE;
+	static final GroupLayout.Alignment leadingAlignment = GroupLayout.Alignment.LEADING;
+	static final GroupLayout.Alignment trailingAlignment = GroupLayout.Alignment.TRAILING;
+	static final short maxValue = Short.MAX_VALUE;
+	static final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
+	static final GroupLayout.Alignment baselineAlignment = GroupLayout.Alignment.BASELINE;
 
 
 	protected Color mainPanelColor = new Color(255, 255, 255);
@@ -100,7 +100,7 @@ public class StartingMenu extends JFrame {
 		
 		GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
 		GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
-		GroupLayout layout = new GroupLayout(getContentPane());
+		GroupLayout generalLayout = new GroupLayout(getContentPane());
 		
 		
 		//Code for the Buttons:
@@ -125,11 +125,11 @@ public class StartingMenu extends JFrame {
 		configurationButton = new JButton() {
 			private static final long serialVersionUID = 1L;
 			
-			private BufferedImage gearImage;
 			
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				BufferedImage gearImage = null;
 				try {
 					gearImage = ImageIO.read(new File("src/main/resources/gear.png"));
 				} catch (IOException e) {
@@ -272,11 +272,11 @@ public class StartingMenu extends JFrame {
 		titlePanel = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
-			private BufferedImage titleImage;
 
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				BufferedImage titleImage = null;
 				try {
 					titleImage = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
 				} catch (IOException e) {
@@ -352,30 +352,103 @@ public class StartingMenu extends JFrame {
 		backgroundPanel.setLayout(null);
 		backgroundPanel.add(mainPanel);
 		
-			//Group Layout:	
+			//General Layout:	
 		
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(leadingAlignment)
-				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
-				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(leadingAlignment)
-						.addGroup(trailingAlignment, layout.createSequentialGroup()
-								.addGap(0, 478, maxValue)
-								.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize)))
-				);
-		layout.setVerticalGroup(
-				layout.createParallelGroup(leadingAlignment)
-				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
-				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(leadingAlignment)
-						.addGroup(trailingAlignment, layout.createSequentialGroup()
-								.addGap(0, 150, 150)
-								.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize))
-						)
-				);
+		getContentPane().setLayout(generalLayout);
+		
+				//Horizontal Layouts:
+		
+		SequentialGroup horizontalGeneralOverlay = generateHorizontalGeneralOverlay(generalLayout);
+		
+		ParallelGroup horizontalGeneralFullScreen = generateHorizontalGeneralFullScreen(generalLayout,
+				mainPanel, backgroundPanel, horizontalGeneralOverlay);
+		
+		generalLayout.setHorizontalGroup(horizontalGeneralFullScreen);
+		
+		        //Vertical Layouts:
+		
+		SequentialGroup verticalGeneralOverlay = generateVerticalGeneralOverlay(generalLayout);
+		
+		ParallelGroup verticalGeneralFullScreen = generateVerticalGeneralFullScreen(generalLayout,
+				mainPanel, backgroundPanel, verticalGeneralOverlay);
+		
+		generalLayout.setVerticalGroup(verticalGeneralFullScreen);
 
 		pack();
+	}
+
+	private ParallelGroup generateVerticalGeneralFullScreen(GroupLayout generalLayout, JPanel mainPanel,
+			JPanel backgroundPanel, SequentialGroup verticalGeneralOverlay) {
+		return generalLayout.createParallelGroup(leadingAlignment)
+				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
+				.addComponent(backgroundPanel)
+				.addGroup(trailingAlignment,verticalGeneralOverlay);
+	}
+
+	private SequentialGroup generateVerticalGeneralOverlay(GroupLayout generalLayout) {
+		return generalLayout.createSequentialGroup()
+				.addGap(0, 150, 150)
+				.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize);
+	}
+
+	private ParallelGroup generateHorizontalGeneralFullScreen(GroupLayout generalLayout, JPanel mainPanel,
+			JPanel backgroundPanel, SequentialGroup horizontalGeneralOverlay) {
+		return generateVerticalGeneralFullScreen(generalLayout, mainPanel, backgroundPanel, horizontalGeneralOverlay);
+	}
+
+	private SequentialGroup generateHorizontalGeneralOverlay(GroupLayout generalLayout) {
+		return generalLayout.createSequentialGroup()
+				.addGap(0, 478, maxValue)
+				.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize);
+	}
+
+	private BufferedImage filterImageByColor(BufferedImage image, Color filterColor) {
+		int width = image.getWidth();
+		int height = image.getHeight();
+		BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		int[] pixels = image.getRGB(0, 0, width, height, null, 0, width);
+
+	    for (int i = 0; i < pixels.length; i++) {
+	        Color pixelColor = new Color(pixels[i], true);
+	        if (isColorMatch(pixelColor, filterColor)) {
+	            pixels[i] = pixelColor.getRGB();
+	        } else {
+	            pixels[i] = 0x00FFFFFF;
+	        }
+	    }
+
+	    filteredImage.setRGB(0, 0, width, height, pixels, 0, width);
+	    
+		return filteredImage;
+	}
+
+	private boolean isColorMatch(Color pixelColor, Color filterColor) {
+		int tolerance = 50;
+		return Math.abs(pixelColor.getRed() - filterColor.getRed()) <= tolerance &&
+				Math.abs(pixelColor.getGreen() - filterColor.getGreen()) <= tolerance &&
+				Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
+	}
+	
+	private void startGame(GameService.Difficulty difficulty){
+		if(usernameField.getText().isEmpty())
+			return;
+
+		GameService gameService = new GameService(usernameField.getText());
+
+		if(!gameService.startSession(difficulty)) {
+			return;
+		}
+		setVisible(false);
+		ImageService imageService = new ImageService();
+		ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
+
+		try {
+			UI frame = new UI(imageService, scoreService, gameService);
+			frame.setLocationRelativeTo(null);
+		} catch (IOException | URISyntaxException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 	private SequentialGroup generateVerticalCompleteScreen(GroupLayout overlayPanelLayout,
@@ -570,49 +643,4 @@ public class StartingMenu extends JFrame {
 				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
 	}
 
-	private BufferedImage filterImageByColor(BufferedImage image, Color filterColor) {
-		int width = image.getWidth();
-		int height = image.getHeight();
-		BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				int pixel = image.getRGB(x, y);
-				if (isColorMatch(new Color(pixel, true), filterColor)) {
-					filteredImage.setRGB(x, y, pixel);
-				} else {
-					filteredImage.setRGB(x, y, 0x00FFFFFF);
-				}
-			}
-		}
-		return filteredImage;
-	}
-
-	private boolean isColorMatch(Color pixelColor, Color filterColor) {
-		int tolerance = 50;
-		return Math.abs(pixelColor.getRed() - filterColor.getRed()) <= tolerance &&
-				Math.abs(pixelColor.getGreen() - filterColor.getGreen()) <= tolerance &&
-				Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
-	}
-	
-	private void startGame(GameService.Difficulty difficulty){
-		if(usernameField.getText().isEmpty())
-			return;
-
-		GameService gameService = new GameService(usernameField.getText());
-
-		if(!gameService.startSession(difficulty)) {
-			return;
-		}
-		setVisible(false);
-		ImageService imageService = new ImageService();
-		ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
-
-		try {
-			UI frame = new UI(imageService, scoreService, gameService);
-			frame.setLocationRelativeTo(null);
-		} catch (IOException | URISyntaxException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
 }
