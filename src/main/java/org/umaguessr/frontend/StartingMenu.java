@@ -53,6 +53,12 @@ public class StartingMenu extends JFrame {
 	private void initComponents() {
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		final int defaultSize = GroupLayout.DEFAULT_SIZE;
+		final int preferredSize = GroupLayout.PREFERRED_SIZE;
+		final GroupLayout.Alignment leadingAlignment = GroupLayout.Alignment.LEADING;
+		final GroupLayout.Alignment trailingAlignment = GroupLayout.Alignment.TRAILING;
+		final short maxValue = Short.MAX_VALUE;
+		final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
 		
 		//Buttons:
 		
@@ -74,11 +80,6 @@ public class StartingMenu extends JFrame {
 		JLabel passwordLabel = new JLabel();
 		JLabel registerLabel = new JLabel();
 		
-		//Panels:
-		
-		JPanel jPanel1  = new JPanel();
-		JPanel jPanel2;
-		
 		//Sliders:
 		
 		JSlider volumeSlider = new JSlider();
@@ -86,6 +87,18 @@ public class StartingMenu extends JFrame {
 		//TextFields:
 		
 		JPasswordField passwordTextField = new JPasswordField();
+		
+		//Panels:
+		
+		JPanel titlePanel;
+		JPanel mainPanel  = new JPanel();
+		JPanel backgroundPanel;
+		
+		//Group Layouts:
+		
+		GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
+		GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
+		GroupLayout layout = new GroupLayout(getContentPane());
 		
 		
 		//Code for the Buttons:
@@ -158,39 +171,184 @@ public class StartingMenu extends JFrame {
 			}
 		});
 		
+		
 		//Code for the Labels:
 
+		namesLabel.setText("Names");
+		namesLabel.setOpaque(true);
+		
+		gameDescriptionLabel.setText("Game description");
+		gameDescriptionLabel.setOpaque(true);
+		
+		darkModeLabel.setText("· DARK MODE:");
 		
 		settingsLabel.setText("SETTINGS");
-
+		
 		volumeLabel.setText("· VOLUME:");
 		
+		usernameLabel.setText("· USERNAME:");
+		
+		passwordLabel.setText("· PASSWORD:");
+
+		registerLabel.setText("REGISTER"); 
+
+		
+		//Code for the Sliders:
+		
+		volumeSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent evt) {
+				//Make the slider change the music volume.
+			}
+		});
 		
 		
-		jPanel2 = new JPanel() {
+		//Code for the Panels:
+		
+			//Overlay Panel:
+		
+		overlayPanel.setVisible(false);
+		overlayPanel.setLayout(overlayPanelLayout);
+		
+		
+		overlayPanelLayout.setHorizontalGroup(
+				overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(overlayPanelLayout.createSequentialGroup()
+						.addGap(29, 29, 29)
+						.addGroup(overlayPanelLayout.createParallelGroup(leadingAlignment)
+								.addGroup(overlayPanelLayout.createSequentialGroup()
+										.addComponent(volumeLabel, preferredSize, 80, preferredSize)
+										.addPreferredGap(relatedPlacement, defaultSize, maxValue)
+										.addComponent(volumeSlider, preferredSize, 270, preferredSize))
+								.addGroup(overlayPanelLayout.createSequentialGroup()
+										.addGroup(overlayPanelLayout.createParallelGroup(leadingAlignment)
+												.addComponent(darkModeLabel, preferredSize, 111, preferredSize)
+												.addComponent(passwordLabel, preferredSize, 80, preferredSize)
+												.addComponent(usernameLabel, preferredSize, 80, preferredSize))
+										.addPreferredGap(relatedPlacement)
+										.addGroup(overlayPanelLayout.createParallelGroup(leadingAlignment)
+												.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize)
+												.addComponent(passwordTextField, trailingAlignment, preferredSize, 115, preferredSize)
+												.addComponent(usernameField, trailingAlignment, preferredSize, 115, preferredSize))))
+						.addGap(31, 31, 31))
+				.addGroup(trailingAlignment, overlayPanelLayout.createSequentialGroup()
+						.addContainerGap(defaultSize, maxValue)
+						.addGroup(overlayPanelLayout.createParallelGroup(leadingAlignment)
+								.addComponent(settingsLabel, trailingAlignment)
+								.addComponent(registerLabel, trailingAlignment))
+						.addGap(172, 172, 172))
+				.addGroup(overlayPanelLayout.createSequentialGroup()
+						.addGap(132, 132, 132)
+						.addComponent(submitButton, preferredSize, 138, preferredSize)
+						.addContainerGap(defaultSize, maxValue))
+				);
+		
+		overlayPanelLayout.setVerticalGroup(
+				overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(overlayPanelLayout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(settingsLabel, preferredSize, 30, preferredSize)
+						.addGap(33, 33, 33)
+						.addGroup(overlayPanelLayout.createParallelGroup(leadingAlignment, false)
+								.addComponent(volumeLabel, defaultSize, defaultSize, maxValue)
+								.addComponent(volumeSlider, preferredSize, 45, preferredSize))
+						.addGap(15, 15, 15)
+						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(darkModeLabel, preferredSize, 45, preferredSize)
+								.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize))
+						.addPreferredGap(relatedPlacement)
+						.addComponent(registerLabel, preferredSize, 30, preferredSize)
+						.addPreferredGap(relatedPlacement)
+						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(usernameLabel, defaultSize, 82, maxValue)
+								.addComponent(usernameField, preferredSize, defaultSize, preferredSize))
+						.addPreferredGap(relatedPlacement)
+						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(passwordLabel, defaultSize, defaultSize, maxValue)
+								.addComponent(passwordTextField, preferredSize, defaultSize, preferredSize))
+						.addGap(26, 26, 26)
+						.addComponent(submitButton, preferredSize, 42, preferredSize)
+						.addGap(43, 43, 43))
+				);
+		
+		
+			//Title Panel:
+
+		titlePanel = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
-			private BufferedImage image1;
-
-			{
-				try {
-					image1 = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			private BufferedImage titleImage;
 
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (image1 != null) {
-					BufferedImage filteredImage = filterImageByColor(image1, Color.RED);
+				try {
+					titleImage = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if (titleImage != null) {
+					BufferedImage filteredImage = filterImageByColor(titleImage, Color.RED);
 					g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
 				}
 			}
 		};
+		
+		titlePanel.setPreferredSize(new Dimension(690, 100));
+		titlePanel.setOpaque(false);
+		
+		
+		    //Main Panel:
+		
+		mainPanel.setBackground(mainPanelColor);
+		mainPanel.setLayout(mainPanelLayout);
+		mainPanel.setOpaque(false);
+		
+		mainPanelLayout.setHorizontalGroup(
+				mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(mainPanelLayout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(configurationButton, preferredSize, 50, maxValue)
+						.addGap(18, 18, 18)
+						//.addContainerGap(18, 1000)
+						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
+								.addGroup(mainPanelLayout.createSequentialGroup()
+										.addGroup(mainPanelLayout.createParallelGroup(trailingAlignment, false)
+												.addComponent(normalModeButton, defaultSize, 250, maxValue)
+												.addComponent(namesLabel, preferredSize, 250, preferredSize)
+												.addComponent(easyModeButton, defaultSize, defaultSize, maxValue)
+												.addComponent(hardModeButton, defaultSize, defaultSize, maxValue))
+										.addGap(232, 232, 232)
+										.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize))
+								.addComponent(titlePanel, preferredSize, 800, preferredSize))
+						.addContainerGap(defaultSize, maxValue))
+				);
+		
+		mainPanelLayout.setVerticalGroup(
+				mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(mainPanelLayout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
+								.addComponent(titlePanel, defaultSize, 132, maxValue)
+								.addComponent(configurationButton, preferredSize, 50, preferredSize))
+						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
+								.addGroup(mainPanelLayout.createSequentialGroup()
+										.addGap(49, 49, 49)
+										.addComponent(easyModeButton, preferredSize, 62, preferredSize)
+										.addGap(39, 39, 39)
+										.addComponent(normalModeButton, preferredSize, 62, preferredSize)
+										.addGap(37, 37, 37)
+										.addComponent(hardModeButton, preferredSize, 62, preferredSize)
+										.addPreferredGap(relatedPlacement, 49, maxValue)
+										.addComponent(namesLabel, preferredSize, 65, preferredSize))
+								.addGroup(mainPanelLayout.createSequentialGroup()
+										.addGap(33, 33, 33)
+										.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue)))
+						.addGap(37, 37, 37))
+				);
 
-		JPanel backgroundPanel = new JPanel() {
+			//Background Panel:
+
+		backgroundPanel = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -201,197 +359,30 @@ public class StartingMenu extends JFrame {
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
-		
-		overlayPanel.setVisible(false);
 
-		
-
-		volumeSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent evt) {
-				//Make the slider change the music volume.
-			}
-		});
-
-		darkModeLabel.setText("· DARK MODE:");
-
-
-		registerLabel.setText("REGISTER"); 
-
-		usernameLabel.setText("· USERNAME:");
-		passwordLabel.setText("· PASSWORD:");
-
-
-
-
-		GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
-		overlayPanel.setLayout(overlayPanelLayout);
-		overlayPanelLayout.setHorizontalGroup(
-				overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(overlayPanelLayout.createSequentialGroup()
-						.addGap(29, 29, 29)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(overlayPanelLayout.createSequentialGroup()
-										.addComponent(volumeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGroup(overlayPanelLayout.createSequentialGroup()
-										.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(darkModeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(darkModeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(passwordTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(usernameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
-						.addGap(31, 31, 31))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, overlayPanelLayout.createSequentialGroup()
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(settingsLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-								.addComponent(registerLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-						.addGap(172, 172, 172))
-				.addGroup(overlayPanelLayout.createSequentialGroup()
-						.addGap(132, 132, 132)
-						.addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
-		overlayPanelLayout.setVerticalGroup(
-				overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(overlayPanelLayout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(settingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(33, 33, 33)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addComponent(volumeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(15, 15, 15)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(darkModeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(darkModeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(registerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-								.addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(26, 26, 26)
-						.addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(43, 43, 43))
-				);
-
-		//----------------------------------------------------------------------------------------------------------Hidden panel
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 3
-
-		jPanel2.setPreferredSize(new Dimension(690, 100));
-		jPanel2.setOpaque(false);
-
-		//----------------------------------------------------------------------------------------------------------Panel 3
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 4
-
-		namesLabel.setText("Names");
-		//namesLabel.setBackground(mainPanelColor);
-		namesLabel.setOpaque(true);
-
-		//----------------------------------------------------------------------------------------------------------Panel 4
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 5
-
-		gameDescriptionLabel.setText("Game description");
-		//gameDescriptionLabel.setBackground(mainPanelColor);
-		gameDescriptionLabel.setOpaque(true);
-
-		//----------------------------------------------------------------------------------------------------------Panel 5
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 1
-
-		jPanel1.setBackground(mainPanelColor );
-
-		
-
-		GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(
-				jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(configurationButton, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-						.addGap(18, 18, 18)
-						//.addContainerGap(18, 1000)
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-												.addComponent(normalModeButton, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-												.addComponent(namesLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-												.addComponent(easyModeButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(hardModeButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addGap(232, 232, 232)
-										.addComponent(gameDescriptionLabel, GroupLayout.DEFAULT_SIZE, 284, GroupLayout.PREFERRED_SIZE))
-								.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
-		jPanel1Layout.setVerticalGroup(
-				jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-								.addComponent(configurationButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGap(49, 49, 49)
-										.addComponent(easyModeButton, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addGap(39, 39, 39)
-										.addComponent(normalModeButton, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addGap(37, 37, 37)
-										.addComponent(hardModeButton, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-										.addComponent(namesLabel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGap(33, 33, 33)
-										.addComponent(gameDescriptionLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGap(37, 37, 37))
-				);
-
-		//----------------------------------------------------------------------------------------------------------Panel 1
-
-		jPanel1.setOpaque(false);
 		backgroundPanel.setLayout(null);
-		backgroundPanel.add(jPanel1);
-
-		GroupLayout layout = new GroupLayout(getContentPane());
+		backgroundPanel.add(mainPanel);
+		
+			//Group Layout:	
+		
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				layout.createParallelGroup(leadingAlignment)
+				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
 				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-								.addGap(0, 478, Short.MAX_VALUE)
-								.addComponent(overlayPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(layout.createParallelGroup(leadingAlignment)
+						.addGroup(trailingAlignment, layout.createSequentialGroup()
+								.addGap(0, 478, maxValue)
+								.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize)))
 				);
 		layout.setVerticalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				layout.createParallelGroup(leadingAlignment)
+				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
 				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(leadingAlignment)
+						.addGroup(trailingAlignment, layout.createSequentialGroup()
 								.addGap(0, 150, 150)
-								.addComponent(overlayPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize))
 						)
 				);
 
