@@ -5,16 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class ZoomableImagePanel extends JLayeredPane {
 
+	private static final long serialVersionUID = 1L;
+	
 	private double scale = 1.0;
 	private final double scaleMultiplier;
 	private Image image;
@@ -81,11 +77,9 @@ public class ZoomableImagePanel extends JLayeredPane {
 		translation.x = Math.max(translation.x, getWidth() - imageWidth);
 		translation.y = Math.max(translation.y, getHeight() - imageHeight);
 
-		// Apply translation and scaling transformation
 		translation.x = Math.min(0, Math.max(getWidth() - imageWidth, translation.x));
 		translation.y = Math.min(0, Math.max(getHeight() - imageHeight, translation.y));
 
-		// Apply translation and scaling transformation
 		g2d.translate(translation.x, translation.y);
 		g2d.scale(scale, scale);
 
@@ -112,6 +106,7 @@ public class ZoomableImagePanel extends JLayeredPane {
 		public void mouseReleased(MouseEvent e) {
 			lastDragPoint = null;
 		}
+		
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (lastDragPoint == null) return;
@@ -151,8 +146,8 @@ public class ZoomableImagePanel extends JLayeredPane {
 	private Point2D.Double getRealPoint(MouseEvent e, double scale) {
 		Point2D.Double mouse = new Point2D.Double(e.getX(), e.getY());
 		return new Point2D.Double(
-				(mouse.getX() -translation.x)/scale,
-				(mouse.getY() -translation.y)/scale);
+				(mouse.getX() - translation.x)/scale,
+				(mouse.getY() - translation.y)/scale);
 	}
 
 	public void addMarkers() {
@@ -160,14 +155,15 @@ public class ZoomableImagePanel extends JLayeredPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Point2D.Double p = getRealPoint(e, scale);
-				remove(Marker.getPreviousMarker());
-				Marker marker = new Marker(p.getX(), p.getY());
-				add(marker, 0);
-				Marker.setPreviousMarker(marker);
-
-				getParent().repaint();
+				insertMarker(p);
 			}
-
 		});
+	}
+	
+	private void insertMarker(Point2D.Double p) {
+		remove(Marker.getPreviousMarker());
+		Marker marker = new Marker(p.getX(), p.getY());
+		add(marker, 0);
+		Marker.setPreviousMarker(marker);
 	}
 }

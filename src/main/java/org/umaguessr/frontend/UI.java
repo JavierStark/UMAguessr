@@ -8,13 +8,14 @@ import org.umaguessr.backend.ScoreService;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class UI extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	ImageService imageService;
 	ScoreService scoreService;
 	GameService gameService;
@@ -69,7 +70,6 @@ public class UI extends JFrame {
 		setContentPane(content);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(800, 600));
-		pack();
 		setVisible(true);
 
 		//----------------------------------------------------------------------------------------------------------new
@@ -84,6 +84,7 @@ public class UI extends JFrame {
 			}
 		});
 		//----------------------------------------------------------------------------------------------------------new
+		pack();
 	}
 
 
@@ -100,9 +101,7 @@ public class UI extends JFrame {
 				scorePanel.nextRound();
 				Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
 				changeImage(newImage);
-			}
-			else{
-				// exit UI back to startingmenu
+			}else{
 				this.dispose();
 			}
 		});

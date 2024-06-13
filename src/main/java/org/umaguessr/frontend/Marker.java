@@ -9,6 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Marker extends JLabel{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private double realX;
 	private double realY;
 	private static Marker previousMarker = new Marker(-100, -100);

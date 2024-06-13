@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class ScorePanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private int score;
 	private int round;
 	private JLabel roundLabel;

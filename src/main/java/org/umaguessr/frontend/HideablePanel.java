@@ -1,14 +1,15 @@
 package org.umaguessr.frontend;
 
-import org.umaguessr.backend.Image;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class HideablePanel extends JPanel {
-    public HideablePanel(BufferedImage image){
+	
+	private static final long serialVersionUID = 1L;
+
+	public HideablePanel(BufferedImage image){
     	super();
     	final int width = 800;
     	final int height = 600;
