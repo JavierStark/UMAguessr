@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,6 +60,7 @@ public class StartingMenu extends JFrame {
 		final GroupLayout.Alignment trailingAlignment = GroupLayout.Alignment.TRAILING;
 		final short maxValue = Short.MAX_VALUE;
 		final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
+		final GroupLayout.Alignment baselineAlignment = GroupLayout.Alignment.BASELINE;
 		
 		//Buttons:
 		
@@ -252,17 +254,17 @@ public class StartingMenu extends JFrame {
 								.addComponent(volumeLabel, defaultSize, defaultSize, maxValue)
 								.addComponent(volumeSlider, preferredSize, 45, preferredSize))
 						.addGap(15, 15, 15)
-						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(overlayPanelLayout.createParallelGroup(baselineAlignment)
 								.addComponent(darkModeLabel, preferredSize, 45, preferredSize)
 								.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize))
 						.addPreferredGap(relatedPlacement)
 						.addComponent(registerLabel, preferredSize, 30, preferredSize)
 						.addPreferredGap(relatedPlacement)
-						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(overlayPanelLayout.createParallelGroup(baselineAlignment)
 								.addComponent(usernameLabel, defaultSize, 82, maxValue)
 								.addComponent(usernameField, preferredSize, defaultSize, preferredSize))
 						.addPreferredGap(relatedPlacement)
-						.addGroup(overlayPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(overlayPanelLayout.createParallelGroup(baselineAlignment)
 								.addComponent(passwordLabel, defaultSize, defaultSize, maxValue)
 								.addComponent(passwordTextField, preferredSize, defaultSize, preferredSize))
 						.addGap(26, 26, 26)
@@ -303,49 +305,63 @@ public class StartingMenu extends JFrame {
 		mainPanel.setLayout(mainPanelLayout);
 		mainPanel.setOpaque(false);
 		
-		mainPanelLayout.setHorizontalGroup(
-				mainPanelLayout.createParallelGroup(leadingAlignment)
-				.addGroup(mainPanelLayout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(configurationButton, preferredSize, 50, maxValue)
-						.addGap(18, 18, 18)
-						//.addContainerGap(18, 1000)
-						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
-								.addGroup(mainPanelLayout.createSequentialGroup()
-										.addGroup(mainPanelLayout.createParallelGroup(trailingAlignment, false)
-												.addComponent(normalModeButton, defaultSize, 250, maxValue)
-												.addComponent(namesLabel, preferredSize, 250, preferredSize)
-												.addComponent(easyModeButton, defaultSize, defaultSize, maxValue)
-												.addComponent(hardModeButton, defaultSize, defaultSize, maxValue))
-										.addGap(232, 232, 232)
-										.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize))
-								.addComponent(titlePanel, preferredSize, 800, preferredSize))
-						.addContainerGap(defaultSize, maxValue))
-				);
+				//Horizontal Layouts:
 		
-		mainPanelLayout.setVerticalGroup(
-				mainPanelLayout.createParallelGroup(leadingAlignment)
-				.addGroup(mainPanelLayout.createSequentialGroup()
+		ParallelGroup horizontalModes = mainPanelLayout.createParallelGroup(trailingAlignment, false)
+				.addComponent(normalModeButton, defaultSize, 250, maxValue)
+				.addComponent(namesLabel, preferredSize, 250, preferredSize)
+				.addComponent(easyModeButton, defaultSize, defaultSize, maxValue)
+				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
+		
+		SequentialGroup horizontalScreenBottom = mainPanelLayout.createSequentialGroup()
+				.addGroup(horizontalModes)
+				.addGap(232, 232, 232)
+				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize);
+		
+		ParallelGroup horizontalTitleAndBottom = mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(horizontalScreenBottom)
+				.addComponent(titlePanel, preferredSize, 800, preferredSize);
+		
+		SequentialGroup horizontalFullScreen = mainPanelLayout.createSequentialGroup()
+				.addContainerGap()
+				.addComponent(configurationButton, preferredSize, 50, maxValue)
+				.addGap(18, 18, 18)
+				.addGroup(horizontalTitleAndBottom)
+				.addContainerGap(defaultSize, maxValue);
+		
+		mainPanelLayout.setHorizontalGroup(horizontalFullScreen);
+		
+			        //Vertical Layouts:
+		
+		SequentialGroup verticalModes = mainPanelLayout.createSequentialGroup()
+			.addGap(49, 49, 49)
+			.addComponent(easyModeButton, preferredSize, 62, preferredSize)
+			.addGap(39, 39, 39)
+			.addComponent(normalModeButton, preferredSize, 62, preferredSize)
+			.addGap(37, 37, 37)
+			.addComponent(hardModeButton, preferredSize, 62, preferredSize)
+			.addPreferredGap(relatedPlacement, 49, maxValue)
+			.addComponent(namesLabel, preferredSize, 65, preferredSize);
+		
+		SequentialGroup verticalDescription = mainPanelLayout.createSequentialGroup()
+				.addGap(33, 33, 33)
+				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue);
+		
+		ParallelGroup verticalScreenBottom = mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(verticalModes)
+				.addGroup(verticalDescription);
+		
+		ParallelGroup verticalScreenTop = mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addComponent(titlePanel, defaultSize, 132, maxValue)
+				.addComponent(configurationButton, preferredSize, 50, preferredSize); 
+		
+		
+		mainPanelLayout.setVerticalGroup(mainPanelLayout.createSequentialGroup()
 						.addContainerGap()
-						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
-								.addComponent(titlePanel, defaultSize, 132, maxValue)
-								.addComponent(configurationButton, preferredSize, 50, preferredSize))
-						.addGroup(mainPanelLayout.createParallelGroup(leadingAlignment)
-								.addGroup(mainPanelLayout.createSequentialGroup()
-										.addGap(49, 49, 49)
-										.addComponent(easyModeButton, preferredSize, 62, preferredSize)
-										.addGap(39, 39, 39)
-										.addComponent(normalModeButton, preferredSize, 62, preferredSize)
-										.addGap(37, 37, 37)
-										.addComponent(hardModeButton, preferredSize, 62, preferredSize)
-										.addPreferredGap(relatedPlacement, 49, maxValue)
-										.addComponent(namesLabel, preferredSize, 65, preferredSize))
-								.addGroup(mainPanelLayout.createSequentialGroup()
-										.addGap(33, 33, 33)
-										.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue)))
-						.addGap(37, 37, 37))
+						.addGroup(verticalScreenTop)
+						.addGroup(verticalScreenBottom)
+						.addGap(37, 37, 37)
 				);
-
 			//Background Panel:
 
 		backgroundPanel = new JPanel() {
