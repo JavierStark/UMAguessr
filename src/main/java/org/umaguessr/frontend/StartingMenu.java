@@ -51,6 +51,8 @@ public class StartingMenu extends JFrame {
 	}
 
 	private void initComponents() {
+
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		//Buttons:
 		
@@ -86,10 +88,24 @@ public class StartingMenu extends JFrame {
 		JPasswordField passwordTextField = new JPasswordField();
 		
 		
-		//Code for the buttons:
-
+		//Code for the Buttons:
 		
-		submitButton.setText("Submit");
+			//Easy Mode Button:
+		
+		easyModeButton.setText("Easy Mode");
+		easyModeButton.addActionListener(e -> startGame(GameService.Difficulty.Easy));
+		
+			//Normal Mode Button:
+		
+		normalModeButton.setText("Normal Mode");
+		normalModeButton.addActionListener(e -> startGame(GameService.Difficulty.Medium));
+		
+			//Hard Mode Button:
+		
+		hardModeButton.setText("Hard Mode");
+		hardModeButton.addActionListener(e -> startGame(GameService.Difficulty.Hard));
+		
+			//Configuration Button:
 		
 		configurationButton = new JButton() {
 			private static final long serialVersionUID = 1L;
@@ -109,6 +125,7 @@ public class StartingMenu extends JFrame {
 					g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
 				}
 			}
+			
 		};
 		
 		configurationButton.addActionListener(new ActionListener() {
@@ -118,8 +135,38 @@ public class StartingMenu extends JFrame {
 			}
 		});
 		
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			//Submit Button:
+		
+		submitButton.setText("Submit");
+		submitButton.setBounds(150, 100, 100, 30);
+		
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = usernameField.getText();
+				JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
+			}
+		});
+		
+			//Dark Mode Toggle Button:
+		
+		darkModeToggleButton.setText("X");
+		
+		darkModeToggleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				//Make the toggle button change the screen lightning.
+			}
+		});
+		
+		//Code for the Labels:
 
+		
+		settingsLabel.setText("SETTINGS");
+
+		volumeLabel.setText("· VOLUME:");
+		
+		
+		
 		jPanel2 = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
@@ -154,23 +201,10 @@ public class StartingMenu extends JFrame {
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
-
 		
-
-		//----------------------------------------------------------------------------------------------------------Hidden panel
-
-
-
-
-
-		/**
-		 * Settings panel view configuration.
-		 */
 		overlayPanel.setVisible(false);
 
-		settingsLabel.setText("SETTINGS");
-
-		volumeLabel.setText("· VOLUME:");
+		
 
 		volumeSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent evt) {
@@ -180,27 +214,12 @@ public class StartingMenu extends JFrame {
 
 		darkModeLabel.setText("· DARK MODE:");
 
-		darkModeToggleButton.setText("X");
-		darkModeToggleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				//Make the toggle button change the screen lightning.
-			}
-		});
 
 		registerLabel.setText("REGISTER"); 
 
 		usernameLabel.setText("· USERNAME:");
 		passwordLabel.setText("· PASSWORD:");
 
-		submitButton.setBounds(150, 100, 100, 30);
-
-		submitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String text = usernameField.getText();
-				JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
-			}
-		});
 
 
 
@@ -302,13 +321,7 @@ public class StartingMenu extends JFrame {
 
 		jPanel1.setBackground(mainPanelColor );
 
-		easyModeButton.setText("Easy Mode");
-		easyModeButton.addActionListener(e -> startGame(GameService.Difficulty.Easy));
-		normalModeButton.setText("Normal Mode");
-		normalModeButton.addActionListener(e -> startGame(GameService.Difficulty.Medium));
-		hardModeButton.setText("Hard Mode");
-		hardModeButton.addActionListener(e -> startGame(GameService.Difficulty.Hard));
-
+		
 
 		GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
