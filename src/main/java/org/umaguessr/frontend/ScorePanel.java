@@ -8,7 +8,6 @@ public class ScorePanel extends JPanel {
 	private int round;
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
-	private JButton signalButton;
 	
 	public ScorePanel() {
 		score = 0;
@@ -35,11 +34,6 @@ public class ScorePanel extends JPanel {
 	
 	public void setScore(int newScore) {
 		score = newScore;
-		scoreLabel.setText("Score: " + score);
-	}
-	
-	public void sumScore(int newScore) {
-		score += newScore;
 		scoreLabel.setText("Score: " + score);
 	}
 	
