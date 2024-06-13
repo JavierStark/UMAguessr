@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The ScoreService class calculates and manages scores for the UMAguessr game.
+ */
 public class ScoreService {
 
 	private int finalScore;
@@ -22,12 +25,28 @@ public class ScoreService {
 	private static final String JDBC_USER = "postgres";
 	private static final String JDBC_PASSWORD = "bombardeenlaetsii";
 
+	/**
+	 * Constructs a ScoreService object with the specified ImageService and
+	 * username.
+	 *
+	 * @param imageService the ImageService object to use for retrieving image data
+	 * @param username     the username associated with the scores
+	 */
 	public ScoreService(ImageService imageService, String username) {
 		this.imageService = imageService;
 		this.finalScore = 0;
 		this.username = username;
 	}
 
+	/**
+	 * Calculates the score for a guess based on the provided coordinates.
+	 * Updates the final score and saves the score to the database.
+	 *
+	 * @param id     the ID of the image being guessed
+	 * @param coordX the X coordinate of the guess
+	 * @param coordY the Y coordinate of the guess
+	 * @return the points earned for the guess
+	 */
 	public int calculateScore(String id, int coordX, int coordY) {
 		double distance = calculateDistance(id, coordX, coordY);
 		int points = calculatePointsBasedOnDistance(distance);
@@ -36,6 +55,11 @@ public class ScoreService {
 		return points;
 	}
 
+	/**
+	 * Returns the final score.
+	 *
+	 * @return the final score
+	 */
 	public int getFinalScore() {
 		return finalScore;
 	}
@@ -63,7 +87,7 @@ public class ScoreService {
 		String query = "INSERT INTO scores (image_id, score, daily_attempt, username) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-			 PreparedStatement ps = conn.prepareStatement(query)) {
+				PreparedStatement ps = conn.prepareStatement(query)) {
 			ps.setInt(1, Integer.parseInt(imageId));
 			ps.setInt(2, score);
 			ps.setInt(3, 1); // Default daily attempt value for simplicity
@@ -74,6 +98,11 @@ public class ScoreService {
 		}
 	}
 
+	/**
+	 * Returns the username associated with the scores.
+	 *
+	 * @return the username
+	 */
 	public String getUsername() {
 		return username;
 	}

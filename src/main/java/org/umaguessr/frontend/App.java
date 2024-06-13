@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ImageService imageService = new ImageService();
-            ScoreService scoreService = new ScoreService(imageService);
+            ScoreService scoreService = new ScoreService(imageService, null);
             try {
                 new UI(imageService, scoreService);
             } catch (IOException | URISyntaxException e) {
