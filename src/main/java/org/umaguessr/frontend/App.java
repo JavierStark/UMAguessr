@@ -4,12 +4,9 @@ import org.umaguessr.backend.GameService;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.ScoreService;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class App {

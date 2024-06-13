@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.*;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,34 +39,18 @@ public class StartingMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+
+	private JTextField usernameField = new JTextField();
+	private JPanel overlayPanel = new JPanel();
 	
-	private final int WIDTH = screenSize.width/2;
-	private final int HEIGHT = screenSize.height/2;
-	
-	private JButton jButton1;
-	private JButton jButton2;
-	private JButton jButton3;
-	private JButton jButton4;
-	private JButton submitButton;
-
-	private JLabel jLabel2;
-	private JLabel jLabel3;
-	private JLabel modLabel;
-	private JLabel settLabel;
-	private JLabel volLabel;
-	private JLabel usrnameLabel;
-	private JLabel passLabel;
-	private JLabel regLabel;
-
-	private JPanel jPanel1;
-	private JPanel jPanel3;
-	private JPanel overlayPanel;
-
-
-	private JToggleButton modeToggleButton;
-	private JSlider volumeSlider1;
-	private JPasswordField passField;
-	private JTextField usernameField;
+	static final int defaultSize = GroupLayout.DEFAULT_SIZE;
+	static final int preferredSize = GroupLayout.PREFERRED_SIZE;
+	static final GroupLayout.Alignment leadingAlignment = GroupLayout.Alignment.LEADING;
+	static final GroupLayout.Alignment trailingAlignment = GroupLayout.Alignment.TRAILING;
+	static final short maxValue = Short.MAX_VALUE;
+	static final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
+	static final GroupLayout.Alignment baselineAlignment = GroupLayout.Alignment.BASELINE;
 
 
 	protected Color mainPanelColor = new Color(255, 255, 255);
@@ -75,351 +60,377 @@ public class StartingMenu extends JFrame {
 	}
 
 	private void initComponents() {
-
-		jPanel1 = new JPanel();
-		jButton1 = new JButton();
-		jPanel3 = new JPanel();
-		jButton2 = new JButton();
-		jLabel2 = new JLabel();
-		jButton3 = new JButton();
-		jButton4 = new JButton();
-		jLabel3 = new JLabel();
-
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		jPanel3 = new JPanel() {
+		
+		//Buttons:
+		
+		JButton easyModeButton = new JButton();
+		JButton normalModeButton = new JButton();
+		JButton hardModeButton = new JButton();
+		JButton configurationButton;
+		JButton submitButton = new JButton();
+		JToggleButton darkModeToggleButton = new JToggleButton();
+		
+		//Labels:
+		
+		JLabel namesLabel = new JLabel();
+		JLabel gameDescriptionLabel = new JLabel();
+		JLabel darkModeLabel = new JLabel();
+		JLabel settingsLabel = new JLabel();
+		JLabel volumeLabel = new JLabel();
+		JLabel usernameLabel  = new JLabel();
+		JLabel passwordLabel = new JLabel();
+		JLabel registerLabel = new JLabel();
+		
+		//Sliders:
+		
+		JSlider volumeSlider = new JSlider();
+		
+		//TextFields:
+		
+		JPasswordField passwordTextField = new JPasswordField();
+		
+		//Panels:
+		
+		JPanel titlePanel;
+		JPanel mainPanel  = new JPanel();
+		JPanel backgroundPanel;
+		
+		//Group Layouts:
+		
+		GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
+		GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
+		GroupLayout generalLayout = new GroupLayout(getContentPane());
+		
+		
+		//Code for the Buttons:
+		
+			//Easy Mode Button:
+		
+		easyModeButton.setText("Easy Mode");
+		easyModeButton.addActionListener(e -> startGame(GameService.Difficulty.Easy));
+		
+			//Normal Mode Button:
+		
+		normalModeButton.setText("Normal Mode");
+		normalModeButton.addActionListener(e -> startGame(GameService.Difficulty.Medium));
+		
+			//Hard Mode Button:
+		
+		hardModeButton.setText("Hard Mode");
+		hardModeButton.addActionListener(e -> startGame(GameService.Difficulty.Hard));
+		
+			//Configuration Button:
+		
+		configurationButton = new JButton() {
 			private static final long serialVersionUID = 1L;
-
-			private BufferedImage image1;
-
-            {
-                try {
-                    image1 = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
+			
+			
 			@Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (image1 != null) {
-                    BufferedImage filteredImage = filterImageByColor(image1, Color.RED);
-                    g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				BufferedImage gearImage = null;
+				try {
+					gearImage = ImageIO.read(new File("src/main/resources/gear.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if (gearImage != null) {
+					BufferedImage filteredImage = filterImageByColor(gearImage, Color.BLACK);
+					g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
+				}
+			}
+			
 		};
-
-		JPanel backgroundPanel = new JPanel() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("C:\\Users\\pedro\\Pictures\\Saved Pictures\\Star Landing.jpg");
-                Image image = icon.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        jButton1 = new JButton() {
-			private static final long serialVersionUID = 1L;
-
-			private BufferedImage image2;
-
-            {
-                try {
-                    image2 = ImageIO.read(new File("src/main/resources/gear.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-			@Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (image2 != null) {
-                    BufferedImage filteredImage = filterImageByColor(image2, Color.BLACK);
-                    g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
-		};
-
-		jButton1.addActionListener(new ActionListener() {
+		
+		configurationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				overlayPanel.setVisible(!overlayPanel.isVisible());
 			}
 		});
+		
+			//Submit Button:
+		
+		submitButton.setText("Submit");
+		submitButton.setBounds(150, 100, 100, 30);
+		
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = usernameField.getText();
+				JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
+			}
+		});
+		
+			//Dark Mode Toggle Button:
+		
+		darkModeToggleButton.setText("X");
+		
+		darkModeToggleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				//Make the toggle button change the screen lightning.
+			}
+		});
+		
+		
+		//Code for the Labels:
 
-		//----------------------------------------------------------------------------------------------------------Hidden panel
+		namesLabel.setText("Names");
+		namesLabel.setOpaque(true);
+		
+		gameDescriptionLabel.setText("Game description");
+		gameDescriptionLabel.setOpaque(true);
+		
+		darkModeLabel.setText("· DARK MODE:");
+		
+		settingsLabel.setText("SETTINGS");
+		
+		volumeLabel.setText("· VOLUME:");
+		
+		usernameLabel.setText("· USERNAME:");
+		
+		passwordLabel.setText("· PASSWORD:");
 
-		overlayPanel = new JPanel();
+		registerLabel.setText("REGISTER"); 
 
-		modLabel = new JLabel();
-        modeToggleButton = new JToggleButton();
-        volLabel = new JLabel();
-        volumeSlider1 = new JSlider();
-        settLabel = new JLabel();
-        
-        usrnameLabel = new JLabel();
-        passLabel = new JLabel();
-        regLabel = new JLabel();
-        passField = new JPasswordField();
-        usernameField = new JTextField();
-        submitButton = new JButton("Submit");
-        
-        
-
-        /**
-		 * Settings panel view configuration.
-		 */
-//		overlayPanel.setBackground(Color.WHITE);
-//		overlayPanel.setOpaque(false);
+		
+		//Code for the Sliders:
+		
+		volumeSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent evt) {
+				//Make the slider change the music volume.
+			}
+		});
+		
+		
+		//Code for the Panels:
+		
+			//Overlay Panel:
+		
 		overlayPanel.setVisible(false);
+		overlayPanel.setLayout(overlayPanelLayout);
 		
-		settLabel.setText("SETTINGS");
+				//Horizontal Layouts:
 		
-		volLabel.setText("· VOLUME:");
+		ParallelGroup horizontalLowerHalf1 = generateHorizontalLowerHalf1(overlayPanelLayout,
+				darkModeToggleButton, passwordTextField);
+		
+		ParallelGroup horizontalLowerHalf2 = generateHorizontalLowerHalf2(overlayPanelLayout,
+				darkModeLabel, usernameLabel, passwordLabel);
+		
+		SequentialGroup horizontalLowerHalf = generateHorizontalLowerHalf(overlayPanelLayout,
+				horizontalLowerHalf1, horizontalLowerHalf2);
+		
+		SequentialGroup horizontalVolumeControl = generateHorizontalVolumeControl(overlayPanelLayout,
+				volumeLabel, volumeSlider);
+		
+		ParallelGroup horizontalBottomHalf = generateHorizontalBottomHalf(overlayPanelLayout,
+				horizontalLowerHalf, horizontalVolumeControl);
+		
+		ParallelGroup horizontalGeneralSettings = generateHorizontalGeneralSettings(overlayPanelLayout,
+				settingsLabel, registerLabel);
+		
+		SequentialGroup horizontalBottom = generateHorizontalBottom(overlayPanelLayout,
+				horizontalBottomHalf);
+		
+		SequentialGroup horizontalSettings = generateHorizontalSettings(overlayPanelLayout,
+				horizontalGeneralSettings);
+		
+		SequentialGroup horizontalSubmit = generateHorizontalSubmit(overlayPanelLayout, submitButton);
+		
+		ParallelGroup horizontalCompleteScreen = generateHorizontalCompleteScreen(overlayPanelLayout,
+				horizontalBottom, horizontalSettings, horizontalSubmit);
+		
+		overlayPanelLayout.setHorizontalGroup(horizontalCompleteScreen);
+		
+			    //Vertical Layouts:
+		
+		ParallelGroup verticalVolumeControl = generateVerticalVolumeControl(overlayPanelLayout,
+				volumeLabel, volumeSlider);
+		
+		ParallelGroup verticalDarkMode = generateVerticalDarkMode(overlayPanelLayout,
+				darkModeToggleButton, darkModeLabel);
+		
+		ParallelGroup verticalUsername = generateVerticalUsername(overlayPanelLayout,
+				usernameLabel);
+		
+		ParallelGroup verticalPassword = generateVerticalPassword(overlayPanelLayout,
+				passwordLabel, passwordTextField);
+		
+		SequentialGroup verticalCompleteScreen =  generateVerticalCompleteScreen(overlayPanelLayout,
+				settingsLabel, registerLabel,verticalVolumeControl,
+				verticalDarkMode, verticalUsername, verticalPassword)
+				.addComponent(submitButton, preferredSize, 42, preferredSize)
+				.addGap(43, 43, 43);
+		
+		overlayPanelLayout.setVerticalGroup(verticalCompleteScreen);
+		
+		
+			//Title Panel:
 
-        volumeSlider1.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent evt) {
-            	//Make the slider change the music volume.
-            }
-        });
-
-		modLabel.setText("· DARK MODE:");
-
-        modeToggleButton.setText("X");
-        modeToggleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	//Make the toggle button change the screen lightning.
-            }
-        });
-        
-        regLabel.setText("REGISTER"); 
-
-        usrnameLabel.setText("· USERNAME:");
-        passLabel.setText("· PASSWORD:");
-        
-        submitButton.setBounds(150, 100, 100, 30);
-
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String text = usernameField.getText();
-                JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
-            }
-        });
-        
-        
-
-        GroupLayout overlayPanelLayout = new GroupLayout(overlayPanel);
-        overlayPanel.setLayout(overlayPanelLayout);
-        overlayPanelLayout.setHorizontalGroup(
-        		overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(overlayPanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(overlayPanelLayout.createSequentialGroup()
-                        .addComponent(volLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(volumeSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(overlayPanelLayout.createSequentialGroup()
-                        .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(modLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usrnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(modeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(31, 31, 31))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, overlayPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(settLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(regLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(172, 172, 172))
-            .addGroup(overlayPanelLayout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        overlayPanelLayout.setVerticalGroup(
-        		overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(overlayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(settLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(volLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(volumeSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(modLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modeToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(regLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(usrnameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(overlayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
-        );
-
-		//----------------------------------------------------------------------------------------------------------Hidden panel
+		titlePanel = new JPanel() {
+			private static final long serialVersionUID = 1L;
 
 
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				BufferedImage titleImage = null;
+				try {
+					titleImage = ImageIO.read(new File("src/main/resources/UMAGUESSR.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if (titleImage != null) {
+					BufferedImage filteredImage = filterImageByColor(titleImage, Color.RED);
+					g.drawImage(filteredImage, 0, 0, getWidth(), getHeight(), this);
+				}
+			}
+		};
+		
+		titlePanel.setPreferredSize(new Dimension(690, 100));
+		titlePanel.setOpaque(false);
+		
+		
+		    //Main Panel:
+		
+		mainPanel.setBackground(mainPanelColor);
+		mainPanel.setLayout(mainPanelLayout);
+		mainPanel.setOpaque(false);
+		
+				//Horizontal Layouts:
+		
+		ParallelGroup horizontalModes = generateHorizontalModes(mainPanelLayout, easyModeButton, normalModeButton,
+				hardModeButton, namesLabel);
+		
+		SequentialGroup horizontalScreenBottom = generateHorizontalScreenBottom(mainPanelLayout,
+				gameDescriptionLabel, horizontalModes);
+		
+		ParallelGroup horizontalTitleAndBottom = generateHorizontalTitleAndBottom(mainPanelLayout,
+				titlePanel, horizontalScreenBottom);
+		
+		SequentialGroup horizontalFullScreen = generateHorizontalFullScreen(mainPanelLayout,
+				configurationButton, horizontalTitleAndBottom);
+		
+		mainPanelLayout.setHorizontalGroup(horizontalFullScreen);
+		
+				//Vertical Layouts:
+		
+		SequentialGroup verticalModes = generateVerticalModes(mainPanelLayout,
+				easyModeButton, normalModeButton, hardModeButton, namesLabel);
+		
+		SequentialGroup verticalDescription = generateVerticalDescription(mainPanelLayout,
+				gameDescriptionLabel);
+		
+		ParallelGroup verticalScreenBottom = generateHorizontalBottomHalf(mainPanelLayout,
+				verticalDescription, verticalModes);
+		
+		ParallelGroup verticalScreenTop = generateVerticalScreenTop(mainPanelLayout,
+				configurationButton, titlePanel); 
+		
+		SequentialGroup verticalFullScreen = generateVerticalFullScreen(mainPanelLayout,
+				verticalScreenBottom, verticalScreenTop);
+		
+		mainPanelLayout.setVerticalGroup(verticalFullScreen);
+		
+		
+			//Background Panel:
 
-		//----------------------------------------------------------------------------------------------------------Panel 3
+		backgroundPanel = new JPanel() {
+			private static final long serialVersionUID = 1L;
 
-        jPanel3.setPreferredSize(new Dimension(690, 100));
-		jPanel3.setOpaque(false);
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				ImageIcon icon = new ImageIcon("C:\\Users\\pedro\\Pictures\\Saved Pictures\\Star Landing.jpg");
+				Image image = icon.getImage();
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
 
-		//----------------------------------------------------------------------------------------------------------Panel 3
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 4
-
-		jLabel2.setText("Names");
-		//jLabel2.setBackground(mainPanelColor);
-		jLabel2.setOpaque(true);
-
-		//----------------------------------------------------------------------------------------------------------Panel 4
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 5
-
-		jLabel3.setText("Game description");
-		//jLabel3.setBackground(mainPanelColor);
-		jLabel3.setOpaque(true);
-
-		//----------------------------------------------------------------------------------------------------------Panel 5
-
-
-
-		//----------------------------------------------------------------------------------------------------------Panel 1
-
-		jPanel1.setBackground(mainPanelColor );
-
-		jButton2.setText("Easy Mode");
-		jButton2.addActionListener(e -> startGame(GameService.Difficulty.Easy));
-		jButton4.setText("Normal Mode");
-		jButton4.addActionListener(e -> startGame(GameService.Difficulty.Medium));
-		jButton3.setText("Hard Mode");
-		jButton3.addActionListener(e -> startGame(GameService.Difficulty.Hard));
-
-
-		GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(
-				jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
-						.addGap(18, 18, 18)
-						//.addContainerGap(18, 1000)
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-												.addComponent(jButton4, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-												.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-												.addComponent(jButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addGap(232, 232, 232)
-										.addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 284, GroupLayout.PREFERRED_SIZE))
-								.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
-		jPanel1Layout.setVerticalGroup(
-				jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-								.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGap(49, 49, 49)
-										.addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addGap(39, 39, 39)
-										.addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addGap(37, 37, 37)
-										.addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-										.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGap(33, 33, 33)
-										.addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGap(37, 37, 37))
-				);
-
-		//----------------------------------------------------------------------------------------------------------Panel 1
-
-		jPanel1.setOpaque(false);
 		backgroundPanel.setLayout(null);
-		backgroundPanel.add(jPanel1);
-
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-								.addGap(0, 478, Short.MAX_VALUE)
-								.addComponent(overlayPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				);
-		layout.setVerticalGroup(
-				layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(backgroundPanel)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-								.addGap(0, 150, 150)
-								.addComponent(overlayPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						)
-				);
+		backgroundPanel.add(mainPanel);
+		
+			//General Layout:	
+		
+		getContentPane().setLayout(generalLayout);
+		
+				//Horizontal Layouts:
+		
+		SequentialGroup horizontalGeneralOverlay = generateHorizontalGeneralOverlay(generalLayout);
+		
+		ParallelGroup horizontalGeneralFullScreen = generateHorizontalGeneralFullScreen(generalLayout,
+				mainPanel, backgroundPanel, horizontalGeneralOverlay);
+		
+		generalLayout.setHorizontalGroup(horizontalGeneralFullScreen);
+		
+		        //Vertical Layouts:
+		
+		SequentialGroup verticalGeneralOverlay = generateVerticalGeneralOverlay(generalLayout);
+		
+		ParallelGroup verticalGeneralFullScreen = generateVerticalGeneralFullScreen(generalLayout,
+				mainPanel, backgroundPanel, verticalGeneralOverlay);
+		
+		generalLayout.setVerticalGroup(verticalGeneralFullScreen);
 
 		pack();
 	}
 
+	private ParallelGroup generateVerticalGeneralFullScreen(GroupLayout generalLayout, JPanel mainPanel,
+			JPanel backgroundPanel, SequentialGroup verticalGeneralOverlay) {
+		return generalLayout.createParallelGroup(leadingAlignment)
+				.addComponent(mainPanel, defaultSize, defaultSize, maxValue)
+				.addComponent(backgroundPanel)
+				.addGroup(trailingAlignment,verticalGeneralOverlay);
+	}
+
+	private SequentialGroup generateVerticalGeneralOverlay(GroupLayout generalLayout) {
+		return generalLayout.createSequentialGroup()
+				.addGap(0, 150, 150)
+				.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize);
+	}
+
+	private ParallelGroup generateHorizontalGeneralFullScreen(GroupLayout generalLayout, JPanel mainPanel,
+			JPanel backgroundPanel, SequentialGroup horizontalGeneralOverlay) {
+		return generateVerticalGeneralFullScreen(generalLayout, mainPanel, backgroundPanel, horizontalGeneralOverlay);
+	}
+
+	private SequentialGroup generateHorizontalGeneralOverlay(GroupLayout generalLayout) {
+		return generalLayout.createSequentialGroup()
+				.addGap(0, 478, maxValue)
+				.addComponent(overlayPanel, preferredSize, defaultSize, preferredSize);
+	}
+
 	private BufferedImage filterImageByColor(BufferedImage image, Color filterColor) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		int width = image.getWidth();
+		int height = image.getHeight();
+		BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		int[] pixels = image.getRGB(0, 0, width, height, null, 0, width);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int pixel = image.getRGB(x, y);
-                if (isColorMatch(new Color(pixel, true), filterColor)) {
-                    filteredImage.setRGB(x, y, pixel);
-                } else {
-                    filteredImage.setRGB(x, y, 0x00FFFFFF);
-                }
-            }
-        }
-        return filteredImage;
-    }
+	    for (int i = 0; i < pixels.length; i++) {
+	        Color pixelColor = new Color(pixels[i], true);
+	        if (isColorMatch(pixelColor, filterColor)) {
+	            pixels[i] = pixelColor.getRGB();
+	        } else {
+	            pixels[i] = 0x00FFFFFF;
+	        }
+	    }
 
-    private boolean isColorMatch(Color pixelColor, Color filterColor) {
-        int tolerance = 50;
-        return Math.abs(pixelColor.getRed() - filterColor.getRed()) <= tolerance &&
-               Math.abs(pixelColor.getGreen() - filterColor.getGreen()) <= tolerance &&
-               Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
-    }
-    private void startGame(GameService.Difficulty difficulty){
+	    filteredImage.setRGB(0, 0, width, height, pixels, 0, width);
+	    
+		return filteredImage;
+	}
+
+	private boolean isColorMatch(Color pixelColor, Color filterColor) {
+		int tolerance = 50;
+		return Math.abs(pixelColor.getRed() - filterColor.getRed()) <= tolerance &&
+				Math.abs(pixelColor.getGreen() - filterColor.getGreen()) <= tolerance &&
+				Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
+	}
+	
+	private void startGame(GameService.Difficulty difficulty){
 		if(usernameField.getText().isEmpty())
 			return;
 
@@ -428,15 +439,208 @@ public class StartingMenu extends JFrame {
 		if(!gameService.startSession(difficulty)) {
 			return;
 		}
-        setVisible(false);
-        ImageService imageService = new ImageService();
-        ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
+		setVisible(false);
+		ImageService imageService = new ImageService();
+		ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
 
-        try {
+		try {
 			UI frame = new UI(imageService, scoreService, gameService);
 			frame.setLocationRelativeTo(null);
 		} catch (IOException | URISyntaxException ex) {
 			throw new RuntimeException(ex);
 		}
-    }
+	}
+
+	private SequentialGroup generateVerticalCompleteScreen(GroupLayout overlayPanelLayout,
+			JLabel settingsLabel, JLabel registerLabel, ParallelGroup verticalVolumeControl,
+			ParallelGroup verticalDarkMode, ParallelGroup verticalUsername, ParallelGroup verticalPassword) {
+		return overlayPanelLayout.createSequentialGroup()
+				.addContainerGap()
+				.addComponent(settingsLabel, preferredSize, 30, preferredSize)
+				.addGap(33, 33, 33)
+				.addGroup(verticalVolumeControl)
+				.addGap(15, 15, 15)
+				.addGroup(verticalDarkMode)
+				.addPreferredGap(relatedPlacement)
+				.addComponent(registerLabel, preferredSize, 30, preferredSize)
+				.addPreferredGap(relatedPlacement)
+				.addGroup(verticalUsername)
+				.addPreferredGap(relatedPlacement)
+				.addGroup(verticalPassword)
+				.addGap(26, 26, 26);
+	}
+
+	private ParallelGroup generateVerticalPassword(GroupLayout overlayPanelLayout, JLabel passwordLabel,
+			JPasswordField passwordTextField) {
+		return overlayPanelLayout.createParallelGroup(baselineAlignment)
+				.addComponent(passwordLabel, defaultSize, defaultSize, maxValue)
+				.addComponent(passwordTextField, preferredSize, defaultSize, preferredSize);
+	}
+
+	private ParallelGroup generateVerticalUsername(GroupLayout overlayPanelLayout, JLabel usernameLabel) {
+		return overlayPanelLayout.createParallelGroup(baselineAlignment)
+				.addComponent(usernameLabel, defaultSize, 82, maxValue)
+				.addComponent(usernameField, preferredSize, defaultSize, preferredSize);
+	}
+
+	private ParallelGroup generateVerticalDarkMode(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton,
+			JLabel darkModeLabel) {
+		return overlayPanelLayout.createParallelGroup(baselineAlignment)
+		.addComponent(darkModeLabel, preferredSize, 45, preferredSize)
+		.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize);
+	}
+
+	private ParallelGroup generateVerticalVolumeControl(GroupLayout overlayPanelLayout, JLabel volumeLabel,
+			JSlider volumeSlider) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment, false)
+		.addComponent(volumeLabel, defaultSize, defaultSize, maxValue)
+		.addComponent(volumeSlider, preferredSize, 45, preferredSize);
+	}
+
+	private SequentialGroup generateVerticalFullScreen(GroupLayout mainPanelLayout, ParallelGroup verticalScreenBottom,
+			ParallelGroup verticalScreenTop) {
+		return mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(verticalScreenTop)
+                .addGroup(verticalScreenBottom)
+                .addGap(37, 37, 37);
+	}
+
+	private ParallelGroup generateVerticalScreenTop(GroupLayout mainPanelLayout, JButton configurationButton,
+			JPanel titlePanel) {
+		return mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addComponent(titlePanel, defaultSize, 132, maxValue)
+				.addComponent(configurationButton, preferredSize, 50, preferredSize);
+	}
+
+	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel) {
+		return mainPanelLayout.createSequentialGroup()
+				.addGap(33, 33, 33)
+				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue);
+	}
+
+	private SequentialGroup generateVerticalModes(GroupLayout mainPanelLayout, JButton easyModeButton,
+			JButton normalModeButton, JButton hardModeButton, JLabel namesLabel) {
+		return mainPanelLayout.createSequentialGroup()
+			.addGap(49, 49, 49)
+			.addComponent(easyModeButton, preferredSize, 62, preferredSize)
+			.addGap(39, 39, 39)
+			.addComponent(normalModeButton, preferredSize, 62, preferredSize)
+			.addGap(37, 37, 37)
+			.addComponent(hardModeButton, preferredSize, 62, preferredSize)
+			.addPreferredGap(relatedPlacement, 49, maxValue)
+			.addComponent(namesLabel, preferredSize, 65, preferredSize);
+	}
+
+	private ParallelGroup generateHorizontalCompleteScreen(GroupLayout overlayPanelLayout,
+			SequentialGroup horizontalBottom, SequentialGroup horizontalSettings, SequentialGroup horizontalSubmit) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(trailingAlignment, horizontalBottom)
+				.addGroup(horizontalSettings)
+				.addGroup(horizontalSubmit);
+	}
+
+	private SequentialGroup generateHorizontalSubmit(GroupLayout overlayPanelLayout, JButton submitButton) {
+		return overlayPanelLayout.createSequentialGroup()
+		.addGap(132, 132, 132)
+		.addComponent(submitButton, preferredSize, 138, preferredSize)
+		.addContainerGap(defaultSize, maxValue);
+	}
+
+	private SequentialGroup generateHorizontalSettings(GroupLayout overlayPanelLayout,
+			ParallelGroup horizontalGeneralSettings) {
+		return overlayPanelLayout.createSequentialGroup()
+		.addContainerGap(defaultSize, maxValue)
+		.addGroup(horizontalGeneralSettings)
+		.addGap(172, 172, 172);
+	}
+
+	private SequentialGroup generateHorizontalBottom(GroupLayout overlayPanelLayout,
+			ParallelGroup horizontalBottomHalf) {
+		return overlayPanelLayout.createSequentialGroup()
+				.addGap(29, 29, 29)
+				.addGroup(horizontalBottomHalf)
+				.addGap(31, 31, 31);
+	}
+
+	private ParallelGroup generateHorizontalGeneralSettings(GroupLayout overlayPanelLayout, JLabel settingsLabel,
+			JLabel registerLabel) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addComponent(settingsLabel, trailingAlignment)
+				.addComponent(registerLabel, trailingAlignment);
+	}
+
+	private ParallelGroup generateHorizontalBottomHalf(GroupLayout overlayPanelLayout,
+			SequentialGroup horizontalLowerHalf, SequentialGroup horizontalVolumeControl) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(horizontalVolumeControl)
+				.addGroup(horizontalLowerHalf);
+	}
+
+	private SequentialGroup generateHorizontalVolumeControl(GroupLayout overlayPanelLayout, JLabel volumeLabel,
+			JSlider volumeSlider) {
+		return overlayPanelLayout.createSequentialGroup()
+				.addComponent(volumeLabel, preferredSize, 80, preferredSize)
+				.addPreferredGap(relatedPlacement, defaultSize, maxValue)
+				.addComponent(volumeSlider, preferredSize, 270, preferredSize);
+	}
+
+	private SequentialGroup generateHorizontalLowerHalf(GroupLayout overlayPanelLayout,
+			ParallelGroup horizontalLowerHalf1, ParallelGroup horizontalLowerHalf2) {
+		return overlayPanelLayout.createSequentialGroup()
+				.addGroup(horizontalLowerHalf2)
+				.addPreferredGap(relatedPlacement)
+				.addGroup(horizontalLowerHalf1);
+	}
+
+	private ParallelGroup generateHorizontalLowerHalf2(GroupLayout overlayPanelLayout, JLabel darkModeLabel,
+			JLabel usernameLabel, JLabel passwordLabel) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment)
+				.addComponent(darkModeLabel, preferredSize, 111, preferredSize)
+				.addComponent(passwordLabel, preferredSize, 80, preferredSize)
+				.addComponent(usernameLabel, preferredSize, 80, preferredSize);
+	}
+
+	private ParallelGroup generateHorizontalLowerHalf1(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton,
+			JPasswordField passwordTextField) {
+		return overlayPanelLayout.createParallelGroup(leadingAlignment)
+		.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize)
+		.addComponent(passwordTextField, trailingAlignment, preferredSize, 115, preferredSize)
+		.addComponent(usernameField, trailingAlignment, preferredSize, 115, preferredSize);
+	}
+
+	private SequentialGroup generateHorizontalFullScreen(GroupLayout mainPanelLayout, JButton configurationButton,
+			ParallelGroup horizontalTitleAndBottom) {
+		return mainPanelLayout.createSequentialGroup()
+				.addContainerGap()
+				.addComponent(configurationButton, preferredSize, 50, maxValue)
+				.addGap(18, 18, 18)
+				.addGroup(horizontalTitleAndBottom)
+				.addContainerGap(defaultSize, maxValue);
+	}
+
+	private ParallelGroup generateHorizontalTitleAndBottom(GroupLayout mainPanelLayout, JPanel titlePanel,
+			SequentialGroup horizontalScreenBottom) {
+		return mainPanelLayout.createParallelGroup(leadingAlignment)
+				.addGroup(horizontalScreenBottom)
+				.addComponent(titlePanel, preferredSize, 800, preferredSize);
+	}
+
+	private SequentialGroup generateHorizontalScreenBottom(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel,
+			ParallelGroup horizontalModes) {
+		return mainPanelLayout.createSequentialGroup()
+				.addGroup(horizontalModes)
+				.addGap(232, 232, 232)
+				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize);
+	}
+
+	private ParallelGroup generateHorizontalModes(GroupLayout mainPanelLayout, JButton easyModeButton, JButton normalModeButton,
+			JButton hardModeButton, JLabel namesLabel) {
+		return mainPanelLayout.createParallelGroup(trailingAlignment, false)
+				.addComponent(normalModeButton, defaultSize, 250, maxValue)
+				.addComponent(namesLabel, preferredSize, 250, preferredSize)
+				.addComponent(easyModeButton, defaultSize, defaultSize, maxValue)
+				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
+	}
+
 }

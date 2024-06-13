@@ -4,14 +4,9 @@ import javax.swing.UIManager;
 
 public class MainLoop {
 	
-	public static void main(String args[]) {
+	public static void main(String[] args) {
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+        	UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception e) {
         	e.printStackTrace();
         }
@@ -21,7 +16,6 @@ public class MainLoop {
         	public void run() {
                 StartingMenu frame = new StartingMenu();
                 frame.setLocationRelativeTo(null);
-                //frame.setResizable(false);
                 frame.setVisible(true);
             }
         });
