@@ -69,7 +69,6 @@ public class StartingMenu extends JFrame {
 		JButton normalModeButton = new JButton();
 		JButton hardModeButton = new JButton();
 		JButton configurationButton;
-		JButton submitButton = new JButton();
 		JToggleButton darkModeToggleButton = new JToggleButton();
 		
 		//Labels:
@@ -88,8 +87,6 @@ public class StartingMenu extends JFrame {
 		JSlider volumeSlider = new JSlider();
 		
 		//TextFields:
-		
-		JPasswordField passwordTextField = new JPasswordField();
 		
 		//Panels:
 		
@@ -150,19 +147,6 @@ public class StartingMenu extends JFrame {
 			}
 		});
 		
-			//Submit Button:
-		
-		submitButton.setText("Submit");
-		submitButton.setBounds(150, 100, 100, 30);
-		
-		submitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String text = usernameField.getText();
-				JOptionPane.showMessageDialog(overlayPanel, "User: " + text);
-			}
-		});
-		
 			//Dark Mode Toggle Button:
 		
 		darkModeToggleButton.setText("X");
@@ -213,14 +197,8 @@ public class StartingMenu extends JFrame {
 		
 				//Horizontal Layouts:
 		
-		ParallelGroup horizontalLowerHalf1 = generateHorizontalLowerHalf1(overlayPanelLayout,
-				darkModeToggleButton, passwordTextField);
-		
-		ParallelGroup horizontalLowerHalf2 = generateHorizontalLowerHalf2(overlayPanelLayout,
-				darkModeLabel, usernameLabel, passwordLabel);
-		
 		SequentialGroup horizontalLowerHalf = generateHorizontalLowerHalf(overlayPanelLayout,
-				horizontalLowerHalf1, horizontalLowerHalf2);
+				darkModeToggleButton, darkModeLabel);
 		
 		SequentialGroup horizontalVolumeControl = generateHorizontalVolumeControl(overlayPanelLayout,
 				volumeLabel, volumeSlider);
@@ -229,18 +207,16 @@ public class StartingMenu extends JFrame {
 				horizontalLowerHalf, horizontalVolumeControl);
 		
 		ParallelGroup horizontalGeneralSettings = generateHorizontalGeneralSettings(overlayPanelLayout,
-				settingsLabel, registerLabel);
+				settingsLabel);
 		
 		SequentialGroup horizontalBottom = generateHorizontalBottom(overlayPanelLayout,
 				horizontalBottomHalf);
 		
 		SequentialGroup horizontalSettings = generateHorizontalSettings(overlayPanelLayout,
 				horizontalGeneralSettings);
-		
-		SequentialGroup horizontalSubmit = generateHorizontalSubmit(overlayPanelLayout, submitButton);
-		
+				
 		ParallelGroup horizontalCompleteScreen = generateHorizontalCompleteScreen(overlayPanelLayout,
-				horizontalBottom, horizontalSettings, horizontalSubmit);
+				horizontalBottom, horizontalSettings);
 		
 		overlayPanelLayout.setHorizontalGroup(horizontalCompleteScreen);
 		
@@ -252,16 +228,8 @@ public class StartingMenu extends JFrame {
 		ParallelGroup verticalDarkMode = generateVerticalDarkMode(overlayPanelLayout,
 				darkModeToggleButton, darkModeLabel);
 		
-		ParallelGroup verticalUsername = generateVerticalUsername(overlayPanelLayout,
-				usernameLabel);
-		
-		ParallelGroup verticalPassword = generateVerticalPassword(overlayPanelLayout,
-				passwordLabel, passwordTextField);
-		
 		SequentialGroup verticalCompleteScreen =  generateVerticalCompleteScreen(overlayPanelLayout,
-				settingsLabel, registerLabel,verticalVolumeControl,
-				verticalDarkMode, verticalUsername, verticalPassword)
-				.addComponent(submitButton, preferredSize, 42, preferredSize)
+				settingsLabel, verticalVolumeControl, verticalDarkMode)
 				.addGap(43, 43, 43);
 		
 		overlayPanelLayout.setVerticalGroup(verticalCompleteScreen);
@@ -304,8 +272,9 @@ public class StartingMenu extends JFrame {
 		ParallelGroup horizontalModes = generateHorizontalModes(mainPanelLayout, easyModeButton, normalModeButton,
 				hardModeButton, namesLabel);
 		
-		SequentialGroup horizontalScreenBottom = generateHorizontalScreenBottom(mainPanelLayout,
-				gameDescriptionLabel, horizontalModes);
+		ParallelGroup rightHor = generateRightHorizontal(mainPanelLayout, gameDescriptionLabel, usernameLabel);
+		
+		SequentialGroup horizontalScreenBottom = generateHorizontalScreenBottom(mainPanelLayout, horizontalModes, rightHor);
 		
 		ParallelGroup horizontalTitleAndBottom = generateHorizontalTitleAndBottom(mainPanelLayout,
 				titlePanel, horizontalScreenBottom);
@@ -321,7 +290,7 @@ public class StartingMenu extends JFrame {
 				easyModeButton, normalModeButton, hardModeButton, namesLabel);
 		
 		SequentialGroup verticalDescription = generateVerticalDescription(mainPanelLayout,
-				gameDescriptionLabel);
+				gameDescriptionLabel, usernameLabel);
 		
 		ParallelGroup verticalScreenBottom = generateHorizontalBottomHalf(mainPanelLayout,
 				verticalDescription, verticalModes);
@@ -453,9 +422,11 @@ public class StartingMenu extends JFrame {
 		}
 	}
 
+	//Verticals
+	
 	private SequentialGroup generateVerticalCompleteScreen(GroupLayout overlayPanelLayout,
-			JLabel settingsLabel, JLabel registerLabel, ParallelGroup verticalVolumeControl,
-			ParallelGroup verticalDarkMode, ParallelGroup verticalUsername, ParallelGroup verticalPassword) {
+			JLabel settingsLabel, ParallelGroup verticalVolumeControl,
+			ParallelGroup verticalDarkMode) {
 		return overlayPanelLayout.createSequentialGroup()
 				.addContainerGap()
 				.addComponent(settingsLabel, preferredSize, 30, preferredSize)
@@ -463,26 +434,7 @@ public class StartingMenu extends JFrame {
 				.addGroup(verticalVolumeControl)
 				.addGap(15, 15, 15)
 				.addGroup(verticalDarkMode)
-				.addPreferredGap(relatedPlacement)
-				.addComponent(registerLabel, preferredSize, 30, preferredSize)
-				.addPreferredGap(relatedPlacement)
-				.addGroup(verticalUsername)
-				.addPreferredGap(relatedPlacement)
-				.addGroup(verticalPassword)
-				.addGap(26, 26, 26);
-	}
-
-	private ParallelGroup generateVerticalPassword(GroupLayout overlayPanelLayout, JLabel passwordLabel,
-			JPasswordField passwordTextField) {
-		return overlayPanelLayout.createParallelGroup(baselineAlignment)
-				.addComponent(passwordLabel, defaultSize, defaultSize, maxValue)
-				.addComponent(passwordTextField, preferredSize, defaultSize, preferredSize);
-	}
-
-	private ParallelGroup generateVerticalUsername(GroupLayout overlayPanelLayout, JLabel usernameLabel) {
-		return overlayPanelLayout.createParallelGroup(baselineAlignment)
-				.addComponent(usernameLabel, defaultSize, 82, maxValue)
-				.addComponent(usernameField, preferredSize, defaultSize, preferredSize);
+				.addGap(150, 150, 150);
 	}
 
 	private ParallelGroup generateVerticalDarkMode(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton,
@@ -515,10 +467,14 @@ public class StartingMenu extends JFrame {
 				.addComponent(configurationButton, preferredSize, 50, preferredSize);
 	}
 
-	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel) {
+	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel) {
 		return mainPanelLayout.createSequentialGroup()
 				.addGap(33, 33, 33)
-				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue);
+				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue)
+				.addPreferredGap(relatedPlacement)
+				.addComponent(usernameLabel, defaultSize, 82, maxValue)
+				.addComponent(usernameField, preferredSize, defaultSize, preferredSize)
+				.addGap(50,50,50);
 	}
 
 	private SequentialGroup generateVerticalModes(GroupLayout mainPanelLayout, JButton easyModeButton,
@@ -534,19 +490,13 @@ public class StartingMenu extends JFrame {
 			.addComponent(namesLabel, preferredSize, 65, preferredSize);
 	}
 
+	// Horizontals
+	
 	private ParallelGroup generateHorizontalCompleteScreen(GroupLayout overlayPanelLayout,
-			SequentialGroup horizontalBottom, SequentialGroup horizontalSettings, SequentialGroup horizontalSubmit) {
+			SequentialGroup horizontalBottom, SequentialGroup horizontalSettings) {
 		return overlayPanelLayout.createParallelGroup(leadingAlignment)
 				.addGroup(trailingAlignment, horizontalBottom)
-				.addGroup(horizontalSettings)
-				.addGroup(horizontalSubmit);
-	}
-
-	private SequentialGroup generateHorizontalSubmit(GroupLayout overlayPanelLayout, JButton submitButton) {
-		return overlayPanelLayout.createSequentialGroup()
-		.addGap(132, 132, 132)
-		.addComponent(submitButton, preferredSize, 138, preferredSize)
-		.addContainerGap(defaultSize, maxValue);
+				.addGroup(horizontalSettings);
 	}
 
 	private SequentialGroup generateHorizontalSettings(GroupLayout overlayPanelLayout,
@@ -565,11 +515,9 @@ public class StartingMenu extends JFrame {
 				.addGap(31, 31, 31);
 	}
 
-	private ParallelGroup generateHorizontalGeneralSettings(GroupLayout overlayPanelLayout, JLabel settingsLabel,
-			JLabel registerLabel) {
+	private ParallelGroup generateHorizontalGeneralSettings(GroupLayout overlayPanelLayout, JLabel settingsLabel) {
 		return overlayPanelLayout.createParallelGroup(leadingAlignment)
-				.addComponent(settingsLabel, trailingAlignment)
-				.addComponent(registerLabel, trailingAlignment);
+				.addComponent(settingsLabel, trailingAlignment);
 	}
 
 	private ParallelGroup generateHorizontalBottomHalf(GroupLayout overlayPanelLayout,
@@ -587,30 +535,15 @@ public class StartingMenu extends JFrame {
 				.addComponent(volumeSlider, preferredSize, 270, preferredSize);
 	}
 
-	private SequentialGroup generateHorizontalLowerHalf(GroupLayout overlayPanelLayout,
-			ParallelGroup horizontalLowerHalf1, ParallelGroup horizontalLowerHalf2) {
+	private SequentialGroup generateHorizontalLowerHalf(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton, JLabel darkModeLabel) {
 		return overlayPanelLayout.createSequentialGroup()
-				.addGroup(horizontalLowerHalf2)
-				.addPreferredGap(relatedPlacement)
-				.addGroup(horizontalLowerHalf1);
-	}
-
-	private ParallelGroup generateHorizontalLowerHalf2(GroupLayout overlayPanelLayout, JLabel darkModeLabel,
-			JLabel usernameLabel, JLabel passwordLabel) {
-		return overlayPanelLayout.createParallelGroup(leadingAlignment)
 				.addComponent(darkModeLabel, preferredSize, 111, preferredSize)
-				.addComponent(passwordLabel, preferredSize, 80, preferredSize)
-				.addComponent(usernameLabel, preferredSize, 80, preferredSize);
+				.addPreferredGap(relatedPlacement)
+				.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize);
 	}
 
-	private ParallelGroup generateHorizontalLowerHalf1(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton,
-			JPasswordField passwordTextField) {
-		return overlayPanelLayout.createParallelGroup(leadingAlignment)
-		.addComponent(darkModeToggleButton, preferredSize, 45, preferredSize)
-		.addComponent(passwordTextField, trailingAlignment, preferredSize, 115, preferredSize)
-		.addComponent(usernameField, trailingAlignment, preferredSize, 115, preferredSize);
-	}
-
+	// MainPanel methods
+	
 	private SequentialGroup generateHorizontalFullScreen(GroupLayout mainPanelLayout, JButton configurationButton,
 			ParallelGroup horizontalTitleAndBottom) {
 		return mainPanelLayout.createSequentialGroup()
@@ -628,12 +561,12 @@ public class StartingMenu extends JFrame {
 				.addComponent(titlePanel, preferredSize, 800, preferredSize);
 	}
 
-	private SequentialGroup generateHorizontalScreenBottom(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel,
-			ParallelGroup horizontalModes) {
+	private SequentialGroup generateHorizontalScreenBottom(GroupLayout mainPanelLayout,	ParallelGroup horizontalModes, ParallelGroup rightHor) {
 		return mainPanelLayout.createSequentialGroup()
 				.addGroup(horizontalModes)
 				.addGap(232, 232, 232)
-				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize);
+				.addGroup(rightHor);
+				
 	}
 
 	private ParallelGroup generateHorizontalModes(GroupLayout mainPanelLayout, JButton easyModeButton, JButton normalModeButton,
@@ -643,6 +576,13 @@ public class StartingMenu extends JFrame {
 				.addComponent(namesLabel, preferredSize, 250, preferredSize)
 				.addComponent(easyModeButton, defaultSize, defaultSize, maxValue)
 				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
+	}
+	
+	private ParallelGroup generateRightHorizontal(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel) {
+		return mainPanelLayout.createParallelGroup(trailingAlignment, false)
+				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize)
+				.addComponent(usernameLabel, defaultSize, 82, maxValue)
+				.addComponent(usernameField, preferredSize, 115, preferredSize);
 	}
 
 }
