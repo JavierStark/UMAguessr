@@ -42,6 +42,7 @@ public class StartingMenu extends JFrame {
 
 
 	private JTextField usernameField = new JTextField();
+	private JPanel mainPanel = new JPanel();
 	private JPanel overlayPanel = new JPanel();
 	
 	static final int defaultSize = GroupLayout.DEFAULT_SIZE;
@@ -93,7 +94,6 @@ public class StartingMenu extends JFrame {
 		//Panels:
 		
 		JPanel titlePanel;
-		JPanel mainPanel  = new JPanel();
 		JPanel backgroundPanel;
 		
 		//Group Layouts:
@@ -431,8 +431,10 @@ public class StartingMenu extends JFrame {
 	}
 	
 	private void startGame(GameService.Difficulty difficulty){
-		if(usernameField.getText().isEmpty())
+		if(usernameField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(mainPanel, "ERROR: \nmust enter username");
 			return;
+		}
 
 		GameService gameService = new GameService(usernameField.getText());
 
