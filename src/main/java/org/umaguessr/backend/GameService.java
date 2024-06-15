@@ -26,7 +26,8 @@ public class GameService {
         this.username = username;
         this.sessionActive = false;
         this.lastDatePlayed = getLastDateByUsername(username);
-        this.dailyAttempt = getNumberOfDailyAttemptsByUsername(username) -1;
+        this.dailyAttempt = getNumberOfDailyAttemptsByUsername(username);
+        System.out.println("Daily attempts: " + dailyAttempt);
     }
 
     public int getDailyAttempt() {
@@ -58,7 +59,6 @@ public class GameService {
      * @return True if the session started succesfully. False otherwise.
      */
     public boolean startSession(int newGameDifficulty) {
-
         if (!canPlay()) {
             sessionActive = false;
             return false;
@@ -75,8 +75,11 @@ public class GameService {
      * @return True if the game can be started, false otherwise.
      */
     public boolean continuePlaying(){
-        dailyAttempt++;
-        return canPlay();
+        if(canPlay()){
+            dailyAttempt++;
+            return true;
+        }
+        return false;
     }
 
     public void endSession() {
@@ -95,7 +98,7 @@ public class GameService {
      * @return True if the user can play another game, false otherwise.
      */
     private boolean canPlay() {
-        if(dailyAttempt > MAX_ATTEMPTS) {
+        if(dailyAttempt >= MAX_ATTEMPTS) {
             return false;
         }
         if(lastDatePlayed != null) {
