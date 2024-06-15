@@ -8,12 +8,14 @@ public class ScorePanel extends JPanel {
 	
 	private int score;
 	private int round;
+	private final int maxRound;
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
 	
 	public ScorePanel(int initialRound, int maxRound) {
 		score = 0;
 		round = initialRound;
+		this.maxRound = maxRound;
 		
 		setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 				
@@ -50,6 +52,6 @@ public class ScorePanel extends JPanel {
 	
 	public void nextRound() {
 		round ++;
-		roundLabel.setText("Round: " + round);
+		roundLabel.setText("Round: " + round+ "/" + maxRound);
 	}
 }
