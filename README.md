@@ -70,4 +70,11 @@ Today the main focused has been refactoring the backend code, where we can highl
 - Some unncecesary conditionals of the ScoreService class have been removed.
 
 ### Days 11, 12 & 13:
-These days some more refactoring was done. A bug where the images were not loaded from the web when filtered images were asked was fixed; a bufferedImage parameter was added to the HideablePanel and ZoomableImagePanel classes and the Database interface was deleted, as it was not being used. Also, some tests were added to the GameService class, and we started managing the daily session feature. Alsom some extra buttong were added to the menu, improving the UI and giving it access to the GameService class.
+These days some more refactoring was done. A bug where the images were not loaded from the web when filtered images were asked was fixed; a bufferedImage parameter was added to the HideablePanel and ZoomableImagePanel classes and the Database interface was deleted, as it was not being used. Also, some tests were added to the GameService class, and we started managing the daily session feature. Finally, some extra buttons were added to the menu, improving the UI and giving it access to the GameService class.
+
+### Day 14:
+We started adding some new images to the database, so the previously added test images were removed, because now the test can be done with the real images. Also, some URLs were fixed in the JSON file.
+
+The frontend team changed the window divider from horizontal into vertical, so that the game interface is more eye-pleasant and does not depend so much on the panel size. Also, the LookAndFeel style was changed to Windows, in order to improve the asthetics of the UI. Some extra minor improvements were done, like changing the labels of the buttons.
+
+The backend team fixed some unusual bugs related to the scoring system, where the score obtained never reached the maximum score. The team also tackled some other bugs in the ImageService class, which showed infinite images.
