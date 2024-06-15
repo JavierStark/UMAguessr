@@ -3,6 +3,7 @@ package backend;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.umaguessr.backend.FilterByDifficulty;
 import org.umaguessr.backend.GameService;
 import java.time.*;
 import java.sql.*;
@@ -13,7 +14,7 @@ class GameServiceTest {
 
     private static final String JDBC_URL = "jdbc:postgresql://vps.damianverde.es:5432/umaguessr";
     private static final String JDBC_USER = "postgres";
-    private static final String JDBC_PASSWORD = "bombardeenlaetsii";
+    private static final String JDBC_PASSWORD = "WCa%YVo6L$35@7Z";
     private static final String SAMPLE_USERNAME = "testuser";
 
     @BeforeEach
@@ -51,20 +52,20 @@ class GameServiceTest {
         }
 
         GameService sut = new GameService(SAMPLE_USERNAME);
-        assertFalse(sut.startSession(GameService.Difficulty.Easy));
+        assertFalse(sut.startSession(FilterByDifficulty.EASY_DIFFICULTY));
     }
 
     @Test
     void testCanStartSessionIfMoreThanADayPassed() {
         GameService sut = new GameService(SAMPLE_USERNAME);
-        sut.startSession(GameService.Difficulty.Easy);
+        sut.startSession(FilterByDifficulty.EASY_DIFFICULTY);
         assertTrue(sut.isSessionActive());
     }
 
     @Test
     void testEndSession() {
         GameService sut = new GameService(SAMPLE_USERNAME);
-        sut.startSession(GameService.Difficulty.Easy);
+        sut.startSession(FilterByDifficulty.EASY_DIFFICULTY);
         sut.endSession();
         assertFalse(sut.isSessionActive());
     }

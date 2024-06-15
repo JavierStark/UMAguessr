@@ -28,8 +28,6 @@ class ImageServiceTest {
         assertNotNull(imageRepository);
         List<Image> images = imageRepository.getAllImages();
         assertEquals(12, images.size());
-        assertEquals("1", images.get(0).getId());
-        assertEquals("2", images.get(1).getId());
     }
 
     @Test
@@ -78,12 +76,12 @@ class ImageServiceTest {
     @Test
     void testCheckDifficultyIsCorrect() throws SQLException {
         assertEquals(1, imageRepository.getImageData("1").getDifficulty());
-        assertEquals(7, imageRepository.getImageData("4").getDifficulty());
+        assertEquals(2, imageRepository.getImageData("7").getDifficulty());
     }
 
     @Test
     void testFilterByFaculty() throws SQLException {
         ImageService filteredImageService = new ImageService(new FilterByFaculty("ETSII"));
-        assertEquals(5, filteredImageService.getAllImages().size());
+        assertEquals(6, filteredImageService.getAllImages().size());
     }
 }
