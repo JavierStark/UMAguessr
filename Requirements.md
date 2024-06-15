@@ -1,4 +1,4 @@
-# Requirements
+# Requirements (implemented)
 
 - Main menu interface with user login fields, difficulty selection and game description
   - Error window when trying to play without being logged
@@ -13,6 +13,14 @@
   - Button to confirm a guess
   - Clickable map to set marker for current guess
 
+# Requirements (to be implemented in future iterations)
+- Secure user login with password
+- Online scoreboard
+- Much more images of all faculties
+- More difficulty levels
+- More game modes
+- Port the app to web and mobile
+
 ## App flow
 
 - The user access any difficulty mode from the main menu after typing its user name
@@ -21,3 +29,5 @@
 - They will be rewarded points based on their precision (from 0 to 100 each round)
 - Their round number will be saved between game session
 - They will be only able to do a certain number of rounds per day. They cannot play if they have played the max number of round
+
+
