@@ -18,7 +18,7 @@ public class ImageService {
 
     private static final String JDBC_URL = "jdbc:postgresql://vps.damianverde.es:5432/umaguessr";
     private static final String JDBC_USER = "postgres";
-    private static final String JDBC_PASSWORD = "bombardeenlaetsii";
+    private static final String JDBC_PASSWORD = "WCa%YVo6L$35@7Z";
 
     private List<Image> imagesData;
     private Set<String> playedImageIds;
