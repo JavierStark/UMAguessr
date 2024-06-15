@@ -272,7 +272,7 @@ public class StartingMenu extends JFrame {
 		ParallelGroup horizontalModes = generateHorizontalModes(mainPanelLayout, easyModeButton, normalModeButton,
 				hardModeButton, namesLabel);
 		
-		ParallelGroup rightHor = generateRightHorizontal(mainPanelLayout, gameDescriptionLabel, usernameLabel);
+		ParallelGroup rightHor = generateRightHorizontal(mainPanelLayout, gameDescriptionLabel, usernameLabel, usernameField);
 		
 		SequentialGroup horizontalScreenBottom = generateHorizontalScreenBottom(mainPanelLayout, horizontalModes, rightHor);
 		
@@ -289,8 +289,10 @@ public class StartingMenu extends JFrame {
 		SequentialGroup verticalModes = generateVerticalModes(mainPanelLayout,
 				easyModeButton, normalModeButton, hardModeButton, namesLabel);
 		
+		ParallelGroup usrCtrl = generateVerticalUsernameControl(mainPanelLayout, usernameLabel, usernameField);
+		
 		SequentialGroup verticalDescription = generateVerticalDescription(mainPanelLayout,
-				gameDescriptionLabel, usernameLabel);
+				gameDescriptionLabel, usrCtrl);
 		
 		ParallelGroup verticalScreenBottom = generateHorizontalBottomHalf(mainPanelLayout,
 				verticalDescription, verticalModes);
@@ -312,7 +314,7 @@ public class StartingMenu extends JFrame {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				ImageIcon icon = new ImageIcon("C:\\Users\\pedro\\Pictures\\Saved Pictures\\Star Landing.jpg");
+				ImageIcon icon = new ImageIcon("C:\\Users\\Pedro Torres\\Documents\\UMAGuesrr\\Images\\");
 				Image image = icon.getImage();
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 			}
@@ -434,7 +436,7 @@ public class StartingMenu extends JFrame {
 				.addGroup(verticalVolumeControl)
 				.addGap(15, 15, 15)
 				.addGroup(verticalDarkMode)
-				.addGap(150, 150, 150);
+				.addGap(250, 250, 250);
 	}
 
 	private ParallelGroup generateVerticalDarkMode(GroupLayout overlayPanelLayout, JToggleButton darkModeToggleButton,
@@ -467,13 +469,19 @@ public class StartingMenu extends JFrame {
 				.addComponent(configurationButton, preferredSize, 50, preferredSize);
 	}
 
-	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel) {
+	private ParallelGroup generateVerticalUsernameControl(GroupLayout mainPanelLayout, JLabel usernameLabel,
+			JTextField usernameField) {
+		return mainPanelLayout.createParallelGroup(baselineAlignment)
+				.addComponent(usernameLabel, defaultSize, 82, maxValue)
+				.addComponent(usernameField, preferredSize, defaultSize, preferredSize);
+	}
+	
+	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, ParallelGroup usrCtrl) {
 		return mainPanelLayout.createSequentialGroup()
 				.addGap(33, 33, 33)
 				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue)
 				.addPreferredGap(relatedPlacement)
-				.addComponent(usernameLabel, defaultSize, 82, maxValue)
-				.addComponent(usernameField, preferredSize, defaultSize, preferredSize)
+				.addGroup(usrCtrl)
 				.addGap(50,50,50);
 	}
 
@@ -578,11 +586,12 @@ public class StartingMenu extends JFrame {
 				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
 	}
 	
-	private ParallelGroup generateRightHorizontal(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel) {
+	private ParallelGroup generateRightHorizontal(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel, 
+			JTextField usernameField) {
 		return mainPanelLayout.createParallelGroup(trailingAlignment, false)
 				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize)
 				.addComponent(usernameLabel, defaultSize, 82, maxValue)
-				.addComponent(usernameField, preferredSize, 115, preferredSize);
+				.addComponent(usernameField, preferredSize, 200, preferredSize);
 	}
 
 }
