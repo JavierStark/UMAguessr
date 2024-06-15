@@ -29,6 +29,14 @@ public class ScoreService {
 		this.username = username;
 	}
 
+	/**
+	 * This method calculates the score that the user gets given a guess.
+	 * @param id Id of the current reference image
+	 * @param coordX X coordinate of the user's guess
+	 * @param coordY Y coordinate of the user's guess
+	 * @param dailyAttempt Attempt number of the user
+	 * @return Resulting score
+	 */
 	public int calculateScore(String id, int coordX, int coordY, int dailyAttempt) {
 		double distance = calculateDistance(id, coordX, coordY);
 		int points = calculatePointsBasedOnDistance(distance);
@@ -41,6 +49,13 @@ public class ScoreService {
 		return currentScore;
 	}
 
+	/**
+	 * Auxiliary method that calculates the distance between the image and the guess
+	 * @param id Current image
+	 * @param coordX X coordinate of the guess
+	 * @param coordY Y coordinate of the guess
+	 * @return Distance between image and guess
+	 */
 	private double calculateDistance(String id, int coordX, int coordY) {
 		System.out.println("Calculating distance for image " + id + " with coordinates (" + coordX + ", " + coordY + ")");
 		Image image = imageService.getImageData(id);
@@ -51,6 +66,13 @@ public class ScoreService {
 		return Math.sqrt((double) (differenceX * differenceX) + differenceY * differenceY);
 	}
 
+	/**
+	 * This auxiliary method calculates the score based on the distance. It is an exponential function
+	 * with negative exponent; thus decreasing rapidly the further away the guess is from the actual image.
+	 * All parameters of the function can be freely modified and are declared as constants in this class.
+	 * @param distance
+	 * @return Resulting points.
+	 */
 	private int calculatePointsBasedOnDistance(double distance) {
 		if (distance <= MIN_DISTANCE_FOR_MAX_SCORE)
 			return MAX_SCORE;
@@ -61,13 +83,16 @@ public class ScoreService {
 		return (int) Math.ceil(Math.pow(BASE, EXPONENT_MULTIPLIER * distance + EXPONENT_CONSTANT));
 	}
 
+	/**
+	 * Auxiliary method that uses the class DatabaseService to save the resulting score into the database.
+	 * @param imageId Current image
+	 * @param score Score got
+	 * @param dailyAttempt Daily attempt number
+	 */
 	private void saveScoreToDB(String imageId, int score, int dailyAttempt) {
 
 		DatabaseService.saveScoreIntoDatabase(imageId, score, dailyAttempt, username);
 
 	}
 
-	public String getUsername() {
-		return username;
-	}
 }
