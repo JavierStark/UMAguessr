@@ -16,7 +16,6 @@ public class ScorePanel extends JPanel {
 		round = 1;
 		
 		setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		setBackground(Color.WHITE);
 				
 		roundLabel = new JLabel("Round: " + round, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -25,6 +24,16 @@ public class ScorePanel extends JPanel {
 		
 		roundLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
 		scoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
+		
+		if(StartingMenu.white) {
+			setBackground(Color.WHITE);
+			roundLabel.setForeground(Color.BLACK);
+			scoreLabel.setForeground(Color.BLACK);
+		} else {
+			setBackground(StartingMenu.myBlack);
+			roundLabel.setForeground(Color.WHITE);
+			scoreLabel.setForeground(Color.WHITE);
+		}
 		
 		add(roundLabel, BorderLayout.WEST);
 		add(scoreLabel, BorderLayout.WEST);
