@@ -11,9 +11,9 @@ public class ScorePanel extends JPanel {
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
 	
-	public ScorePanel() {
+	public ScorePanel(int initialRound) {
 		score = 0;
-		round = 1;
+		round = initialRound;
 		
 		setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 				
