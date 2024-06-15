@@ -69,20 +69,6 @@ public class GameService {
         return true;
     }
 
-    private boolean canPlay() {
-        if(dailyAttempt > MAX_ATTEMPTS) {
-            return false;
-        }
-        if(lastDatePlayed != null) {
-            if(lastDatePlayed.getDayOfYear() != LocalDateTime.now().getDayOfYear()) {
-                dailyAttempt = 0;
-                return true;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * Starts, if possible, a new game.
      * @return True if the game can be started, false otherwise.
