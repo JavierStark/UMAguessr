@@ -97,3 +97,7 @@ We started removing all the unecessary panels that contained the different eleme
 
 ### Days 18 & 19:
 These days we refactored the game start implementation, solved some conflicts created by merging frontend branch into backend branch, and added new text fields for the user and password with a button to submit.
+
+### Days 20, 21, 22 & 23:
+![5June](https://github.com/JavierStark/UMAguessr/assets/162295178/a5cdfa15-ffba-4605-9051-248636fac6f1)
+These days we implemented a blocking feature so that after playing 6 times in a day that user can't play anymore that day. Also added a new button detecter to detect the ESC key when pressed, merged both branches to the main one, and finally fixed all tests.
