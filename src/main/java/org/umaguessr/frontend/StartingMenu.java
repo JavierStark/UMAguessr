@@ -427,6 +427,8 @@ public class StartingMenu extends JFrame {
 		GameService gameService = new GameService(usernameField.getText());
 
 		if(!gameService.startSession(difficulty)) {
+			JOptionPane.showMessageDialog(mainPanel, "Maximum number of attempts reached."
+					+ " Please try again tomorrow.");
 			return;
 		}
 		setVisible(false);
