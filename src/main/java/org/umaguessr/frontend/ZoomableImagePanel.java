@@ -14,8 +14,8 @@ public class ZoomableImagePanel extends JLayeredPane {
 	private double scale = 1.0;
 	private final double scaleMultiplier;
 	private Image image;
-	private Point2D.Double translation;
-	private Point2D.Double inImageCoord;
+	private Point2D.Double translation = new Point2D.Double(0,0);
+	private Point2D.Double inImageCoord = new Point2D.Double(0,0);
 
 	public double getTranslateX() {
 		return translation.x;

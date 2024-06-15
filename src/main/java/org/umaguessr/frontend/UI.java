@@ -20,9 +20,12 @@ public class UI extends JFrame {
 	ScoreService scoreService;
 	GameService gameService;
 	ZoomableImagePanel zoomableImagePanel;
+	JPanel content;
 	private Image currentImage;
+	private StartingMenu startingMenu;
 
-	public UI(ImageService imageService, ScoreService scoreService, GameService gameService) throws IOException, URISyntaxException {
+	public UI(ImageService imageService, ScoreService scoreService,
+			GameService gameService) throws IOException, URISyntaxException {
 		super();
 
 		this.imageService = imageService;
@@ -62,7 +65,7 @@ public class UI extends JFrame {
 
 
 
-		JPanel content = new JPanel();
+		content = new JPanel();
 		content.setLayout(new BorderLayout());
 		content.add(splitPane, BorderLayout.CENTER);
 		content.add(scorePanel, BorderLayout.NORTH);
@@ -86,8 +89,28 @@ public class UI extends JFrame {
 		//----------------------------------------------------------------------------------------------------------new
 		pack();
 	}
+	
+	public UI(ImageService imageService, ScoreService scoreService,
+			GameService gameService, StartingMenu startingMenu1) throws IOException, URISyntaxException {
+		this(imageService, scoreService, gameService);
+		this.startingMenu = startingMenu1;
+		content.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "escPressed");
+		content.getActionMap().put("escPressed", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startingMenu.showAgain();
+				hideThis();
+			}
+		});
+	}
 
+	private void hideThis() {
+		this.setVisible(false);
+	}
+	
+	
 	private JButton getSignalButton(ScorePanel scorePanel) {
 		JButton signalButton = new JButton("Make Guess");
 
@@ -102,7 +125,8 @@ public class UI extends JFrame {
 				Image newImage = imageService.getImageData(imageService.getRandomUnplayedImageId());
 				changeImage(newImage);
 			}else{
-				this.dispose();
+				hideThis();
+				startingMenu.showAgain();
 			}
 		});
 
