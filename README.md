@@ -47,4 +47,9 @@ The backend team has integrated some basic methods and functions focused on imag
 
 ### Day 7:
 On the one hand, the frontend team has added some new features to the ZoomableImage class. The zoom panning has been improved, we have defined some strict bounds for the images, and fixed a bug where the top image dissapeared. Then, a new method has been added, which is capable of obtaining the real coordinates of the image on click, regardless of the active zoom.
+
 On the other hand, the backend team has focused on the ScoreService class, which handles the scoring system of the game, although its frontend aspect has not been implemented yet. Also, we have refactored the ImageService class, and added some extra tests to it.
+
+### Day 8:
+Some general refactoring has been done to the whole project, mainly improving the readability and minimizing the duplication of the code. Also, the backend team has added new functionalities regarding the image-related classes, while the frontend team has implemented the Marker class, which is used to locate a marker with associated coordinates in the map, which will then be compared to the actual coordinates of the image to calculate the score.
+
