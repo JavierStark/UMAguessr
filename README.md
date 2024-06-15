@@ -99,4 +99,5 @@ These days we implemented a blocking feature so that after playing 6 times in a 
 These days we refactored all classes from the frontend branch, added new java documentation to all the backend classes, added a mesage to display when trying to play without username entered, and updated the README file.
 
 ### Day 30(last day):
+![Screenshot 2024-06-15 225833](https://github.com/JavierStark/UMAguessr/assets/56975675/2921e3a4-40e3-4b5f-8085-1ad0d2000215)
 Today was the final day, we started changing the location of the username field in the StartingMenu class from the settings pannel to the main panel, we changed the database password after finding out that someone had deleted things from it, and in general we fixed some final refactor in both frontend and backend as well as fixing lots of minor bugs and adding last features that we missed in the previous days.
