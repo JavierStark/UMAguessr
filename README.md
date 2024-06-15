@@ -84,14 +84,19 @@ Today, we worked during the class period, where we fixed the size of the score p
 
 ### Day 17:
 ![1June](https://github.com/JavierStark/UMAguessr/assets/162295178/62808f29-42be-42c7-a375-2272e98fc157)
+
+### Day 18: 
 We started removing all the unecessary panels that contained the different elements from the main frame in StartingMenu class and instead we added all of them to the main panel. Then we refactored the image files creation adding then directly to its component so we could manage them better, and changed an image. Finally we fixed and changed the settings pannel to a complete new panel where we added new elements such as the volume slider and a button to change the theme from white to black.
 
-### Days 18 & 19:
+### Days 19 & 20: 
 These days we refactored the game start implementation, solved some conflicts created by merging frontend branch into backend branch, and added new text fields for the user and password with a button to submit.
 
-### Days 20, 21, 22 & 23:
+### Days 21, 22, 23, 24, 25, 26, 27 & 28:
 ![5June](https://github.com/JavierStark/UMAguessr/assets/162295178/a5cdfa15-ffba-4605-9051-248636fac6f1)
 These days we implemented a blocking feature so that after playing 6 times in a day that user can't play anymore that day. Also added a new button detecter to detect the ESC key when pressed, merged both branches to the main one, and finally fixed all tests.
 
-### Days 24, 25 & 26:
+### Days 29:
 These days we refactored all classes from the frontend branch, added new java documentation to all the backend classes, added a mesage to display when trying to play without username entered, and updated the README file.
+
+### Day 30(last day):
+Today was the final day, we started changing the location of the username field in the StartingMenu class from the settings pannel to the main panel, we changed the database password after finding out that someone had deleted things from it, and in general we fixed some final thins and refactored what was left to do.
