@@ -94,3 +94,6 @@ Today, we worked during the class period, where we fixed the size of the score p
 ### Day 17:
 ![1June](https://github.com/JavierStark/UMAguessr/assets/162295178/62808f29-42be-42c7-a375-2272e98fc157)
 We started removing all the unecessary panels that contained the different elements from the main frame in StartingMenu class and instead we added all of them to the main panel. Then we refactored the image files creation adding then directly to its component so we could manage them better, and changed an image. Finally we fixed and changed the settings pannel to a complete new panel where we added new elements such as the volume slider and a button to change the theme from white to black.
+
+### Days 18 & 19:
+These days we refactored the game start implementation, solved some conflicts created by merging frontend branch into backend branch, and added new text fields for the user and password with a button to submit.
