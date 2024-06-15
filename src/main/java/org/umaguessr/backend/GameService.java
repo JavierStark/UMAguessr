@@ -14,9 +14,6 @@ public class GameService {
     private LocalDateTime lastDatePlayed;
     private String username;
 
-    public int getDailyAttempt() {
-        return dailyAttempt;
-    }
 
     private int gameDifficulty;
     private boolean sessionActive;
@@ -29,7 +26,11 @@ public class GameService {
         this.username = username;
         this.sessionActive = false;
         this.lastDatePlayed = getLastDateByUsername(username);
-        this.dailyAttempt = getNumberOfDailyAttemptsByUsername(username);
+        this.dailyAttempt = getNumberOfDailyAttemptsByUsername(username) -1;
+    }
+
+    public int getDailyAttempt() {
+        return dailyAttempt;
     }
 
     /**
