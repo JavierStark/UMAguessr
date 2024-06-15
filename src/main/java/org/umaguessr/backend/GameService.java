@@ -21,6 +21,10 @@ public class GameService {
     private int gameDifficulty;
     private boolean sessionActive;
 
+    /**
+     * Default constructor.
+     * @param username Username
+     */
     public GameService(String username) {
         this.username = username;
         this.sessionActive = false;
@@ -28,16 +32,30 @@ public class GameService {
         this.dailyAttempt = getNumberOfDailyAttemptsByUsername(username);
     }
 
+    /**
+     * @param username  Username
+     * @return Number of daily attempts that the user has played.
+     */
     private int getNumberOfDailyAttemptsByUsername(String username) {
 
         return DatabaseService.getNumberOfDailyAttemptsByUsername(username);
     }
 
+    /**
+     *
+     * @param username Username
+     * @return Last time that the user has played the game.
+     */
     private LocalDateTime getLastDateByUsername(String username) {
 
         return DatabaseService.getLastDatePlayedByUsername(username);
     }
 
+    /**
+     * This class starts a new session of the game.
+     * @param newGameDifficulty Desired difficulty of the game.
+     * @return True if the session started succesfully. False otherwise.
+     */
     public boolean startSession(int newGameDifficulty) {
 
         if (!canPlay()) {
@@ -51,12 +69,10 @@ public class GameService {
         return true;
     }
 
-    private boolean canPlay() {
-        return lastDatePlayed == null ||
-               dailyAttempt <= MAX_ATTEMPTS ||
-               lastDatePlayed.plusDays(1).isBefore(LocalDateTime.now());
-    }
-
+    /**
+     * Starts, if possible, a new game.
+     * @return True if the game can be started, false otherwise.
+     */
     public boolean continuePlaying(){
         dailyAttempt++;
         return canPlay();
@@ -72,6 +88,15 @@ public class GameService {
 
     public LocalDateTime getLastDatePlayed() {
         return lastDatePlayed;
+    }
+
+    /**
+     * @return True if the user can play another game, false otherwise.
+     */
+    private boolean canPlay() {
+        return lastDatePlayed == null ||
+                dailyAttempt <= MAX_ATTEMPTS ||
+                lastDatePlayed.plusDays(1).isBefore(LocalDateTime.now());
     }
 
 }
