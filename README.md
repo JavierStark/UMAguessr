@@ -101,3 +101,6 @@ These days we refactored the game start implementation, solved some conflicts cr
 ### Days 20, 21, 22 & 23:
 ![5June](https://github.com/JavierStark/UMAguessr/assets/162295178/a5cdfa15-ffba-4605-9051-248636fac6f1)
 These days we implemented a blocking feature so that after playing 6 times in a day that user can't play anymore that day. Also added a new button detecter to detect the ESC key when pressed, merged both branches to the main one, and finally fixed all tests.
+
+### Days 24, 25 & 26:
+These days we refactored all classes from the frontend branch, added new java documentation to all the backend classes, added a mesage to display when trying to play without username entered, and updated the README file.
