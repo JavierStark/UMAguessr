@@ -61,3 +61,11 @@ The backend team started removing some generic test classes in order to create n
 
 The frontend team began creating some new classes in order to build the menu interface of the game. Also, a scoreCounter component was implemented and joined into the image panel. It is connected to the backend ScoreService and GameService classes, so that it can show the current round and score. Finally, the game logo was designed and then added to the menu:
 ![UMAGUESSR](https://github.com/JavierStark/UMAguessr/assets/162293615/876d7c06-5f27-4060-9cdd-4e3122cabb64)
+
+### Day 10:
+Today the main focused has been refactoring the backend code, where we can highlight the following aspects:
+- A final modifier has been added to the Image fields.
+- A deprecated URL has been replaced by a new URI in ImageService.
+- The image randomizer has been slightly improved in ImageService.
+- Some unncecesary conditionals of the ScoreService class have been removed.
+
