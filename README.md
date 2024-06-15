@@ -85,17 +85,12 @@ The backend team fixed some unusual bugs related to the scoring system, where th
 
 ### Day 15:
 ![30May](https://github.com/JavierStark/UMAguessr/assets/162295178/a251a0b1-f11e-4909-84fc-29dfd92d0e57)
-Today we only modified the backend branch, where at first we implemented new 
-whitebox tests adapting them to the data from the new images. Then we replaced 
-the JSON data source with PostgreSQL and updated the tests that where 
-implementing those features. Finally we integrated the username-based session 
-management and the score saving to the database.
+Today we only modified the backend branch, where at first we implemented new whitebox tests adapting them to the data from the new images. Then we replaced the JSON data source with PostgreSQL and updated the tests that where implementing those features. Finally we integrated the username-based session management and the score saving to the database.
 
 ### Day 16:
 ![31May](https://github.com/JavierStark/UMAguessr/assets/162295178/b3140af6-2e12-4444-ac8b-5a2780ab80d5)
-Today, we worked during the class period, where we fixed the size of the score 
-pannel and button from the UI class, added new images taken from the Sciences 
-faculty, merged the backend branch into frontend branch, implemented new methods
-in frontend to send the score to the backend classes, and refactored the 
-methods that made the button from the UI class to change the current image when 
-pressed.
+Today, we worked during the class period, where we fixed the size of the score pannel and button from the UI class, added new images taken from the Sciences faculty, merged the backend branch into frontend branch, implemented new methods in frontend to send the score to the backend classes, and refactored the methods that made the button from the UI class to change the current image when pressed.
+
+### Day 17:
+![1June](https://github.com/JavierStark/UMAguessr/assets/162295178/62808f29-42be-42c7-a375-2272e98fc157)
+We started removing all the unecessary panels that contained the different elements from the main frame in StartingMenu class and instead we added all of them to the main panel. Then we refactored the image files creation adding then directly to its component so we could manage them better, and changed an image. Finally we fixed and changed the settings pannel to a complete new panel where we added new elements such as the volume slider and a button to change the theme from white to black.
