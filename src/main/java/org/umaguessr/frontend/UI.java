@@ -74,19 +74,7 @@ public class UI extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(800, 600));
 		setVisible(true);
-
-		//----------------------------------------------------------------------------------------------------------new
-		content.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "escPressed");
-		content.getActionMap().put("escPressed", new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				//Press the ESC key to return to main menu.
-			}
-		});
-		//----------------------------------------------------------------------------------------------------------new
+		
 		pack();
 	}
 	

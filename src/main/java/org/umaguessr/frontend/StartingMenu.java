@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle;
@@ -53,7 +54,7 @@ public class StartingMenu extends JFrame {
 	//Labels:
 	
 	private JLabel namesLabel = new JLabel();
-	private JLabel gameDescriptionLabel = new JLabel();
+	private JTextArea gameDescriptionLabel = new JTextArea();
 	private JLabel darkModeLabel = new JLabel();
 	private JLabel settingsLabel = new JLabel();
 	private JLabel volumeLabel = new JLabel();
@@ -180,9 +181,23 @@ public class StartingMenu extends JFrame {
 		namesLabel.setText("Names");
 		namesLabel.setOpaque(true);
 		namesLabel.setBackground(Color.WHITE);
-		
-		gameDescriptionLabel.setText("Game description");
+
+
+		gameDescriptionLabel.setText("""
+				
+				Welcome to UMAGUESSR!
+				This is a singleplayer game where you have
+				to guess the location of the image shown
+				from the University of Málaga Campus.
+				You have 6 plays per day and each image rewards a maximum of 100 points.
+				Good luck!
+				""");
+
+		gameDescriptionLabel.setEditable(false);
+		gameDescriptionLabel.setLineWrap(true);
+		gameDescriptionLabel.setWrapStyleWord(true);
 		gameDescriptionLabel.setOpaque(true);
+		gameDescriptionLabel.setBorder(null);
 		
 		darkModeLabel.setText("· DARK MODE:");
 		darkModeLabel.setForeground(Color.WHITE);
@@ -500,7 +515,7 @@ public class StartingMenu extends JFrame {
 				.addComponent(usernameField, preferredSize, defaultSize, preferredSize);
 	}
 	
-	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, ParallelGroup usrCtrl) {
+	private SequentialGroup generateVerticalDescription(GroupLayout mainPanelLayout, JTextArea gameDescriptionLabel, ParallelGroup usrCtrl) {
 		return mainPanelLayout.createSequentialGroup()
 				.addGap(33, 33, 33)
 				.addComponent(gameDescriptionLabel, defaultSize, defaultSize, maxValue)
@@ -610,7 +625,7 @@ public class StartingMenu extends JFrame {
 				.addComponent(hardModeButton, defaultSize, defaultSize, maxValue);
 	}
 	
-	private ParallelGroup generateRightHorizontal(GroupLayout mainPanelLayout, JLabel gameDescriptionLabel, JLabel usernameLabel, 
+	private ParallelGroup generateRightHorizontal(GroupLayout mainPanelLayout, JTextArea gameDescriptionLabel, JLabel usernameLabel, 
 			JTextField usernameField) {
 		return mainPanelLayout.createParallelGroup(trailingAlignment, false)
 				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize)
