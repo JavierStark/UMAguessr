@@ -90,3 +90,12 @@ whitebox tests adapting them to the data from the new images. Then we replaced
 the JSON data source with PostgreSQL and updated the tests that where 
 implementing those features. Finally we integrated the username-based session 
 management and the score saving to the database.
+
+### Day 16:
+![31May](https://github.com/JavierStark/UMAguessr/assets/162295178/b3140af6-2e12-4444-ac8b-5a2780ab80d5)
+Today, we worked during the class period, where we fixed the size of the score 
+pannel and button from the UI class, added new images taken from the Sciences 
+faculty, merged the backend branch into frontend branch, implemented new methods
+in frontend to send the score to the backend classes, and refactored the 
+methods that made the button from the UI class to change the current image when 
+pressed.
