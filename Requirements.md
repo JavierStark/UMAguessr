@@ -2,12 +2,11 @@
 
 - Main menu interface with user login fields, difficulty selection and game description
   - Error window when trying to play without being logged
-  - Accumulated score display
 - Settings window accessible from main menu
   - Dark mode toggle
   - Volume slider
 - Game UI (fully resizable and responsive)
-  - Zoomable and panable map and image
+  - Zoomable and pannable map and image
   - Resizable map for better experience
   - Score display and accumulated score display
   - Current round and max round display
