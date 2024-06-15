@@ -69,3 +69,5 @@ Today the main focused has been refactoring the backend code, where we can highl
 - The image randomizer has been slightly improved in ImageService.
 - Some unncecesary conditionals of the ScoreService class have been removed.
 
+### Days 11, 12 & 13:
+These days some more refactoring was done. A bug where the images were not loaded from the web when filtered images were asked was fixed; a bufferedImage parameter was added to the HideablePanel and ZoomableImagePanel classes and the Database interface was deleted, as it was not being used. Also, some tests were added to the GameService class, and we started managing the daily session feature. Alsom some extra buttong were added to the menu, improving the UI and giving it access to the GameService class.
