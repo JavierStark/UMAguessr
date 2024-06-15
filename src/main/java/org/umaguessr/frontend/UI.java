@@ -49,7 +49,7 @@ public class UI extends JFrame {
 		hideablePanel.setVisible(true);
 
 
-		ScorePanel scorePanel = new ScorePanel(gameService.getDailyAttempt());
+		ScorePanel scorePanel = new ScorePanel(gameService.getDailyAttempt(), gameService.getMaxAttempts());
 		scorePanel.setSize(new Dimension(75, 30));
 		scorePanel.setVisible(true);
 

@@ -111,4 +111,7 @@ public class GameService {
         return true;
     }
 
+    public int getMaxAttempts() {
+        return MAX_ATTEMPTS;
+    }
 }

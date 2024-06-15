@@ -11,13 +11,13 @@ public class ScorePanel extends JPanel {
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
 	
-	public ScorePanel(int initialRound) {
+	public ScorePanel(int initialRound, int maxRound) {
 		score = 0;
 		round = initialRound;
 		
 		setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 				
-		roundLabel = new JLabel("Round: " + round, SwingConstants.CENTER);
+		roundLabel = new JLabel("Round: " + round + "/" +maxRound, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
 		scoreLabel = new JLabel("Score: " + score, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
