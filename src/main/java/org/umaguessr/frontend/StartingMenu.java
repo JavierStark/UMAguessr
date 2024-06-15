@@ -185,12 +185,11 @@ public class StartingMenu extends JFrame {
 
 		gameDescriptionLabel.setText("""
 				
-				Welcome to UMA GUESSR!
+				Welcome to UMAGUESSR!
 				This is a singleplayer game where you have
 				to guess the location of the image shown
-				from the UMA Campus.
-				You have 6 plays per day and each image rewards a maximum of 100
-				points.
+				from the University of Málaga Campus.
+				You have 6 plays per day and each image rewards a maximum of 100 points.
 				Good luck!
 				""");
 
