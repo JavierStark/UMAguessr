@@ -76,6 +76,11 @@ public class StartingMenu extends JFrame {
 	private JPanel backgroundPanel = null;
 	private JPanel titlePanel;
 	
+	// UI:
+	
+	private UI frame;
+
+	
 	static final int defaultSize = GroupLayout.DEFAULT_SIZE;
 	static final int preferredSize = GroupLayout.PREFERRED_SIZE;
 	static final GroupLayout.Alignment leadingAlignment = GroupLayout.Alignment.LEADING;
@@ -420,7 +425,7 @@ public class StartingMenu extends JFrame {
 	
 	private void startGame(int difficulty){
 		if(usernameField.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(mainPanel, "ERROR: \nmust enter username");
+			JOptionPane.showMessageDialog(mainPanel, "ERROR: \nMust enter username");
 			return;
 		}
 
@@ -431,12 +436,12 @@ public class StartingMenu extends JFrame {
 					+ " Please try again tomorrow.");
 			return;
 		}
-		setVisible(false);
 		ImageService imageService = new ImageService();
 		ScoreService scoreService = new ScoreService(imageService, usernameField.getText());
 
 		try {
-			UI frame = new UI(imageService, scoreService, gameService);
+			frame = new UI(imageService, scoreService, gameService, this);
+			setVisible(false);
 			frame.setLocationRelativeTo(null);
 		} catch (IOException | URISyntaxException ex) {
 			throw new RuntimeException(ex);
@@ -642,6 +647,11 @@ public class StartingMenu extends JFrame {
 		usernameLabel.setForeground(Color.WHITE);
 		passwordLabel.setForeground(Color.WHITE);
 		repaint();
+	}
+	
+	void showAgain() {
+		setVisible(true);
+		frame.dispose();
 	}
 
 }
