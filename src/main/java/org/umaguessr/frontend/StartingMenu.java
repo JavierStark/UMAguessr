@@ -41,10 +41,40 @@ public class StartingMenu extends JFrame {
 
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-
+	
+	//Buttons:
+	
+	private JButton easyModeButton = new JButton();
+	private JButton normalModeButton = new JButton();
+	private JButton hardModeButton = new JButton();
+	private JButton configurationButton;
+	private JToggleButton darkModeToggleButton = new JToggleButton();
+	
+	//Labels:
+	
+	private JLabel namesLabel = new JLabel();
+	private JLabel gameDescriptionLabel = new JLabel();
+	private JLabel darkModeLabel = new JLabel();
+	private JLabel settingsLabel = new JLabel();
+	private JLabel volumeLabel = new JLabel();
+	private JLabel usernameLabel  = new JLabel();
+	private JLabel passwordLabel = new JLabel();
+	private JLabel registerLabel = new JLabel();
+	
+	//Sliders:
+	
+	JSlider volumeSlider = new JSlider();
+	
+	//TextFields:
+	
 	private JTextField usernameField = new JTextField();
+
+	//Panels:
+	
 	private JPanel mainPanel = new JPanel();
 	private JPanel overlayPanel = new JPanel();
+	private JPanel backgroundPanel = null;
+	private JPanel titlePanel;
 	
 	static final int defaultSize = GroupLayout.DEFAULT_SIZE;
 	static final int preferredSize = GroupLayout.PREFERRED_SIZE;
@@ -54,8 +84,11 @@ public class StartingMenu extends JFrame {
 	static final LayoutStyle.ComponentPlacement relatedPlacement = LayoutStyle.ComponentPlacement.RELATED;
 	static final GroupLayout.Alignment baselineAlignment = GroupLayout.Alignment.BASELINE;
 
+	static final Color myBlack = new Color(45,45,50);
+	static boolean white = true;
 
-	protected Color mainPanelColor = new Color(255, 255, 255);
+
+	protected Color mainPanelColor = new Color(255,255,255);
 
 	public StartingMenu() {
 		initComponents();
@@ -64,35 +97,7 @@ public class StartingMenu extends JFrame {
 	private void initComponents() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		//Buttons:
 		
-		JButton easyModeButton = new JButton();
-		JButton normalModeButton = new JButton();
-		JButton hardModeButton = new JButton();
-		JButton configurationButton;
-		JToggleButton darkModeToggleButton = new JToggleButton();
-		
-		//Labels:
-		
-		JLabel namesLabel = new JLabel();
-		JLabel gameDescriptionLabel = new JLabel();
-		JLabel darkModeLabel = new JLabel();
-		JLabel settingsLabel = new JLabel();
-		JLabel volumeLabel = new JLabel();
-		JLabel usernameLabel  = new JLabel();
-		JLabel passwordLabel = new JLabel();
-		JLabel registerLabel = new JLabel();
-		
-		//Sliders:
-		
-		JSlider volumeSlider = new JSlider();
-		
-		//TextFields:
-		
-		//Panels:
-		
-		JPanel titlePanel;
-		JPanel backgroundPanel;
 		
 		//Group Layouts:
 		
@@ -154,7 +159,13 @@ public class StartingMenu extends JFrame {
 		
 		darkModeToggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				//Make the toggle button change the screen lightning.
+				if(!white) {
+					white();
+					white=true;
+				}else {
+					black();
+					white=false;
+				}
 			}
 		});
 		
@@ -163,11 +174,13 @@ public class StartingMenu extends JFrame {
 
 		namesLabel.setText("Names");
 		namesLabel.setOpaque(true);
+		namesLabel.setBackground(Color.WHITE);
 		
 		gameDescriptionLabel.setText("Game description");
 		gameDescriptionLabel.setOpaque(true);
 		
 		darkModeLabel.setText("· DARK MODE:");
+		darkModeLabel.setForeground(Color.WHITE);
 		
 		settingsLabel.setText("SETTINGS");
 		
@@ -345,8 +358,11 @@ public class StartingMenu extends JFrame {
 				mainPanel, backgroundPanel, verticalGeneralOverlay);
 		
 		generalLayout.setVerticalGroup(verticalGeneralFullScreen);
-
+		
+		white();
+		
 		pack();
+		
 	}
 
 	private ParallelGroup generateVerticalGeneralFullScreen(GroupLayout generalLayout, JPanel mainPanel,
@@ -593,6 +609,37 @@ public class StartingMenu extends JFrame {
 				.addComponent(gameDescriptionLabel, defaultSize, 284, preferredSize)
 				.addComponent(usernameLabel, defaultSize, 82, maxValue)
 				.addComponent(usernameField, preferredSize, 200, preferredSize);
+	}
+	
+	
+	private void white() {
+		backgroundPanel.setBackground(Color.WHITE);
+		overlayPanel.setBackground(Color.WHITE);
+		namesLabel.setForeground(myBlack);
+		namesLabel.setBackground(Color.WHITE);
+		gameDescriptionLabel.setForeground(myBlack);
+		gameDescriptionLabel.setBackground(Color.WHITE);
+		darkModeLabel.setForeground(myBlack);
+		settingsLabel.setForeground(myBlack);
+		volumeLabel.setForeground(myBlack);
+		usernameLabel.setForeground(myBlack);
+		passwordLabel.setForeground(myBlack);
+		repaint();
+	}
+	
+	private void black() {
+		backgroundPanel.setBackground(new Color(45,45,50));
+		overlayPanel.setBackground(myBlack);
+		namesLabel.setForeground(Color.WHITE);
+		namesLabel.setBackground(myBlack);
+		gameDescriptionLabel.setForeground(Color.WHITE);
+		gameDescriptionLabel.setBackground(myBlack);
+		darkModeLabel.setForeground(Color.WHITE);
+		settingsLabel.setForeground(Color.WHITE);
+		volumeLabel.setForeground(Color.WHITE);
+		usernameLabel.setForeground(Color.WHITE);
+		passwordLabel.setForeground(Color.WHITE);
+		repaint();
 	}
 
 }

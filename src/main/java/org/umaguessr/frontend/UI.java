@@ -34,7 +34,7 @@ public class UI extends JFrame {
 
 		setTitle("UmaGuessr");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBackground(java.awt.Color.WHITE);
+		setBackground(java.awt.Color.BLACK);
 
 
 		Image imageData = imageService.getImageData(imageService.getRandomUnplayedImageId());
