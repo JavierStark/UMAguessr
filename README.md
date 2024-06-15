@@ -43,7 +43,7 @@ Today, at first we updated the trello board adding almost all the pending tasks 
 Then, each team continued with their tasks, where:
 The frontend team has integrated the image zoom so that it can be implemented with both the map and the main image, then, this feature has been used with two new panels that are, the main one where the main image will appear, taking up the entire screen, and the other one being where the map should be visible as soon as you approach the mouse, but not visible otherwise. At last, we implemented some limits in the map movement so that you can't get out of the borders of the image moving or zooming it, and limited the zoom that can be done, so that the image doesn't get too small.
 
-The backend team ...(to be done).
+The backend team has integrated some basic methods and functions focused on image handling, which required to modify and refactor some of the image-related classes. Also, some tests have been implemented in order to check the correct implementation of the new methods.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
