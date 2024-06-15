@@ -53,3 +53,11 @@ On the other hand, the backend team has focused on the ScoreService class, which
 ### Day 8:
 Some general refactoring has been done to the whole project, mainly improving the readability and minimizing the duplication of the code. Also, the backend team has added new functionalities regarding the image-related classes, while the frontend team has implemented the Marker class, which is used to locate a marker with associated coordinates in the map, which will then be compared to the actual coordinates of the image to calculate the score.
 
+### Day 9:
+Today, we worked during the whole class period, which allowed us to add some major improvements to the code.
+First, some issues and problems regarding the repository were fixed, defining three clear and structured branches, and erasing some unused ones. After this, each team focused on their respectives tasks:
+
+The backend team started removing some generic test classes in order to create new separated test cases, one for each main class of the backend package. Also, the JSON file was created, and the available images and some extra test images were added to it with an improved resolution. At last, a new image filter was added, which allows to classificate and discard some images when needed, which was then refactored.
+
+The frontend team began creating some new classes in order to build the menu interface of the game. Also, a scoreCounter component was implemented and joined into the image panel. It is connected to the backend ScoreService and GameService classes, so that it can show the current round and score. Finally, the game logo was designed and then added to the menu:
+![UMAGUESSR](https://github.com/JavierStark/UMAguessr/assets/162293615/876d7c06-5f27-4060-9cdd-4e3122cabb64)
