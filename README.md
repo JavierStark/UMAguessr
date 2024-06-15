@@ -46,14 +46,17 @@ The frontend team has integrated the image zoom so that it can be implemented wi
 The backend team has integrated some basic methods and functions focused on image handling, which required to modify and refactor some of the image-related classes. Also, some tests have been implemented in order to check the correct implementation of the new methods.
 
 ### Day 7:
+![22May](https://github.com/JavierStark/UMAguessr/assets/162295178/bd89d1c5-e256-4049-aff3-74be1cd39f79)
 On the one hand, the frontend team has added some new features to the ZoomableImage class. The zoom panning has been improved, we have defined some strict bounds for the images, and fixed a bug where the top image dissapeared. Then, a new method has been added, which is capable of obtaining the real coordinates of the image on click, regardless of the active zoom.
 
 On the other hand, the backend team has focused on the ScoreService class, which handles the scoring system of the game, although its frontend aspect has not been implemented yet. Also, we have refactored the ImageService class, and added some extra tests to it.
 
 ### Day 8:
+![23May](https://github.com/JavierStark/UMAguessr/assets/162295178/ae07af87-f5b0-4539-bcf5-bc1581105379)
 Some general refactoring has been done to the whole project, mainly improving the readability and minimizing the duplication of the code. Also, the backend team has added new functionalities regarding the image-related classes, while the frontend team has implemented the Marker class, which is used to locate a marker with associated coordinates in the map, which will then be compared to the actual coordinates of the image to calculate the score.
 
 ### Day 9:
+![24May](https://github.com/JavierStark/UMAguessr/assets/162295178/76e2de2f-7c39-4c29-ab7e-ad1796409272)
 Today, we worked during the whole class period, which allowed us to add some major improvements to the code.
 First, some issues and problems regarding the repository were fixed, defining three clear and structured branches, and erasing some unused ones. After this, each team focused on their respectives tasks:
 
@@ -73,8 +76,26 @@ Today the main focused has been refactoring the backend code, where we can highl
 These days some more refactoring was done. A bug where the images were not loaded from the web when filtered images were asked was fixed; a bufferedImage parameter was added to the HideablePanel and ZoomableImagePanel classes and the Database interface was deleted, as it was not being used. Also, some tests were added to the GameService class, and we started managing the daily session feature. Finally, some extra buttons were added to the menu, improving the UI and giving it access to the GameService class.
 
 ### Day 14:
+![29May](https://github.com/JavierStark/UMAguessr/assets/162295178/81786af5-a2e0-4f3a-a7cf-bbb90a3e83f4)
 We started adding some new images to the database, so the previously added test images were removed, because now the test can be done with the real images. Also, some URLs were fixed in the JSON file.
 
 The frontend team changed the window divider from horizontal into vertical, so that the game interface is more eye-pleasant and does not depend so much on the panel size. Also, the LookAndFeel style was changed to Windows, in order to improve the asthetics of the UI. Some extra minor improvements were done, like changing the labels of the buttons.
 
 The backend team fixed some unusual bugs related to the scoring system, where the score obtained never reached the maximum score. The team also tackled some other bugs in the ImageService class, which showed infinite images.
+
+### Day 15:
+![30May](https://github.com/JavierStark/UMAguessr/assets/162295178/a251a0b1-f11e-4909-84fc-29dfd92d0e57)
+Today we only modified the backend branch, where at first we implemented new 
+whitebox tests adapting them to the data from the new images. Then we replaced 
+the JSON data source with PostgreSQL and updated the tests that where 
+implementing those features. Finally we integrated the username-based session 
+management and the score saving to the database.
+
+### Day 16:
+![31May](https://github.com/JavierStark/UMAguessr/assets/162295178/b3140af6-2e12-4444-ac8b-5a2780ab80d5)
+Today, we worked during the class period, where we fixed the size of the score 
+pannel and button from the UI class, added new images taken from the Sciences 
+faculty, merged the backend branch into frontend branch, implemented new methods
+in frontend to send the score to the backend classes, and refactored the 
+methods that made the button from the UI class to change the current image when 
+pressed.
