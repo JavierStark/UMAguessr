@@ -105,4 +105,24 @@ public abstract class DatabaseService {
 
     }
 
+    public static int getAccumulatedScore(String username) {
+
+            int accumulatedScore = 0;
+
+            String query = "SELECT SUM(score) FROM scores WHERE username = ?";
+
+            try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, username);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        accumulatedScore = rs.getInt("sum");
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println("[ERROR | SQL] Reading accumulated score by username.");
+                e.printStackTrace();
+            }
+            return accumulatedScore;
+    }
 }

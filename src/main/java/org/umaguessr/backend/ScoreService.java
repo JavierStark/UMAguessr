@@ -90,9 +90,11 @@ public class ScoreService {
 	 * @param dailyAttempt Daily attempt number
 	 */
 	private void saveScoreToDB(String imageId, int score, int dailyAttempt) {
-
 		DatabaseService.saveScoreIntoDatabase(imageId, score, dailyAttempt, username);
+	}
 
+	public int getAccumulatedScore() {
+		return DatabaseService.getAccumulatedScore(username);
 	}
 
 }

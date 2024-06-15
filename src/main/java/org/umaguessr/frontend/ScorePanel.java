@@ -1,19 +1,25 @@
 package org.umaguessr.frontend;
+import org.umaguessr.backend.ScoreService;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ScorePanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	
+
+	private ScoreService scoreService;
 	private int score;
+	private int accumulatedScore;
 	private int round;
 	private final int maxRound;
 	private JLabel roundLabel;
 	private JLabel scoreLabel;
 	
-	public ScorePanel(int initialRound, int maxRound) {
+	public ScorePanel(int initialRound, int maxRound, ScoreService scoreService) {
+		this.scoreService = scoreService;
 		score = 0;
+		accumulatedScore = scoreService.getAccumulatedScore();
 		round = initialRound;
 		this.maxRound = maxRound;
 		
@@ -21,7 +27,7 @@ public class ScorePanel extends JPanel {
 				
 		roundLabel = new JLabel("Round: " + round + "/" +maxRound, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
-		scoreLabel = new JLabel("Score: " + score, SwingConstants.CENTER);
+		scoreLabel = new JLabel("Score: " + score + " | Total Score: " + accumulatedScore, SwingConstants.CENTER);
 		roundLabel.setVerticalAlignment(SwingConstants.CENTER);
 		
 		roundLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
@@ -47,7 +53,8 @@ public class ScorePanel extends JPanel {
 	
 	public void setScore(int newScore) {
 		score = newScore;
-		scoreLabel.setText("Score: " + score);
+		accumulatedScore = scoreService.getAccumulatedScore();
+		scoreLabel.setText("Score: " + score + " | Total Score: " + accumulatedScore);
 	}
 	
 	public void nextRound() {
