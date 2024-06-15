@@ -13,22 +13,24 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.xml.crypto.Data;
 
+/**
+ * This class handles the exchange of images between frontend
+ * and backend.
+ */
 public class ImageService {
 
-    private static final String JDBC_URL = "jdbc:postgresql://vps.damianverde.es:5432/umaguessr";
-    private static final String JDBC_USER = "postgres";
-    private static final String JDBC_PASSWORD = "WCa%YVo6L$35@7Z";
-
     private List<Image> imagesData;
-    private Set<String> playedImageIds;
-    Random random;
+    private final Set<String> playedImageIds;
 
     public ImageService() {
+
+        imagesData = new ArrayList<>();
         playedImageIds = new HashSet<>();
+
         try {
             loadImagesData();
-            random = new Random();
         } catch (SQLException e) {
             handleSQLException(e);
         }
@@ -44,25 +46,12 @@ public class ImageService {
     }
 
     public void loadImagesData() throws SQLException {
-        String query = "SELECT * FROM images";
-        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
 
-            imagesData = new ArrayList<>();
-            while (rs.next()) {
-                imagesData.add(new Image(
-                        Integer.toString(rs.getInt("image_id")),
-                        rs.getString("image_url"),
-                        new int[]{rs.getInt("pos_x"), rs.getInt("pos_y")},
-                        rs.getString("faculty"),
-                        rs.getInt("difficulty")
-                ));
-            }
-        }
+        DatabaseService.loadImagesData(imagesData);
     }
 
     public void loadImagesWithFilter(ImageFilter filter) {
+
         List<Image> newImageList = new ArrayList<>();
         if (imagesData != null) {
             for (Image img : imagesData) {
@@ -72,6 +61,7 @@ public class ImageService {
             }
         }
         imagesData = newImageList;
+
     }
 
     public Image getImageData(String id) {
@@ -83,18 +73,18 @@ public class ImageService {
     }
 
     public String getRandomUnplayedImageId() {
+
         List<Image> unplayedImages = new ArrayList<>();
-        for (Image image : imagesData) {
-            if (!playedImageIds.contains(image.getId())) {
-                unplayedImages.add(image);
-            }
-        }
+
+        fillUnplayedImages(unplayedImages);
+
         if (unplayedImages.isEmpty()) {
             playedImageIds.clear();
             return getRandomUnplayedImageId();
         }
 
-        Image randomImage = unplayedImages.get(random.nextInt(unplayedImages.size()));
+        Random randomSelector = new Random();
+        Image randomImage = unplayedImages.get(randomSelector.nextInt(unplayedImages.size()));
         playedImageIds.add(randomImage.getId());
         return randomImage.getId();
     }
@@ -108,4 +98,13 @@ public class ImageService {
     private void handleSQLException(SQLException e) {
         e.printStackTrace();
     }
+
+    private void fillUnplayedImages(List<Image> unplayedImages){
+        for (Image image : imagesData) {
+            if (!playedImageIds.contains(image.getId())) {
+                unplayedImages.add(image);
+            }
+        }
+    }
+
 }

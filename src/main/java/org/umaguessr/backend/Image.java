@@ -1,7 +1,8 @@
 package org.umaguessr.backend;
 
 /**
- * Represents an image in the UMAguessr application.
+ * This class represents an Image. It contains all necessary data to
+ * perform calculations with it in other modules.
  */
 public class Image {
 

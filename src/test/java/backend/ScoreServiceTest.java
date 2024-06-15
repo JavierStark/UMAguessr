@@ -2,11 +2,9 @@ package backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.*;
 import org.umaguessr.backend.ScoreService;
-import org.umaguessr.backend.Image;
 import org.umaguessr.backend.ImageService;
 
 import java.io.IOException;
@@ -38,7 +36,7 @@ class ScoreServiceTest {
 
 	@Test
 	void testInitialFinalScoreIs0() {
-		assertEquals(0, myScoreService.getFinalScore());
+		assertEquals(0, myScoreService.getCurrentScore());
 	}
 
 	@Test
@@ -54,13 +52,13 @@ class ScoreServiceTest {
 	@Test
 	void testFinalScoreIncreasesEachRound() {
 		myScoreService.calculateScore("1", 227, 721, 0);
-		assertEquals(ScoreService.MAX_SCORE, myScoreService.getFinalScore());
+		assertEquals(ScoreService.MAX_SCORE, myScoreService.getCurrentScore());
 
 		myScoreService.calculateScore("5", 124, 796, 0);
-		assertEquals(2 * ScoreService.MAX_SCORE, myScoreService.getFinalScore());
+		assertEquals(2 * ScoreService.MAX_SCORE, myScoreService.getCurrentScore());
 
 		myScoreService.calculateScore("2", 238, 790, 0);
-		assertEquals(3 * ScoreService.MAX_SCORE, myScoreService.getFinalScore());
+		assertEquals(3 * ScoreService.MAX_SCORE, myScoreService.getCurrentScore());
 	}
 
 	@Test

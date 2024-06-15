@@ -4,6 +4,8 @@ package org.umaguessr.backend;
  * The {@code ImageFilter} interface represents an image filter.
  * Implementations of this interface can be used to check if an image meets certain criteria.
  */
+
+@FunctionalInterface
 public interface ImageFilter {
 
 	/**

@@ -5,39 +5,40 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * This class handles all score-related tasks. It keeps track
+ * of the current score and calculates the resulting points
+ * given a guess from the user.
+ */
 public class ScoreService {
 
-	private int finalScore;
+	private int currentScore;
 	private final ImageService imageService;
 	private String username;
 
 	public static final int MAX_SCORE = 100;
-	private static final int MIN_DISTANCE_FOR_MAX_SCORE = 27;
+	private static final int MIN_DISTANCE_FOR_MAX_SCORE = 36;
 	private static final int MAX_DISTANCE_FOR_ZERO_SCORE = 250;
 	private static final double BASE = 1.06;
-	private static final double EXPONENT_MULTIPLIER = -0.3;
+	private static final double EXPONENT_MULTIPLIER = -0.22;
 	private static final double EXPONENT_CONSTANT = 87;
-
-	private static final String JDBC_URL = "jdbc:postgresql://vps.damianverde.es:5432/umaguessr";
-	private static final String JDBC_USER = "postgres";
-	private static final String JDBC_PASSWORD = "WCa%YVo6L$35@7Z";
 
 	public ScoreService(ImageService imageService, String username) {
 		this.imageService = imageService;
-		this.finalScore = 0;
+		this.currentScore = 0;
 		this.username = username;
 	}
 
 	public int calculateScore(String id, int coordX, int coordY, int dailyAttempt) {
 		double distance = calculateDistance(id, coordX, coordY);
 		int points = calculatePointsBasedOnDistance(distance);
-		finalScore += points;
+		currentScore += points;
 		saveScoreToDB(id, points, dailyAttempt);
 		return points;
 	}
 
-	public int getFinalScore() {
-		return finalScore;
+	public int getCurrentScore() {
+		return currentScore;
 	}
 
 	private double calculateDistance(String id, int coordX, int coordY) {
@@ -60,18 +61,9 @@ public class ScoreService {
 	}
 
 	private void saveScoreToDB(String imageId, int score, int dailyAttempt) {
-		String query = "INSERT INTO scores (image_id, score, daily_attempt, username) VALUES (?, ?, ?, ?)";
 
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-			 PreparedStatement ps = conn.prepareStatement(query)) {
-			ps.setInt(1, Integer.parseInt(imageId));
-			ps.setInt(2, score);
-			ps.setInt(3, dailyAttempt); // Default daily attempt value for simplicity
-			ps.setString(4, this.username);
-				ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DatabaseService.saveScoreIntoDatabase(imageId, score, dailyAttempt, username);
+
 	}
 
 	public String getUsername() {

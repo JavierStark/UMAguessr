@@ -95,7 +95,7 @@ public class UI extends JFrame {
 			Point2D.Double marker = new Point2D.Double(Marker.getPreviousMarker().getRealX(), Marker.getPreviousMarker().getRealY());
 			scoreService.calculateScore(currentImage.getId(), (int) marker.getX(), (int) marker.getY(), gameService.getDailyAttempt());
 			
-			scorePanel.setScore(scoreService.getFinalScore());
+			scorePanel.setScore(scoreService.getCurrentScore());
 			
 			if(gameService.continuePlaying()){
 				scorePanel.nextRound();

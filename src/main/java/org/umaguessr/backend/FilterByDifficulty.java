@@ -4,6 +4,11 @@ public class FilterByDifficulty implements ImageFilter {
 
 	private int desiredDifficulty;
 
+	public static final int EASY_DIFFICULTY = 1;
+	public static final int MEDIUM_DIFFICULTY = 2;
+	public static final int HARD_DIFFICULTY = 3;
+
+
 	/**
 	 * Constructs a new FilterByDifficulty object with the specified desired difficulty.
 	 *

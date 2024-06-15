@@ -30,6 +30,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.umaguessr.backend.FilterByDifficulty;
 import org.umaguessr.backend.GameService;
 import org.umaguessr.backend.ImageService;
 import org.umaguessr.backend.ScoreService;
@@ -105,17 +106,17 @@ public class StartingMenu extends JFrame {
 			//Easy Mode Button:
 		
 		easyModeButton.setText("Easy Mode");
-		easyModeButton.addActionListener(e -> startGame(GameService.Difficulty.Easy));
+		easyModeButton.addActionListener(e -> startGame(FilterByDifficulty.EASY_DIFFICULTY));
 		
 			//Normal Mode Button:
 		
 		normalModeButton.setText("Normal Mode");
-		normalModeButton.addActionListener(e -> startGame(GameService.Difficulty.Medium));
+		normalModeButton.addActionListener(e -> startGame(FilterByDifficulty.MEDIUM_DIFFICULTY));
 		
 			//Hard Mode Button:
 		
 		hardModeButton.setText("Hard Mode");
-		hardModeButton.addActionListener(e -> startGame(GameService.Difficulty.Hard));
+		hardModeButton.addActionListener(e -> startGame(FilterByDifficulty.HARD_DIFFICULTY));
 		
 			//Configuration Button:
 		
@@ -401,7 +402,7 @@ public class StartingMenu extends JFrame {
 				Math.abs(pixelColor.getBlue() - filterColor.getBlue()) <= tolerance;
 	}
 	
-	private void startGame(GameService.Difficulty difficulty){
+	private void startGame(int difficulty){
 		if(usernameField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(mainPanel, "ERROR: \nmust enter username");
 			return;
