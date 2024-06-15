@@ -42,6 +42,7 @@ public class ScoreService {
 	}
 
 	private double calculateDistance(String id, int coordX, int coordY) {
+		System.out.println("Calculating distance for image " + id + " with coordinates (" + coordX + ", " + coordY + ")");
 		Image image = imageService.getImageData(id);
 
 		int differenceX = image.getCoordinates()[0] - coordX;

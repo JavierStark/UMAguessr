@@ -52,9 +52,17 @@ public class GameService {
     }
 
     private boolean canPlay() {
-        return lastDatePlayed == null ||
-               dailyAttempt <= MAX_ATTEMPTS ||
-               lastDatePlayed.plusDays(1).isBefore(LocalDateTime.now());
+        if(dailyAttempt > MAX_ATTEMPTS) {
+            return false;
+        }
+        if(lastDatePlayed != null) {
+            if(lastDatePlayed.getDayOfYear() != LocalDateTime.now().getDayOfYear()) {
+                dailyAttempt = 0;
+                return true;
+            }
+        }
+
+        return true;
     }
 
     public boolean continuePlaying(){

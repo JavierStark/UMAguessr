@@ -92,7 +92,7 @@ public abstract class DatabaseService {
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+                if (rs.next() && rs.getTimestamp("attempt_time") != null){
                     lastDate = rs.getTimestamp("attempt_time").toLocalDateTime();
                 }
             }
